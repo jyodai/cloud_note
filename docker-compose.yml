@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  php:
+      build:
+        context: .
+        dockerfile: ./docker/php/Dockerfile
+      volumes:
+        - ./:/var/www/html
+      ports:
+        - 80:80
+        - 443:443
+        - 8887:8887
+      container_name: cloud-note-php7.3-apache
+  mysql:
+      build:
+        context: .
+        dockerfile: ./docker/mysql/Dockerfile
+      volumes:
+        - ./docker/mysql/etc/my.cnf:/etc/mysql/conf.d/my.cnf
+      ports:
+        - 3306:3306
+      command: --innodb-use-native-aio=0
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=cloud_note
+        - MYSQL_USER=docker
+        - MYSQL_PASSWORD=docker
+      container_name: cloud-note-mysql5.7

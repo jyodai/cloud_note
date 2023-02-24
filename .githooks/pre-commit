@@ -1,0 +1,41 @@
+#!/bin/bash
+
+
+# コミットが許可されているブランチかを確認
+function checkcommitpermission()
+{
+    branch=`git symbolic-ref head --short`
+    if [ ${branch} = master -o ${branch} = develop ]; then
+        echo ${branch}' ブランチにcommitしようとしています。'
+        continueprocessing
+    fi
+}
+
+# ブランチ名が命名規則に違反していないか確認
+function checkbranchname()
+{
+    branch=`git symbolic-ref head --short`
+    if [[ ! ${branch} =~ master|develop|feature/issue-.* ]]; then
+        echo ${branch}' ブランチ名が命名規則に違反している可能性があります。'
+        continueprocessing
+    fi
+}
+
+function continueprocessing()
+{
+    echo '処理を継続してよろしいですか? [y/n]'
+    exec < /dev/tty
+    read answer
+    case $answer in
+        'y' | 'y' | 'yes') echo '処理を継続します。';;
+        * ) echo '処理を中止しました。';exit 1;;
+    esac
+}
+
+function main()
+{
+    checkcommitpermission
+    checkbranchname
+}
+
+main

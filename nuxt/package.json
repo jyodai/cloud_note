@@ -1,0 +1,38 @@
+{
+  "name": "vuetify",
+  "version": "1.0.0",
+  "description": "My mathematical Nuxt.js project",
+  "author": "",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue ./",
+    "lint:fix": "eslint --fix --ext .js,.vue ./"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/markdownit": "^1.2.9",
+    "markdown-it-plugin-mermaid": "^1.0.7",
+    "nuxt": "^2.15.0",
+    "prismjs": "^1.23.0",
+    "sl-vue-tree": "^1.8.5",
+    "splitpanes": "^2.3.8",
+    "v-contextmenu": "^2.9.0",
+    "vue-codemirror": "^4.0.6",
+    "vue-final-modal": "^2.4.1",
+    "vue-runtime-helpers": "^1.1.2",
+    "vuedraggable": "^2.24.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/eslint-parser": "^7.17.0",
+    "@nuxtjs/eslint-config": "^9.0.0",
+    "@nuxtjs/eslint-module": "^3.1.0",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "eslint": "^8.14.0"
+  }
+}
