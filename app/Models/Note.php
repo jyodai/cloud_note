@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\NoteContent;
 
 class Note extends Model
 {
@@ -37,9 +38,9 @@ class Note extends Model
         return self::where('parent_note_id', $id)->exists();
     }
 
-    public function noteContent()
+    public function content()
     {
-        return $this->hasOne('App\Models\NoteContent');
+        return $this->morphTo(__FUNCTION__, 'note_type', 'id');
     }
 
      public function create($data)
