@@ -16,7 +16,7 @@ class AddNoteTypeToNotesTable extends Migration
     public function up()
     {
         Schema::table('notes', function (Blueprint $table) {
-            $table->integer('note_type')->after('user_id')->default(null);
+            $table->string('note_type')->after('user_id')->default(null);
         });
 
         $notes = Note::get();

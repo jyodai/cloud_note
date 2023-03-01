@@ -16,7 +16,7 @@ class AddNoteTypeToNotesContentsTable extends Migration
     public function up()
     {
         Schema::table('notes_contents', function (Blueprint $table) {
-            $table->integer('note_type')->after('note_id')->default(null);
+            $table->string('note_type')->after('note_id')->default(null);
         });
 
         $notes = NoteContent::get();

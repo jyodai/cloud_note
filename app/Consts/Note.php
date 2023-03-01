@@ -4,5 +4,5 @@ namespace App\Consts;
 
 class Note
 {
-    const NOTE_TYPE_NORMAL = 1;
+    const NOTE_TYPE_NORMAL = 'App\Models\NoteContent';
 }
