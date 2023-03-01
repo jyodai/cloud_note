@@ -47,14 +47,15 @@ class Note extends Model
      {
           $this->parent_note_id = $data['parentNoteId'];
           $this->user_id = $data['user_id'];
+          $this->note_type = $data['note_type'];
           $this->title = $data['title'];
           $this->display_num = $this->nextDisplayNum($data['parentNoteId']);
           $this->hierarchy = $this->belongHierarchy($data['parentNoteId']);
           $this->invalidation_flag = 0;
           $this->save();
 
-          $noteContentEntity = new NoteContent;
-          $noteContentEntity->create(['id' => $this->id, 'title' => $this->title]);
+          $noteContentEntity = new $this->note_type;
+          $noteContentEntity->create($this);
 
           // 順番がおかしくなっている場合の保険
           $this->adjustOrder($this->parent_note_id);

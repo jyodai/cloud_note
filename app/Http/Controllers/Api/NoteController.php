@@ -79,9 +79,11 @@ class NoteController extends Controller
     {
         $parentNoteId = (int) $request->parentNoteId;
         $noteTitle = $request->noteTitle;
+        $noteType = $request->noteType;
 
         $data = [
             'parentNoteId' => $parentNoteId,
+            'note_type' => $noteType,
             'title'    => $noteTitle,
             'user_id'  => $this->user->id,
         ];
