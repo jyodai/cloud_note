@@ -56,6 +56,7 @@ export default {
     '@/plugins/router-option',
     '@/plugins/prism',
     '@/plugins/VueFinalModal',
+    '@/plugins/Const',
   ],
   /*
   ** Nuxt.js dev-modules
