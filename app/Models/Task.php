@@ -20,9 +20,4 @@ class Task extends Model
           $this->invalidation_flag = 0;
           $this->save();
      }
-
-     public function note()
-     {
-        return $this->morphOne(Note::class, 'content', 'note_type', 'note_id');
-     }
 }
