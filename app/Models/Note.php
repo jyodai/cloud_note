@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\NoteContent;
 
 class Note extends Model
 {
@@ -37,23 +38,24 @@ class Note extends Model
         return self::where('parent_note_id', $id)->exists();
     }
 
-    public function noteContent()
+    public function content()
     {
-        return $this->hasOne('App\Models\NoteContent');
+        return $this->morphTo(__FUNCTION__, 'note_type', 'id');
     }
 
      public function create($data)
      {
           $this->parent_note_id = $data['parentNoteId'];
           $this->user_id = $data['user_id'];
+          $this->note_type = $data['note_type'];
           $this->title = $data['title'];
           $this->display_num = $this->nextDisplayNum($data['parentNoteId']);
           $this->hierarchy = $this->belongHierarchy($data['parentNoteId']);
           $this->invalidation_flag = 0;
           $this->save();
 
-          $noteContentEntity = new NoteContent;
-          $noteContentEntity->create(['id' => $this->id, 'title' => $this->title]);
+          $noteContentEntity = new $this->note_type;
+          $noteContentEntity->create($this);
 
           // 順番がおかしくなっている場合の保険
           $this->adjustOrder($this->parent_note_id);

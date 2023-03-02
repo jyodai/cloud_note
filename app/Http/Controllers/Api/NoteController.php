@@ -42,7 +42,7 @@ class NoteController extends Controller
                 ->first();
                 break;
             case 'content':
-                $ret = Note::find($noteId)->noteContent;
+                $ret = Note::find($noteId)->content;
                 break;
         }
         return response()->json($ret);
@@ -79,9 +79,11 @@ class NoteController extends Controller
     {
         $parentNoteId = (int) $request->parentNoteId;
         $noteTitle = $request->noteTitle;
+        $noteType = $request->noteType;
 
         $data = [
             'parentNoteId' => $parentNoteId,
+            'note_type' => $noteType,
             'title'    => $noteTitle,
             'user_id'  => $this->user->id,
         ];

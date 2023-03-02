@@ -6,7 +6,10 @@
         <note-content-head />
       </div>
       <div class="note-content-body">
-        <note-content-body />
+        <note-content-body
+          v-if="note && note.note_type === $NOTE_TYPE_NORMAL"
+          :note="note"
+        />
       </div>
     </div>
   </div>
@@ -23,7 +26,21 @@ export default {
     NoteContentHead,
     NoteContentBody,
   },
-  data () { return {} },
+  data () {
+    return {
+      note: null,
+    }
+  },
+  computed: {
+    changeSelectNote () {
+      return this.$store.getters['NoteContent/getSelectNote']
+    },
+  },
+  watch: {
+    changeSelectNote (newVal, oldVal) {
+      this.note = newVal
+    },
+  },
   mounted () {},
   methods: {},
 }

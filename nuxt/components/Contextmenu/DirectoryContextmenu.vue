@@ -63,7 +63,7 @@ export default {
       const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=note' + '&noteId=' + noteId
       return await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
     },
-    async addNote (noteId = null) {
+    async addNote (noteId = null, noteType = this.$NOTE_TYPE_NORMAL) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。')
       if (!noteTitle) {
         alert('ノートのタイトルが空です')
@@ -72,6 +72,7 @@ export default {
 
       const data = {
         noteId,
+        noteType,
         noteTitle,
       }
       await this.$store.dispatch('NoteTree/addNode', { data, })
