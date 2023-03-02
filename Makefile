@@ -47,7 +47,6 @@ initdb :
 	"
 	docker-compose exec php /bin/bash -c ' \
 		php artisan migrate; \
-		php artisan user:create; \
 	'
 
 inittestdb :
@@ -62,6 +61,13 @@ inittestdb :
 		php artisan --env=testing key:generate; \
 		php artisan --env=testing migrate;\
 	'
+
+createUser :
+	docker-compose exec php /bin/bash -c ' \
+		php artisan user:create; \
+	'
+
+cu : createUser
 
 nuxtwatch :
 	cd nuxt && npm run dev
