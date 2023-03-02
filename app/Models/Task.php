@@ -12,11 +12,10 @@ class Task extends Model
      protected $casts = [
         'note_id' => 'integer',
      ];
-     public $hadDefault = true;
 
      public function create($note)
      {
-          $this->note_id = $note['note_id'];
+          $this->note_id = $note['id'];
           $this->note_type = C_Note::NOTE_TYPE_TASK;
           $this->invalidation_flag = 0;
           $this->save();

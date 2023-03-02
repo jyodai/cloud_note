@@ -12,7 +12,6 @@ class NoteContent extends Model
      protected $casts = [
         'note_id' => 'integer',
      ];
-     public $hadDefault = true;
 
      public function create($note)
      {
