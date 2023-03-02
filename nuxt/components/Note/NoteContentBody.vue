@@ -36,21 +36,16 @@ export default {
     MarkdownView,
     MarkdownEdit,
   },
+  props: {
+    note: {
+      type    : Object,
+      default : () => {},
+    },
+  },
   data () {
     return {
-      showMarkdown : true,
-      note         : null,
+      showMarkdown: true,
     }
-  },
-  computed: {
-    changeSelectNote () {
-      return this.$store.getters['NoteContent/getSelectNote']
-    },
-  },
-  watch: {
-    changeSelectNote (newVal, oldVal) {
-      this.note = newVal
-    },
   },
   methods: {
     changeEditor () {
