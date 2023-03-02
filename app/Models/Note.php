@@ -55,7 +55,9 @@ class Note extends Model
           $this->save();
 
           $noteContentEntity = new $this->note_type;
-          $noteContentEntity->create($this);
+          if ($noteContentEntity->hasDefault) {
+              $noteContentEntity->create($this);
+          }
 
           // 順番がおかしくなっている場合の保険
           $this->adjustOrder($this->parent_note_id);
