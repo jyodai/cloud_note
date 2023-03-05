@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Note;
 use App\Consts\Note as C_Note;
 
-class NoteContent extends Model
+class Task extends Model
 {
-     protected $table = 'notes_contents';
+     protected $table = 'tasks';
      protected $casts = [
         'note_id' => 'integer',
      ];
@@ -16,8 +16,7 @@ class NoteContent extends Model
      public function create($note)
      {
           $this->note_id = $note['id'];
-          $this->note_type = C_Note::NOTE_TYPE_NORMAL;
-          $this->content = '# ' . $note['title'];
+          $this->note_type = C_Note::NOTE_TYPE_TASK;
           $this->invalidation_flag = 0;
           $this->save();
      }

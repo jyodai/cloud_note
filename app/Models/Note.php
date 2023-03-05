@@ -40,7 +40,7 @@ class Note extends Model
 
     public function content()
     {
-        return $this->morphTo(__FUNCTION__, 'note_type', 'id');
+        return $this->hasOne($this->note_type, 'note_id');
     }
 
      public function create($data)

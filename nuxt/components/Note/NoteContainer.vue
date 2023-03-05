@@ -10,6 +10,11 @@
           v-if="note && note.note_type === $NOTE_TYPE_NORMAL"
           :note="note"
         />
+        <div
+          v-if="note && note.note_type === $NOTE_TYPE_TASK"
+        >
+          Sample Task
+        </div>
       </div>
     </div>
   </div>

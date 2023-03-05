@@ -12,7 +12,7 @@ export const mutations = {
 }
 
 export const getters = {
-  getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
+  getSelectNoteId : state => state.selectNote ? state.selectNote.note_id : null,
   getSelectNote   : state => state.selectNote,
 }
 

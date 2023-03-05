@@ -39,6 +39,16 @@ buildxserver :
 	mv ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note.back
 	cp -rf ${XSERVER_DOCUMENT_ROOT}/public_html/cloud_note/nuxt/dist ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note
 
+initdb :
+	docker-compose exec mysql /bin/bash -c " \
+		mysql -u root -proot -e 'DROP DATABASE \`cloud_note\`;';\
+		mysql -u root -proot -e 'CREATE DATABASE \`cloud_note\`;';\
+		mysql -u root -proot -e 'GRANT ALL PRIVILEGES ON \`cloud_note\` .* TO \`docker\`@\`%\`;';\
+	"
+	docker-compose exec php /bin/bash -c ' \
+		php artisan migrate; \
+	'
+
 inittestdb :
 	docker-compose exec mysql /bin/bash -c " \
 		mysql -u root -proot -e 'DROP DATABASE \`test_cloud_note\`;';\
@@ -51,6 +61,13 @@ inittestdb :
 		php artisan --env=testing key:generate; \
 		php artisan --env=testing migrate;\
 	'
+
+createUser :
+	docker-compose exec php /bin/bash -c ' \
+		php artisan user:create; \
+	'
+
+cu : createUser
 
 nuxtwatch :
 	cd nuxt && npm run dev
