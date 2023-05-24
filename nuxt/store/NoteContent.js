@@ -19,8 +19,8 @@ export const getters = {
 export const actions = {
   async loadSelectNote ({ rootState, commit, }, data) {
     const noteId = data.noteId
-    const queryStr = '?token=' + rootState.User.token + '&type=content' + '&noteId=' + noteId
-    const response = await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
+    const queryStr = '?token=' + rootState.User.token + '&noteId=' + noteId
+    const response = await this.$axios.$get(process.env.API_SERVER_URl + '/note_content' + queryStr)
     await commit('setSelectNote', response)
   },
   unsetSelectNote ({ commit, }) {
@@ -39,14 +39,13 @@ export const actions = {
     params.append('token', rootState.User.token)
     params.append('noteId', data.id)
     params.append('content', data.content)
-    params.append('type', 'content')
     const config = {
       headers: {
         'X-HTTP-Method-Override' : 'PUT',
         'Content-Type'           : 'application/x-www-form-urlencoded',
       },
     }
-    await this.$axios.$post(process.env.API_SERVER_URl + '/notes', params, config)
+    await this.$axios.$post(process.env.API_SERVER_URl + '/note_content', params, config)
       .then((res) => {
       }).catch((e) => {
         alert('メモの保存の失敗しました')
