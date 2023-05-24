@@ -44,6 +44,9 @@ Route::middleware(['auth_api'])->group(function () {
     Route::post  ('notes'      , 'Api\NoteController@addNote');
     Route::delete('notes/{id}' , 'Api\NoteController@deleteNote');
 
+    Route::get   ('note_content' , 'Api\NoteContentController@getContent');
+    Route::put   ('note_content' , 'Api\NoteContentController@save');
+
     Route::get   ('tree'              , 'Api\TreeController@getTree');
     Route::get   ('tree/{id}/children', 'Api\TreeController@getTreeChildren');
     Route::put   ('tree/{id}/move'    , 'Api\TreeController@moveTree');

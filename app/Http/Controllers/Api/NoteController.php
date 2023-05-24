@@ -32,19 +32,10 @@ class NoteController extends Controller
      */
     public function getNote(Request $request)
     {
-        $ret = null;
         $noteId = $request->noteId ? (int) $request->noteId : null;
-        $type = $request->type;
-        switch ($type) {
-            case 'note':
-                $ret = Note::where('user_id', $this->user->id)
-                ->where('id', $noteId)
-                ->first();
-                break;
-            case 'content':
-                $ret = Note::find($noteId)->content;
-                break;
-        }
+        $ret = Note::where('user_id', $this->user->id)
+        ->where('id', $noteId)
+        ->first();
         return response()->json($ret);
     }
 
@@ -56,23 +47,11 @@ class NoteController extends Controller
             exit;
         }
 
-        $type = $request->type;
-        switch ($type) {
-            case 'note':
-                $noteTitle = $request->noteTitle;
+        $noteTitle = $request->noteTitle;
 
-                $entity = Note::where('id', $noteId)->first();
-                $entity->title = $noteTitle ? $noteTitle : $entity->title;
-                $entity->save();
-                break;
-            case 'content':
-                $content = is_null($request->content) ? '' : $request->content;
-
-                $entity = NoteContent::where('id', $noteId)->first();
-                $entity->content = $content;
-                $entity->save();
-                break;
-        }
+        $entity = Note::where('id', $noteId)->first();
+        $entity->title = $noteTitle ? $noteTitle : $entity->title;
+        $entity->save();
     }
 
     public function addNote(Request $request)
