@@ -65,7 +65,7 @@ export default {
   methods: {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId']
-      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=note' + '&noteId=' + noteId
+      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
       return await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
     },
     async addNote (noteId = null, noteType = this.$NOTE_TYPE_NORMAL) {
