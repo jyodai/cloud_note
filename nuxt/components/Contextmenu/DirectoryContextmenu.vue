@@ -115,9 +115,9 @@ export default {
       )
     },
     deleteNoteContent (deleteInfo) {
-      const selectNoteId = this.$store.getters['NoteContent/getSelectNoteId']
+      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId']
       if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
-        this.$store.dispatch('NoteContent/unsetSelectNote')
+        this.$store.dispatch('NoteTab/unsetSelectNote')
       }
     },
     async property () {
