@@ -16,7 +16,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.watch(() => this.$store.getters['NoteContent/getSelectNoteId'],
+    this.$store.watch(() => this.$store.getters['NoteTab/getSelectNoteId'],
       noteId => this.getnotePath(noteId)
     )
   },
