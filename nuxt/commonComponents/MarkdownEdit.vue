@@ -59,13 +59,8 @@ export default {
       },
     }
   },
-  computed: {
-    changeNote () {
-      return this.content
-    },
-  },
   watch: {
-    changeNote (newVal, oldVal) {
+    content (newVal, oldVal) {
       this.codemirrorContent = this.content.content
     },
   },
