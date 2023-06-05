@@ -4,7 +4,7 @@
     @keydown.ctrl.83.prevent.stop="saveNote()"
   >
     <codemirror
-      v-model="content"
+      v-model="codemirrorContent"
       class="editor"
       :options="codemirrorOptions"
       @blur="onBlur"
@@ -23,7 +23,7 @@ export default {
     codemirror,
   },
   props: {
-    note: {
+    content: {
       type    : Object,
       default : () => {},
     },
@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       contentChangeFlag : false,
-      content           : null,
+      codemirrorContent : null,
       codemirrorOptions : {
         tabSize         : 4,
         indentUnit      : 4,
@@ -61,16 +61,16 @@ export default {
   },
   computed: {
     changeNote () {
-      return this.note
+      return this.content
     },
   },
   watch: {
     changeNote (newVal, oldVal) {
-      this.content = this.note.content
+      this.codemirrorContent = this.content.content
     },
   },
   created () {
-    this.content = this.note.content
+    this.codemirrorContent = this.content.content
   },
   mounted () {
     const self = this
@@ -86,12 +86,12 @@ export default {
       this.contentChangeFlag = true
     },
     onBlur () {
-      this.$emit('blur', { id: this.note.id, content: this.content, })
+      this.$emit('blur', { id: this.content.id, content: this.codemirrorContent, })
       this.contentChangeFlag = false
     },
     // ctrl + s で発火
     saveNote () {
-      this.$emit('saveNote', { id: this.note.id, content: this.content, })
+      this.$emit('saveNote', { id: this.content.id, content: this.codemirrorContent, })
       this.contentChangeFlag = false
     },
   },
