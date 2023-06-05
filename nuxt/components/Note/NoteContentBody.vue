@@ -59,7 +59,7 @@ export default {
       this.saveNote(data)
     },
     saveNote (data) {
-      this.$store.dispatch('NoteContent/updateSelectNote', data)
+      this.$store.dispatch('NoteContent/updateSelectContent', data)
     },
   },
 }

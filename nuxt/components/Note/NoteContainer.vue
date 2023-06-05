@@ -41,15 +41,15 @@ export default {
       return this.$store.getters['NoteTab/getSelectNote']
     },
     changeContent () {
-      return this.$store.getters['NoteContent/getSelectNote']
+      return this.$store.getters['NoteContent/getSelectContent']
     },
   },
   watch: {
     async changeSelectNote (newVal, oldVal) {
-      await this.$store.dispatch('NoteContent/loadSelectNote', { noteId: newVal.id, })
+      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId: newVal.id, })
     },
     changeContent (newVal, oldVal) {
-      this.note = this.$store.getters['NoteContent/getSelectNote']
+      this.note = this.$store.getters['NoteContent/getSelectContent']
     },
   },
   mounted () {},
