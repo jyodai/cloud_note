@@ -12,7 +12,7 @@
     />
     <markdown-view
       class="content-preview"
-      :note="content"
+      :content="content"
     />
   </div>
   <div
@@ -21,7 +21,7 @@
     @click.ctrl="changeEditor()"
   >
     <markdown-view
-      :note="content"
+      :content="content"
     />
   </div>
 </template>

@@ -13,7 +13,7 @@ import Mermaid from 'mermaid/dist/mermaid'
 
 export default {
   props: {
-    note: {
+    content: {
       type    : Object,
       default : () => {},
     },
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     changeNote () {
-      return this.note
+      return this.content
     },
   },
   watch: {
@@ -35,7 +35,7 @@ export default {
   },
   created () {
     this.initializeMermaid()
-    this.markdown = this.beforeMarkdown(this.note.content)
+    this.markdown = this.beforeMarkdown(this.content.content)
   },
   updated () {
     this.afterMarkdown()
