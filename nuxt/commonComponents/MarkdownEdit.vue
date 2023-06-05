@@ -60,8 +60,8 @@ export default {
     }
   },
   watch: {
-    content (newVal, oldVal) {
-      this.codemirrorContent = this.content.content
+    content () {
+      this.reset()
     },
   },
   created () {
@@ -77,7 +77,14 @@ export default {
     }, false)
   },
   methods: {
+    reset () {
+      this.codemirrorContent = this.content.content
+      this.contentChangeFlag = false
+    },
     contentChange () {
+      if (this.content.content === this.codemirrorContent) {
+        return
+      }
       this.contentChangeFlag = true
     },
     onBlur () {
