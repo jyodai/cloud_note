@@ -84,8 +84,8 @@ export default {
     padding: 1rem;
     border: 1px solid #e2e8f0;
     border-radius: 0.25rem;
-    border-color: #2d3748;
-    background-color: #1a202c;
+    border-color: #363636;
+    background-color: #333333;
   }
   .modal__title {
     margin: 0 2rem 0 0;
@@ -95,6 +95,7 @@ export default {
   .modal__content {
     flex-grow: 1;
     overflow-y: auto;
+    padding: 1rem 0 0;
   }
   .modal__action {
     display: flex;
