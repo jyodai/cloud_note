@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     changeSelectNote () {
-      return this.$store.getters['NoteContent/getSelectNote']
+      return this.$store.getters['NoteTab/getSelectNote']
     },
   },
   watch: {

@@ -1,27 +1,27 @@
 <template>
   <div
-    v-if="note !== null && showMarkdown === false"
+    v-if="content !== null && showMarkdown === false"
     class="content"
     @click.ctrl="changeEditor()"
   >
     <markdown-edit
       class="content-edit"
-      :note="note"
+      :content="content"
       @saveNote="saveNote"
       @blur="blur"
     />
     <markdown-view
       class="content-preview"
-      :note="note"
+      :content="content"
     />
   </div>
   <div
-    v-else-if="note !== null && showMarkdown === true"
+    v-else-if="content !== null && showMarkdown === true"
     class="content"
     @click.ctrl="changeEditor()"
   >
     <markdown-view
-      :note="note"
+      :content="content"
     />
   </div>
 </template>
@@ -47,7 +47,23 @@ export default {
       showMarkdown: true,
     }
   },
+  computed: {
+    content () {
+      return this.$store.getters['NoteContent/getSelectContent']
+    },
+  },
+  watch: {
+    async note (newVal) {
+      await this.load(newVal)
+    },
+  },
+  async created () {
+    await this.load(this.note)
+  },
   methods: {
+    async load (note) {
+      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId: note.id, })
+    },
     changeEditor () {
       if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {
         alert('ファイルが選択されていません')
@@ -59,7 +75,7 @@ export default {
       this.saveNote(data)
     },
     saveNote (data) {
-      this.$store.dispatch('NoteContent/updateSelectNote', data)
+      this.$store.dispatch('NoteContent/updateSelectContent', data)
     },
   },
 }
