@@ -17,11 +17,11 @@ export default {
   },
   mounted () {
     this.$store.watch(() => this.$store.getters['NoteTab/getSelectNoteId'],
-      noteId => this.getnotePath(noteId)
+      noteId => this.getNotePath(noteId)
     )
   },
   methods: {
-    async getnotePath (noteId) {
+    async getNotePath (noteId) {
       if (!noteId) {
         this.notePath = 'ファイル未選択'
         return
