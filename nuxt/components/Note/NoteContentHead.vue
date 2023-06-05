@@ -15,10 +15,15 @@ export default {
       notePath: 'ファイル未選択',
     }
   },
-  mounted () {
-    this.$store.watch(() => this.$store.getters['NoteTab/getSelectNoteId'],
-      noteId => this.getNotePath(noteId)
-    )
+  computed: {
+    changeSelectNote () {
+      return this.$store.getters['NoteTab/getSelectNote']
+    },
+  },
+  watch: {
+    changeSelectNote (newVal, oldVal) {
+      this.getNotePath(newVal.id)
+    },
   },
   methods: {
     async getNotePath (noteId) {
