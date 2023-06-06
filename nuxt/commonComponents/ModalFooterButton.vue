@@ -1,13 +1,18 @@
 <template>
   <div>
-    <v-btn
+    <span
       v-for="(button, index) in buttonLists"
       :key="index"
-      class="modal-footer-button"
-      @click="button.event()"
     >
-      {{ button.label }}
-    </v-btn>
+      <template v-if="isVisible(button.name)">
+        <v-btn
+          class="modal-footer-button"
+          @click="button.event()"
+        >
+          {{ button.label }}
+        </v-btn>
+      </template>
+    </span>
   </div>
 </template>
 
@@ -20,23 +25,26 @@ export default {
     'close',
   ],
   props: {
-    content: {
-      type    : Object,
-      default : () => {},
+    visibleLists: {
+      type    : Array,
+      default : () => [],
     },
   },
   data () {
     return {
       buttonLists: [
         {
+          name  : 'save',
           label : '保存',
           event : () => this.save(),
         },
         {
+          name  : 'delete',
           label : '削除',
           event : () => this.delete(),
         },
         {
+          name  : 'close',
           label : '閉じる',
           event : () => this.close(),
         },
@@ -52,6 +60,9 @@ export default {
     },
     close () {
       this.$emit('close')
+    },
+    isVisible (name) {
+      return this.visibleLists.includes(name)
     },
   },
 }
