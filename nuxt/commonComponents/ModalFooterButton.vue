@@ -16,6 +16,7 @@
 export default {
   emit: [
     'save',
+    'delete',
     'close',
   ],
   props: {
@@ -32,6 +33,10 @@ export default {
           event : () => this.save(),
         },
         {
+          label : '削除',
+          event : () => this.delete(),
+        },
+        {
           label : '閉じる',
           event : () => this.close(),
         },
@@ -41,6 +46,9 @@ export default {
   methods: {
     save () {
       this.$emit('save')
+    },
+    delete () {
+      this.$emit('delete')
     },
     close () {
       this.$emit('close')
