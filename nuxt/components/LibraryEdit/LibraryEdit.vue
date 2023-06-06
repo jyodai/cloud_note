@@ -15,15 +15,12 @@
         </div>
       </template>
       <template #modalAction>
-        <v-btn@click="editFile()">
-          保存</v-btn>
-          <v-btn@click="deleteFile()">
-            削除</v-btn>
-            <v-btn @click="closeModal()">
-              閉じる
-            </v-btn>
-          </v-btn@click="deletefile()">
-        </v-btn@click="editfile()">
+        <modal-footer-button
+          :visible-lists="['save', 'delete', 'close']"
+          @save="editFile()"
+          @delete="deleteFile()"
+          @close="closeModal()"
+        />
       </template>
     </modal>
   </div>
@@ -31,10 +28,12 @@
 
 <script>
 import Modal from '../Modal/ModalWrapper.vue'
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
   components: {
     Modal,
+    ModalFooterButton,
   },
   data () {
     return {
