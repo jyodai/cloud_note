@@ -110,7 +110,7 @@ export default {
     height: 100%;
     width: 100%;
     padding:5px;
-    font-size:12px;
+    font-size:14px;
     line-height: 18px;
     white-space : pre;
     font-weight: 500;
