@@ -1,0 +1,20 @@
+.g-table-list {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr {
+    border: 1px solid #555555;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #2E2E2E;
+  }
+
+  th,
+  td {
+    padding: 5px 10px;
+    border-right: 1px solid #555555;
+  }
+}

@@ -47,6 +47,7 @@ export default {
   */
   css     : [
     { src: '~/assets/common.scss', },
+    { src: '~/assets/table.scss', },
   ],
   /*
   ** Plugins to load before mounting the App

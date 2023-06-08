@@ -95,7 +95,7 @@ export default {
   .modal__content {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 1rem 0 0;
+    padding: 0px 10px;
   }
   .modal__action {
     display: flex;
