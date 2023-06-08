@@ -4,13 +4,17 @@
     width: 100%;
   }
 
-  table tr {
-    border: 1px solid #121212;
+  tr {
+    border: 1px solid #555555;
   }
 
-  table th,
-  table td {
+  tbody tr:nth-child(odd) {
+    background-color: #2E2E2E;
+  }
+
+  th,
+  td {
     padding: 5px 10px;
-    border-right: 1px solid #121212;
+    border-right: 1px solid #555555;
   }
 }
