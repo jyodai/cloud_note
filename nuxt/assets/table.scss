@@ -1,0 +1,16 @@
+.g-table-list {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  table tr {
+    border: 1px solid #121212;
+  }
+
+  table th,
+  table td {
+    padding: 5px 10px;
+    border-right: 1px solid #121212;
+  }
+}
