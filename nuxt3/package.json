@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev --port=8887",
+    "dev": "nuxt dev --port=8887 --https --ssl-cert ./ssl/localhost.pem --ssl-key ./ssl/localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

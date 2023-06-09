@@ -28,3 +28,11 @@ RUN n 16.14.0
 
 # Vim
 RUN apt-get install -y vim
+
+# wget
+RUN apt-get install -y wget
+
+# mkcert
+RUN wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+RUN mv mkcert-v1.4.3-linux-amd64 /usr/local/bin/mkcert
+RUN chmod 755 /usr/local/bin/mkcert
