@@ -11,6 +11,7 @@ help :
 	# make nuxtwatch     開発時のVue自動ビルドを実行
 	# make nw            nuxtwatchのエイリアス
 	# make test          Laravelのテストを実行
+	# make cert          Nuxt3の開発環境用の証明書を発行
 
 sh :
 	docker-compose exec php /bin/bash
@@ -78,4 +79,9 @@ test :
 	docker-compose exec php /bin/bash -c ' \
 		php artisan config:clear; \
 		php artisan test; \
+	'
+
+cert :
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3/ssl && mkcert localhost; \
 	'
