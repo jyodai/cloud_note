@@ -15,6 +15,7 @@
     "sass": "^1.63.3"
   },
   "dependencies": {
+    "mermaid": "^10.2.3",
     "splitpanes": "^3.1.5",
     "v-contextmenu": "^3.0.0",
     "vue-codemirror": "^4.0.6"
