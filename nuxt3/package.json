@@ -11,6 +11,15 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
-    "nuxt": "^3.5.2"
+    "nuxt": "^3.5.2",
+    "sass": "^1.63.3"
+  },
+  "dependencies": {
+    "mermaid": "^10.2.3",
+    "sl-vue-tree": "^1.8.5",
+    "splitpanes": "^3.1.5",
+    "v-contextmenu": "^3.0.0",
+    "vue-codemirror": "^4.0.6",
+    "vuedraggable": "^4.1.0"
   }
 }
