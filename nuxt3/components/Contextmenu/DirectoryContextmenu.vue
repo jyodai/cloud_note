@@ -37,7 +37,7 @@ import {
   ContextmenuItem,
   ContextmenuSubmenu
 } from 'v-contextmenu'
-import 'v-contextmenu/dist/index.css'
+import 'v-contextmenu/dist/themes/default.css';
 
 export default {
   directives: {
