@@ -15,8 +15,7 @@
     "sass": "^1.63.3"
   },
   "dependencies": {
-    "codemirror": "^5.65.13",
-    "splitpanes": "^3.1.5",
-    "vue-codemirror": "^6.1.1"
+    "vue-codemirror": "^4.0.6",
+    "splitpanes": "^3.1.5"
   }
 }
