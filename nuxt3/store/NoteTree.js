@@ -1,9 +1,9 @@
-export const state = () => ({
+const state = () => ({
   selectNote : null,
   treeNodes  : [],
 })
 
-export const mutations = {
+const mutations = {
   setSelectNote (state, note) {
     state.selectNote = note
   },
@@ -55,7 +55,7 @@ export const mutations = {
   },
 }
 
-export const getters = {
+const getters = {
   getSelectNoteId : state => state.selectNote === null ? null : state.selectNote.id,
   getTree         : state => state.treeNodes,
   getDisplayTree  : state => state.treeNodes[0] ? state.treeNodes[0].children : [],
@@ -77,7 +77,7 @@ export const getters = {
   },
 }
 
-export const actions = {
+const actions = {
   setSelectTree ({ commit, }, note) {
     commit('setSelectNote', note)
   },
@@ -281,4 +281,12 @@ function convertNode (node) {
     isDraggable : true,
     data        : node,
   }
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  getters,
+  actions,
 }

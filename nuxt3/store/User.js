@@ -1,9 +1,9 @@
-export const state = () => ({
+const state = () => ({
   user  : null,
   token : null,
 })
 
-export const mutations = {
+const mutations = {
   setUser (state, user) {
     state.user = user
   },
@@ -12,10 +12,18 @@ export const mutations = {
   },
 }
 
-export const getters = {
+const getters = {
   getUser  : state => state.user,
   getToken : state => state.token,
 }
 
-export const actions = {
+const actions = {
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  getters,
+  actions,
 }

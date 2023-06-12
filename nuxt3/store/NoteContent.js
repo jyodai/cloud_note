@@ -1,8 +1,8 @@
-export const state = () => ({
+const state = () => ({
   selectContent: null,
 })
 
-export const mutations = {
+const mutations = {
   setSelectContent (state, note) {
     state.selectContent = note
   },
@@ -11,12 +11,12 @@ export const mutations = {
   },
 }
 
-export const getters = {
+const getters = {
   getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
   getSelectContent : state => state.selectContent,
 }
 
-export const actions = {
+const actions = {
   async loadSelectContent ({ rootState, commit, }, data) {
     const noteId = data.noteId
     const queryStr = '?token=' + rootState.User.token + '&noteId=' + noteId
@@ -51,4 +51,12 @@ export const actions = {
         alert('メモの保存の失敗しました')
       })
   },
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  getters,
+  actions,
 }
