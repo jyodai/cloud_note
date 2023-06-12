@@ -11,6 +11,7 @@ services:
         - 80:80
         - 443:443
         - 8887:8887
+        - 24678:24678
       container_name: cloud-note-php7.3-apache
   mysql:
       build:
