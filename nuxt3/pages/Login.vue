@@ -37,7 +37,7 @@ export default {
       const params = new URLSearchParams()
       params.append('email', this.email)
       params.append('password', this.password)
-      const response = await this.$axios.post(process.env.API_SERVER_URl + '/users/token', params, this.config)
+      const response = await this.$axios.post(this.$config.public.apiUrl + '/users/token', params, this.config)
         .catch((e) => {
           alert(e.message)
           return false
@@ -61,7 +61,7 @@ export default {
     },
     async getUser (value) {
       const queryStr = '?token=' + value
-      const response = await this.$axios.get(process.env.API_SERVER_URl + '/user' + queryStr)
+      const response = await this.$axios.get(this.$config.public.apiUrl + '/user' + queryStr)
 
       if (response.user) {
         this.$store.commit('User/setUser', response.user)
