@@ -37,7 +37,7 @@ export default {
       const params = new URLSearchParams()
       params.append('email', this.email)
       params.append('password', this.password)
-      const response = await this.$axios.$post(process.env.API_SERVER_URl + '/users/token', params, this.config)
+      const response = await this.$axios.post(process.env.API_SERVER_URl + '/users/token', params, this.config)
         .catch((e) => {
           alert(e.message)
           return false
