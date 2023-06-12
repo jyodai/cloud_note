@@ -61,7 +61,7 @@ export default {
     },
     async getUser (value) {
       const queryStr = '?token=' + value
-      const response = await this.$axios.$get(process.env.API_SERVER_URl + '/user' + queryStr)
+      const response = await this.$axios.get(process.env.API_SERVER_URl + '/user' + queryStr)
 
       if (response.user) {
         this.$store.commit('User/setUser', response.user)
