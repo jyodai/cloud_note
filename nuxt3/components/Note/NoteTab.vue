@@ -1,6 +1,6 @@
 <template>
-  <draggable v-model="noteTab" class="note-tab thin-scroll-bar">
-    <template v-for="note in noteTab" :key="note.id">
+  <draggable v-model="noteTab" item-key="id" class="note-tab thin-scroll-bar">
+    <template #item="{ note, index }">
       <div
         class="note-title g-up-down-center"
         :class="{select : note.id === $store.getters['NoteTab/getSelectNoteId']}"
