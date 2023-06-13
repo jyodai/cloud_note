@@ -71,9 +71,9 @@ export default {
     noteLoadFlag (newVal, oldVal) {
       if (newVal) {
         const targetElementId = 'dir-frame'
-        this.createLoadScreen(targetElementId)
+        this.$util.load.createLoadScreen(targetElementId)
       } else {
-        this.deleteLoadScreen()
+        this.$util.load.deleteLoadScreen()
       }
     },
     storeTreeNodes: {
