@@ -8,7 +8,7 @@
         <pane size="100">
           <div class="content-area">
             <slot />
-            <modal-list />
+            <!-- <modal-list /> -->
           </div>
         </pane>
       </splitpanes>
