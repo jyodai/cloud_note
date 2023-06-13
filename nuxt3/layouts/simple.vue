@@ -7,7 +7,7 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <nuxt />
+      <slot />
     </v-main>
     <v-footer
       app

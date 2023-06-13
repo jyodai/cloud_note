@@ -9,6 +9,10 @@
   </splitpanes>
 </template>
 
+<script setup>
+setPageLayout("dashboard");
+</script>
+
 <script>
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
@@ -22,7 +26,6 @@ export default {
     DirFrame,
     NoteFrame,
   },
-  layout: 'dashboard',
   data () {
     return {
     }
@@ -38,3 +41,4 @@ export default {
 .note {
 }
 </style>
+

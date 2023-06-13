@@ -7,7 +7,7 @@
       <splitpanes horizontal>
         <pane size="100">
           <div class="content-area">
-            <nuxt />
+            <slot />
             <modal-list />
           </div>
         </pane>
