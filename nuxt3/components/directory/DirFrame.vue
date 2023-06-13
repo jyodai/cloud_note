@@ -2,50 +2,50 @@
   <div class="dir-frame">
     <directory-contextmenu>
       <div id="dir-frame" onContextmenu="return false;">
-        <sl-vue-tree
-          v-model="treeNodes"
-          @toggle="toggle($event)"
-          @drop="drop"
-        >
-          <template slot="title" slot-scope="{ node }">
-            <span
-              @click="setNote(node.data)"
-              @mouseup.right="selectNoteTree(node.data)"
-            >
-              {{ node.title }}
-            </span>
-          </template>
-
-          <template slot="toggle" slot-scope="{ node }">
-            <span v-if="node.data.hasChild">
-              <v-icon v-if="node.isExpanded" size="12">
-                mdi-folder-open
-              </v-icon>
-              <v-icon v-else size="12">
-                mdi-folder
-              </v-icon>
-            </span>
-            <span v-else>
-              <v-icon size="12">
-                mdi-file-outline
-              </v-icon>
-            </span>
-          </template>
-        </sl-vue-tree>
+        <!-- <sl-vue-tree -->
+        <!--   v-model="treeNodes" -->
+        <!--   @toggle="toggle($event)" -->
+        <!--   @drop="drop" -->
+        <!-- > -->
+        <!--   <template slot="title" slot-scope="{ node }"> -->
+        <!--     <span -->
+        <!--       @click="setNote(node.data)" -->
+        <!--       @mouseup.right="selectNoteTree(node.data)" -->
+        <!--     > -->
+        <!--       {{ node.title }} -->
+        <!--     </span> -->
+        <!--   </template> -->
+        <!--  -->
+        <!--   <template slot="toggle" slot-scope="{ node }"> -->
+        <!--     <span v-if="node.data.hasChild"> -->
+        <!--       <v-icon v-if="node.isExpanded" size="12"> -->
+        <!--         mdi-folder-open -->
+        <!--       </v-icon> -->
+        <!--       <v-icon v-else size="12"> -->
+        <!--         mdi-folder -->
+        <!--       </v-icon> -->
+        <!--     </span> -->
+        <!--     <span v-else> -->
+        <!--       <v-icon size="12"> -->
+        <!--         mdi-file-outline -->
+        <!--       </v-icon> -->
+        <!--     </span> -->
+        <!--   </template> -->
+        <!-- </sl-vue-tree> -->
       </div>
     </directory-contextmenu>
   </div>
 </template>
 
 <script>
-import SlVueTree from 'sl-vue-tree'
-import 'sl-vue-tree/dist/sl-vue-tree-dark.css'
+// import SlVueTree from 'sl-vue-tree'
+// import 'sl-vue-tree/dist/sl-vue-tree-dark.css'
 import DirectoryContextmenu from '../Contextmenu/DirectoryContextmenu.vue'
 
 export default {
   components: {
     DirectoryContextmenu,
-    SlVueTree,
+    // SlVueTree,
   },
   data () {
     return {

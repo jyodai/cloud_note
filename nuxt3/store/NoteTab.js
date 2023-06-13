@@ -1,9 +1,9 @@
-export const state = () => ({
+const state = () => ({
   noteTab: [], // ノートObjectを格納
   selectNote: null,
 })
 
-export const mutations = {
+const mutations = {
   setSelectNote (state, note) {
     state.selectNote = note
   },
@@ -27,7 +27,7 @@ export const mutations = {
   },
 }
 
-export const getters = {
+const getters = {
   getNoteTab      : state => state.noteTab,
   getSelectNote   : state => state.selectNote,
   getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
@@ -41,7 +41,7 @@ export const getters = {
   },
 }
 
-export const actions = {
+const actions = {
   setSelectNote ({commit}, note) {
     commit('setSelectNote', note)
   },
@@ -96,4 +96,12 @@ export const actions = {
     const noteTab = getters.getNoteTab
     localStorage.setItem('noteTab', JSON.stringify(noteTab))
   },
+}
+
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  getters,
+  actions,
 }
