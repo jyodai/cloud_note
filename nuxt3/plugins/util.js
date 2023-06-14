@@ -1,9 +1,13 @@
-import axios from '~/libraries/axiosCore.js';
+import Load from '~/utils/load.js';
+
+const util = {
+  load : Load,
+};
 
 export default defineNuxtPlugin(() => {
   return {
       provide: {
-        axios
+        util,
       },
     };
 });
