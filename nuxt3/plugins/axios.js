@@ -1,10 +1,4 @@
-import axiosCore from "axios";
-
-const axios = axiosCore.create({});
-
-axios.interceptors.response.use((response) => {
-  return response.data
-})
+import axios from '~/libraries/axiosCore.js';
 
 export default defineNuxtPlugin(() => {
   return {
