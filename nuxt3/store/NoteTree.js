@@ -94,7 +94,7 @@ const actions = {
     }
     const config = { params, }
     const response = await this.$axios
-      .$get(process.env.API_SERVER_URl + '/tree', config)
+      .get(this.$config.public.apiUrl + '/tree', config)
 
     const rootNode = [
       {
@@ -111,11 +111,11 @@ const actions = {
     const params = {
       token: rootState.User.token,
     }
-    const url = process.env.API_SERVER_URl + '/tree' + '/' + id + '/' + 'children'
+    const url = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'children'
     const config = { params, }
     this.noteLoadFlag = true
     const response = await this.$axios
-      .$get(url, config)
+      .get(url, config)
     const addTreeNodes = convertTree(response)
 
     const parentTreeNode = getters.findTreeNode(getters.getTree, id)
@@ -176,8 +176,8 @@ const actions = {
       target_note_id : targetId,
       type,
     }
-    const url = process.env.API_SERVER_URl + '/tree' + '/' + id + '/' + 'move'
-    const response = await this.$axios.$put(url, params)
+    const url = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'move'
+    const response = await this.$axios.put(url, params)
 
     const node = getters.findTreeNode(getters.getTree, id)
     const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)
@@ -210,9 +210,9 @@ const actions = {
       parentNoteId : data.noteId,
       noteType     : data.noteType,
     }
-    const url = process.env.API_SERVER_URl + '/notes'
+    const url = this.$config.public.apiUrl + '/notes'
     await this.$axios
-      .$post(url, params)
+      .post(url, params)
       .then((response) => {
         const node = convertNode(response)
         const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)
@@ -226,9 +226,9 @@ const actions = {
       token     : rootState.User.token,
       noteTitle : data.noteTitle,
     }
-    const url = process.env.API_SERVER_URl + '/notes' + '/' + noteId
+    const url = this.$config.public.apiUrl + '/notes' + '/' + noteId
     await this.$axios
-      .$put(url, params)
+      .put(url, params)
       .then((response) => {
         const node = getters.findTreeNode(getters.getTree, response.id)
         commit('setNodeData', { node, data: response, })
@@ -241,10 +241,10 @@ const actions = {
     const params = {
       token: rootState.User.token,
     }
-    const url = process.env.API_SERVER_URl + '/notes' + '/' + id
+    const url = this.$config.public.apiUrl + '/notes' + '/' + id
     const config = { params, }
     const response = await this.$axios
-      .$delete(url, config)
+      .delete(url, config)
       .then((response) => {
         const node = getters.findTreeNode(getters.getTree, id)
         const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)

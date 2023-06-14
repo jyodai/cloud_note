@@ -20,7 +20,7 @@ const actions = {
   async loadSelectContent ({ rootState, commit, }, data) {
     const noteId = data.noteId
     const queryStr = '?token=' + rootState.User.token + '&noteId=' + noteId
-    const response = await this.$axios.$get(process.env.API_SERVER_URl + '/note_content' + queryStr)
+    const response = await this.$axios.get(this.$config.public.apiUrl + '/note_content' + queryStr)
     await commit('setSelectContent', response)
   },
   unsetSelectContent ({ commit, }) {
@@ -45,7 +45,7 @@ const actions = {
         'Content-Type'           : 'application/x-www-form-urlencoded',
       },
     }
-    await this.$axios.$post(process.env.API_SERVER_URl + '/note_content', params, config)
+    await this.$axios.post(this.$config.public.apiUrl + '/note_content', params, config)
       .then((res) => {
       }).catch((e) => {
         alert('メモの保存の失敗しました')
