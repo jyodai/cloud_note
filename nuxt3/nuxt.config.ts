@@ -7,7 +7,10 @@ export default defineNuxtConfig({
       apiUrl: process.env.API_SERVER_URl,
     },
   },
-  css: ['vuetify/lib/styles/main.sass'],
+  css: [
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.css',
+  ],
   build: {
     transpile: ['vuetify'],
   },
