@@ -7,7 +7,7 @@ import NoteContent from '~/store/NoteContent.js';
 
 
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   const registerAxios = (store) => {
     store.$axios = axios;
   };
@@ -30,5 +30,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     ]
   });
 
-  nuxtApp.vueApp.use(store);
+  return {
+      provide: {
+        store,
+      },
+    };
 });
