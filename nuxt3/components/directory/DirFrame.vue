@@ -2,7 +2,7 @@
   <div class="dir-frame">
     <directory-contextmenu>
       <div id="dir-frame" onContextmenu="return false;">
-        <!-- <sl-vue-tree -->
+        <!-- <vue-power-tree -->
         <!--   v-model="treeNodes" -->
         <!--   @toggle="toggle($event)" -->
         <!--   @drop="drop" -->
@@ -31,21 +31,55 @@
         <!--       </v-icon> -->
         <!--     </span> -->
         <!--   </template> -->
-        <!-- </sl-vue-tree> -->
+        <!-- </vue-power-tree> -->
+        <!-- <vue-power-tree v-model="nodes"/> -->
+        <Tree :value="treeNodes" @drop="drop">
+          <template v-slot="{node, index, path, tree}">
+            <span
+              v-if="node.data.hasChild"
+              @click="toggle(node)"
+            >
+              <v-icon v-if="node.isExpanded" size="12">
+                mdi-folder-open
+              </v-icon>
+              <v-icon v-else size="12">
+                mdi-folder
+              </v-icon>
+            </span>
+
+            <span v-else>
+              <v-icon size="12">
+                mdi-file-outline
+              </v-icon>
+            </span>
+
+            <span
+              @click="setNote(node.data)"
+              @mouseup.right="selectNoteTree(node.data)"
+            >
+              {{ node.title }}
+            </span>
+          </template>
+        </Tree>
       </div>
     </directory-contextmenu>
   </div>
 </template>
 
 <script>
-// import SlVueTree from 'sl-vue-tree'
-// import 'sl-vue-tree/dist/sl-vue-tree-dark.css'
 import DirectoryContextmenu from '../Contextmenu/DirectoryContextmenu.vue'
+
+import {
+  Tree, // Base tree
+  Fold, Draggable, // plugins
+  foldAll, unfoldAll, cloneTreeData, walkTreeData, getPureTreeData, // utils
+} from 'he-tree-vue'
+import 'he-tree-vue/dist/he-tree-vue.css' // base style
 
 export default {
   components: {
     DirectoryContextmenu,
-    // SlVueTree,
+    Tree: Tree.mixPlugins([Fold, Draggable])
   },
   data () {
     return {
@@ -107,21 +141,21 @@ export default {
           this.noteLoadFlag = false
         })
     },
-    toggle (event) {
-      if (event.isExpanded) {
-        this.closeToggle(event)
+    toggle (node) {
+      if (node.isExpanded) {
+        this.closeToggle(node)
       } else {
-        this.openToggle(event)
+        this.openToggle(node)
       }
     },
-    async openToggle (event) {
-      const id = event.data.id
+    async openToggle (node) {
+      const id = node.data.id
       this.noteLoadFlag = true
       await this.$store.dispatch('NoteTree/openNode', id)
         .finally(() => { this.noteLoadFlag = false })
     },
-    async closeToggle (event) {
-      const id = event.data.id
+    async closeToggle (node) {
+      const id = node.data.id
       this.noteLoadFlag = true
       await this.$store.dispatch('NoteTree/closeNode', id)
         .finally(() => { this.noteLoadFlag = false })
