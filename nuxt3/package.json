@@ -18,6 +18,7 @@
     "@mdi/font": "^7.2.96",
     "axios": "^1.4.0",
     "he-tree-vue": "^3.1.2",
+    "markdown-it": "^13.0.1",
     "mermaid": "^10.2.3",
     "splitpanes": "^3.1.5",
     "v-contextmenu": "^3.0.0",
