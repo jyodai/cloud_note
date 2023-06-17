@@ -2,48 +2,22 @@
   <div class="dir-frame">
     <directory-contextmenu>
       <div id="dir-frame" onContextmenu="return false;">
-        <!-- <vue-power-tree -->
-        <!--   v-model="treeNodes" -->
-        <!--   @toggle="toggle($event)" -->
-        <!--   @drop="drop" -->
-        <!-- > -->
-        <!--   <template slot="title" slot-scope="{ node }"> -->
-        <!--     <span -->
-        <!--       @click="setNote(node.data)" -->
-        <!--       @mouseup.right="selectNoteTree(node.data)" -->
-        <!--     > -->
-        <!--       {{ node.title }} -->
-        <!--     </span> -->
-        <!--   </template> -->
-        <!--  -->
-        <!--   <template slot="toggle" slot-scope="{ node }"> -->
-        <!--     <span v-if="node.data.hasChild"> -->
-        <!--       <v-icon v-if="node.isExpanded" size="12"> -->
-        <!--         mdi-folder-open -->
-        <!--       </v-icon> -->
-        <!--       <v-icon v-else size="12"> -->
-        <!--         mdi-folder -->
-        <!--       </v-icon> -->
-        <!--     </span> -->
-        <!--     <span v-else> -->
-        <!--       <v-icon size="12"> -->
-        <!--         mdi-file-outline -->
-        <!--       </v-icon> -->
-        <!--     </span> -->
-        <!--   </template> -->
-        <!-- </vue-power-tree> -->
-        <!-- <vue-power-tree v-model="nodes"/> -->
-        <Tree :value="treeNodes" @drop="drop">
+        <Tree
+          ref="tree"
+          :value="treeNodes"
+          @drop="drop"
+          @node-folded-changed="nodeFoldedChanged"
+        >
           <template v-slot="{node, index, path, tree}">
             <span
               v-if="node.data.hasChild"
-              @click="toggle(node)"
+              @click="tree.toggleFold(node, path); toggle(node)"
             >
-              <v-icon v-if="node.isExpanded" size="12">
-                mdi-folder-open
+              <v-icon v-if="node.$folded" size="12">
+                mdi-folder
               </v-icon>
               <v-icon v-else size="12">
-                mdi-folder
+                mdi-folder-open
               </v-icon>
             </span>
 
@@ -69,12 +43,8 @@
 <script>
 import DirectoryContextmenu from '../Contextmenu/DirectoryContextmenu.vue'
 
-import {
-  Tree, // Base tree
-  Fold, Draggable, // plugins
-  foldAll, unfoldAll, cloneTreeData, walkTreeData, getPureTreeData, // utils
-} from 'he-tree-vue'
-import 'he-tree-vue/dist/he-tree-vue.css' // base style
+import { Tree, Fold, Draggable, } from 'he-tree-vue'
+import 'he-tree-vue/dist/he-tree-vue.css'
 
 export default {
   components: {
@@ -112,7 +82,8 @@ export default {
     },
     storeTreeNodes: {
       handler () {
-        this.treeNodes = this.$store.getters['NoteTree/getDisplayTree']
+        const tree = this.$store.getters['NoteTree/getDisplayTree']
+        this.treeNodes = this.$util.object.clone(tree)
       },
       deep: true,
     },
@@ -134,15 +105,43 @@ export default {
     selectNoteTree (note) {
       this.$store.dispatch('NoteTree/setSelectTree', note)
     },
-    async drop (nodes, position, event) {
+    async drop (event) {
+      const tree = this.$refs.tree;
+
+      const id   = event.dragNode.data.id
+      const position = this.getPosition(event.dragNode, event.targetPath);
+
       this.noteLoadFlag = true
-      await this.$store.dispatch('NoteTree/moveNode', { nodes, position, })
+      await this.$store.dispatch('NoteTree/moveNode', { id, position, })
         .finally(() => {
           this.noteLoadFlag = false
         })
     },
+    getPosition(node, path) {
+      const tree = this.$refs.tree;
+      const position = {}
+      const parentNode = tree.getNodeParentByPath(path);
+      if (!parentNode || parentNode.data.hasChild) {
+        let lastPath = path.pop();
+        if (lastPath === 0) {
+          path.push(lastPath + 1);
+          position.placement = 'before';
+        } else {
+          path.push(lastPath - 1);
+          position.placement = 'after';
+        }
+        position.node = tree.getNodeByPath(path)
+      } else {
+        position.node = parentNode;
+        position.placement = 'inside';
+      }
+      return position
+    },
+    nodeFoldedChanged(node) {
+      this.toggle(node)
+    },
     toggle (node) {
-      if (node.isExpanded) {
+      if (node.$folded) {
         this.closeToggle(node)
       } else {
         this.openToggle(node)
