@@ -13,8 +13,8 @@ const mutations = {
   setChildrenTree (state, { parentTreeNode, addTreeNodes, }) {
     parentTreeNode.children = addTreeNodes
   },
-  setExpanded (state, { node, flag, }) {
-    node.isExpanded = flag
+  setFolded(state, {node, flag}) {
+    node.$folded = flag
   },
   setHasChild (state, { node, flag, }) {
     node.data.hasChild = flag
@@ -123,8 +123,8 @@ const actions = {
   },
   async openNode ({ getters, commit, dispatch, }, id) {
     const node = getters.findTreeNode(getters.getTree, id)
-    const flag = true
-    commit('setExpanded', { node, flag, })
+    const flag = false
+    commit('setFolded', { node, flag, })
 
     await dispatch('loadChildrenTree', id)
 
@@ -132,8 +132,8 @@ const actions = {
   },
   async closeNode ({ getters, commit, dispatch, }, id) {
     const node = getters.findTreeNode(getters.getTree, id)
-    const flag = false
-    commit('setExpanded', { node, flag, })
+    const flag = true
+    commit('setFolded', { node, flag, })
 
     const parentTreeNode = getters.findTreeNode(getters.getTree, id)
     commit('setChildrenTree', { parentTreeNode, addTreeNodes: [], })
@@ -167,8 +167,7 @@ const actions = {
 
     localStorage.setItem('restoreTreeLists', JSON.stringify(newRestoreLists))
   },
-  async moveNode ({ rootState, getters, commit, }, { nodes, position, }) {
-    const id = nodes[0].data.id
+  async moveNode ({ rootState, getters, commit, }, { id, position, }) {
     const targetId = position.node.data.id
     const type = position.placement
     const params = {
@@ -275,8 +274,8 @@ function convertNode (node) {
   return {
     title       : node.title,
     isLeaf      : false,
+    $folded     : node.children.length === 0,
     children    : [],
-    isExpanded  : node.children.length !== 0,
     isSelected  : false,
     isDraggable : true,
     data        : node,
