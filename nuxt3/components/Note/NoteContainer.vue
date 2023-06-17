@@ -7,11 +7,11 @@
       </div>
       <div class="note-content-body">
         <note-content-body
-          v-if="note && note.note_type === $NOTE_TYPE_NORMAL"
+          v-if="note && note.note_type === $const.NOTE_TYPE_NORMAL"
           :note="note"
         />
         <div
-          v-if="note && note.note_type === $NOTE_TYPE_TASK"
+          v-if="note && note.note_type === $const.NOTE_TYPE_TASK"
         >
           Sample Task
         </div>
