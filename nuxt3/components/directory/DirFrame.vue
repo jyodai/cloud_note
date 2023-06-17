@@ -169,8 +169,8 @@ export default {
   width: 100%;
   height: 100%;
   margin-top:20px;
-  padding-left : 5px;
-  padding-right : 5px;
+  padding-left : 10px;
+  padding-right : 10px;
   font-size: 12px;
   #dir-frame {
     width :100%;
@@ -180,32 +180,20 @@ export default {
 </style>
 
 <style lang="scss">
-.sl-vue-tree.sl-vue-tree-root {
+.he-tree {
   width: 100%;
   height: 100%;
   background-color: inherit;
   border : 0px;
   overflow : auto;
-  .sl-vue-tree-nodes-list {
+  .tree-children {
     overflow : initial;
-    .sl-vue-tree-selected {
-    }
-    .sl-vue-tree-node {
-      .sl-vue-tree-node-is-leaf {
-      }
-      .sl-vue-tree-node-item {
-        background-color: inherit;
-        line-height : 18px;
+    .tree-branch {
         white-space: nowrap;
-        .sl-vue-tree-gap {
-          min-width : 25px;
+        .tree-node {
+          border:none;
+          padding:0;
         }
-        .sl-vue-tree-title {
-          .sl-vue-tree-toggle {
-            width : 12px;
-          }
-        }
-      }
     }
   }
 }
