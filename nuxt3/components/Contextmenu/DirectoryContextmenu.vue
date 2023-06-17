@@ -3,7 +3,7 @@
     <div v-contextmenu:contextmenu class="contextmenu">
       <slot />
     </div>
-    <contextmenu ref="contextmenu" class="contextmenu">
+    <contextmenu ref="contextmenu">
       <contextmenu-submenu title="新規作成" class="contextmenu-sub">
         <contextmenu-item @click="addNote(0)">
           ルートノート
