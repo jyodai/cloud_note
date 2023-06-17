@@ -12,7 +12,7 @@
           ノート
         </contextmenu-item>
         <contextmenu-item
-          @click="addNote($store.getters['NoteTree/getSelectNoteId'], $NOTE_TYPE_TASK)"
+          @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)"
         >
           タスク
         </contextmenu-item>
@@ -68,7 +68,7 @@ export default {
       const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
       return await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
     },
-    async addNote (noteId = null, noteType = this.$NOTE_TYPE_NORMAL) {
+    async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。')
       if (!noteTitle) {
         alert('ノートのタイトルが空です')
