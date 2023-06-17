@@ -1,12 +1,12 @@
 <template>
   <draggable v-model="noteTab" item-key="id" class="note-tab thin-scroll-bar">
-    <template #item="{ note, index }">
+    <template #item="{ element, index }">
       <div
         class="note-title g-up-down-center"
-        :class="{select : note.id === $store.getters['NoteTab/getSelectNoteId']}"
+        :class="{select : element.id === $store.getters['NoteTab/getSelectNoteId']}"
       >
-        <span class="title" @click="setNote(note)">{{ note.title }}</span>
-        <v-icon class="close-icon" size="14" @click="removeNoteTab(note.id)">
+        <span class="title" @click="setNote(element)">{{ element.title }}</span>
+        <v-icon class="close-icon" size="14" @click="removeNoteTab(element.id)">
           mdi-close-thick
         </v-icon>
       </div>
