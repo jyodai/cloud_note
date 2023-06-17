@@ -62,7 +62,7 @@ export default {
         params.append('file[]', this.uploadFiles[i])
       }
 
-      const response = await this.$axios.$post(
+      const response = await this.$axios.post(
         process.env.API_SERVER_URl + '/libraries/files',
         params
       )

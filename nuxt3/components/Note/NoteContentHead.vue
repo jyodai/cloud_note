@@ -32,7 +32,7 @@ export default {
         return
       }
       const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
-      const response = await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
+      const response = await this.$axios.get(process.env.API_SERVER_URl + '/notes' + queryStr)
       this.notePath = response.path
     },
     openNoteFile () {

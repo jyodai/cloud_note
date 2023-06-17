@@ -28,7 +28,7 @@ export default {
       const token = sessionStorage.getItem('token')
       const params = new URLSearchParams()
       params.append('token', token)
-      await this.$axios.$delete(process.env.API_SERVER_URl + '/users/token', { data: params, }, this.config)
+      await this.$axios.delete(process.env.API_SERVER_URl + '/users/token', { data: params, }, this.config)
 
       if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
         sessionStorage.removeItem('token')
