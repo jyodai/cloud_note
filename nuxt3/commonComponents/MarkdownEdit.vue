@@ -1,7 +1,7 @@
 <template>
   <div
     class="markdown-edit"
-    @keydown.ctrl.83.prevent.stop="saveNote()"
+    @keydown.ctrl.s.prevent.stop="saveNote()"
   >
     <codemirror
       v-model:value="codemirrorContent"
