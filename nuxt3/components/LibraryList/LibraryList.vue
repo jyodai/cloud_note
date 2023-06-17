@@ -75,7 +75,7 @@ export default {
     },
     async getFileList (num) {
       const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=list' + '&num=' + num
-      const response = await this.$axios.$get(process.env.API_SERVER_URl + '/libraries/files' + queryStr)
+      const response = await this.$axios.get(process.env.API_SERVER_URl + '/libraries/files' + queryStr)
       this.fileList = response
     },
     getFileHtml (str) {

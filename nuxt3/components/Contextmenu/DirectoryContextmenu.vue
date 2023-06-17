@@ -66,7 +66,7 @@ export default {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId']
       const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
-      return await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
+      return await this.$axios.get(process.env.API_SERVER_URl + '/notes' + queryStr)
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。')
