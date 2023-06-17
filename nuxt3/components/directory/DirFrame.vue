@@ -1,7 +1,7 @@
 <template>
   <div class="dir-frame">
     <directory-contextmenu>
-      <div id="dir-frame" onContextmenu="return false;">
+      <div id="dir-frame">
         <Tree
           ref="tree"
           :value="treeNodes"
