@@ -63,7 +63,7 @@ export default {
       }
 
       const response = await this.$axios.post(
-        process.env.API_SERVER_URl + '/libraries/files',
+        this.$config.public.apiUrl + '/libraries/files',
         params
       )
       alert(response.message)

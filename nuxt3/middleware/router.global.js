@@ -25,7 +25,7 @@ async function tokenCheck (app, store) {
   store.commit('User/setToken', token)
 
   const queryStr = '?token=' + token
-  const response = await app.$axios.get(process.env.API_SERVER_URl + '/user' + queryStr)
+  const response = await app.$axios.get(app.$config.public.apiUrl + '/user' + queryStr)
   if (response.user) {
     store.commit('User/setUser', response.user)
   }

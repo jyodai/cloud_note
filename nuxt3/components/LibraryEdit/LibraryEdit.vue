@@ -75,7 +75,7 @@ export default {
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },
       }
-      const response = await this.$axios.post(process.env.API_SERVER_URl + '/libraries/files', params, config)
+      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
       alert(response.message)
 
       this.closeModal()
@@ -90,7 +90,7 @@ export default {
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },
       }
-      const response = await this.$axios.post(process.env.API_SERVER_URl + '/libraries/files', params, config)
+      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
       alert(response.message)
 
       this.closeModal()
