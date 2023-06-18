@@ -98,7 +98,7 @@ export default {
       this.revertPreCode()
       this.toc()
       Mermaid.init()
-      Prism.highlightAll()
+      this.$prism.highlightAll()
     },
     toc () {
       const area = 'markdownArea'

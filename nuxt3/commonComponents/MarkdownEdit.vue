@@ -1,10 +1,10 @@
 <template>
   <div
     class="markdown-edit"
-    @keydown.ctrl.83.prevent.stop="saveNote()"
+    @keydown.ctrl.s.prevent.stop="saveNote()"
   >
     <codemirror
-      v-model="codemirrorContent"
+      v-model:value="codemirrorContent"
       class="editor"
       :options="codemirrorOptions"
       @blur="onBlur"
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { codemirror } from 'vue-codemirror'
+import codemirror from 'codemirror-editor-vue3'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-dark.css'
 
