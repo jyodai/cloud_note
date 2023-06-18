@@ -100,8 +100,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.markdown-edit::v-deep {
+<style lang="scss">
+.markdown-edit {
   height: 100%;
   width: 100%;
   .editor {
