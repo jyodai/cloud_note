@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
+      sererAlias: process.env.SERVER_ALIAS,
       apiUrl: process.env.API_SERVER_URl,
     },
   },
@@ -16,4 +17,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  app: {
+    baseURL: process.env.SERVER_ALIAS,
+  }
 })
