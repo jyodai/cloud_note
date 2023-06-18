@@ -12,12 +12,15 @@
   </v-card>
 </template>
 
+<script setup>
+setPageLayout(false);
+</script>
+
 <script>
 
 export default {
   components: {
   },
-  layout: 'simple',
   data () {
     return {
       email    : '',

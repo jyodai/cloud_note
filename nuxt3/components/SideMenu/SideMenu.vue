@@ -102,7 +102,8 @@ export default {
       this.$vfm.show('LibraryList')
     },
     logout () {
-      this.$router.push('/logout')
+      this.$store.dispatch('User/logout')
+      navigateTo('/login')
     },
   },
 }
