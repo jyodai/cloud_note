@@ -20,7 +20,7 @@
                 <th>
                   ファイル名
                 </th>
-                <th />
+                <th class="table-header-icon" />
               </tr>
             </thead>
             <tbody>
@@ -31,7 +31,11 @@
                   {{ file.fileName }}
                 </td>
                 <td>
-                  <span @click="openEdit(file.fileName)">編集</span>
+                  <icon-list
+                      :show-icons="['edit', 'trash']"
+                      @edit="openEdit(file.fileName)"
+                      @trash="deleteFile(file.fileName)"
+                  />
                 </td>
               </tr>
             </tbody>
@@ -51,11 +55,13 @@
 <script>
 import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
+import IconList from '~/commonComponents/IconList.vue'
 
 export default {
   components: {
     Modal,
     ModalFooterButton,
+    IconList,
   },
   data () {
     return {
@@ -99,6 +105,21 @@ export default {
       modal[0].params = { fileName, }
       this.$vfm.show('LibraryEdit')
     },
+    async deleteFile (fileName) {
+      const params = new URLSearchParams()
+      params.append('token', this.$store.getters['User/getToken'])
+      params.append('originFileName', fileName)
+      const config = {
+        headers: {
+          'X-HTTP-Method-Override' : 'DELETE',
+          'Content-Type'           : 'application/x-www-form-urlencoded',
+        },
+      }
+      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
+      alert(response.message)
+
+      this.closeModal()
+    },
   },
 }
 </script>
@@ -116,6 +137,10 @@ export default {
   .content-body {
     height: calc(100% - 50px);
     overflow: auto;
+    .table-header-icon {
+      text-align: center;
+      width : 80px;
+    }
   }
 }
 </style>
