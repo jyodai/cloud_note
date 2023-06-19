@@ -20,7 +20,7 @@
                 <th>
                   ファイル名
                 </th>
-                <th />
+                <th class="table-header-icon" />
               </tr>
             </thead>
             <tbody>
@@ -137,6 +137,10 @@ export default {
   .content-body {
     height: calc(100% - 50px);
     overflow: auto;
+    .table-header-icon {
+      text-align: center;
+      width : 80px;
+    }
   }
 }
 </style>
