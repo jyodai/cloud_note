@@ -56,6 +56,6 @@ export default {
 
 <style lang="scss" scoped>
 .icon {
-  margin-left : 10px;
+  margin-right : 5px;
 }
 </style>
