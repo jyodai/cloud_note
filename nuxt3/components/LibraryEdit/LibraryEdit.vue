@@ -38,8 +38,6 @@ export default {
     return {
       modalName   : 'LibraryEdit',
       modalOption : {
-        width      : '550px',
-        height     : '400px',
         beforeOpen : this.beforeOpen,
       },
       uploadFiles : null,

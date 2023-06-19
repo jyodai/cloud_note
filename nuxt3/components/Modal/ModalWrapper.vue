@@ -50,8 +50,8 @@ export default {
   methods: {
     setOption () {
       const defaultOption = {
-        width      : '650px',
-        height     : '500px',
+        width      : '60%',
+        height     : '60%',
         beforeOpen : () => {},
       }
       this.option = Object.assign(defaultOption, this.modalOption)
