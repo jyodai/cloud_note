@@ -16,9 +16,8 @@
       </template>
       <template #modalAction>
         <modal-footer-button
-          :visible-lists="['save', 'delete', 'close']"
+          :visible-lists="['save', 'close']"
           @save="editFile()"
-          @delete="deleteFile()"
           @close="closeModal()"
         />
       </template>
@@ -72,21 +71,6 @@ export default {
       const config = {
         headers: {
           'X-HTTP-Method-Override' : 'PUT',
-          'Content-Type'           : 'application/x-www-form-urlencoded',
-        },
-      }
-      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
-      alert(response.message)
-
-      this.closeModal()
-    },
-    async deleteFile () {
-      const params = new URLSearchParams()
-      params.append('token', this.$store.getters['User/getToken'])
-      params.append('originFileName', this.originFileName)
-      const config = {
-        headers: {
-          'X-HTTP-Method-Override' : 'DELETE',
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },
       }

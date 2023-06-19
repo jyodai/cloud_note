@@ -31,7 +31,11 @@
                   {{ file.fileName }}
                 </td>
                 <td>
-                  <span @click="openEdit(file.fileName)">編集</span>
+                  <icon-list
+                      :show-icons="['edit', 'trash']"
+                      @edit="openEdit(file.fileName)"
+                      @trash="deleteFile(file.fileName)"
+                  />
                 </td>
               </tr>
             </tbody>
@@ -51,11 +55,13 @@
 <script>
 import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
+import IconList from '~/commonComponents/IconList.vue'
 
 export default {
   components: {
     Modal,
     ModalFooterButton,
+    IconList,
   },
   data () {
     return {
@@ -98,6 +104,21 @@ export default {
       const modal = this.$vfm.get('LibraryEdit')
       modal[0].params = { fileName, }
       this.$vfm.show('LibraryEdit')
+    },
+    async deleteFile (fileName) {
+      const params = new URLSearchParams()
+      params.append('token', this.$store.getters['User/getToken'])
+      params.append('originFileName', fileName)
+      const config = {
+        headers: {
+          'X-HTTP-Method-Override' : 'DELETE',
+          'Content-Type'           : 'application/x-www-form-urlencoded',
+        },
+      }
+      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
+      alert(response.message)
+
+      this.closeModal()
     },
   },
 }
