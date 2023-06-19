@@ -17,7 +17,7 @@
 <script>
 
 export default {
-  emit: [
+  emits: [
     "edit",
     "trash",
   ],

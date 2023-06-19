@@ -32,9 +32,9 @@
                 </td>
                 <td>
                   <icon-list
-                      :show-icons="['edit', 'trash']"
-                      @edit="openEdit(file.fileName)"
-                      @trash="deleteFile(file.fileName)"
+                    :show-icons="['edit', 'trash']"
+                    @edit="openEdit(file.fileName)"
+                    @trash="deleteFile(file.fileName)"
                   />
                 </td>
               </tr>
