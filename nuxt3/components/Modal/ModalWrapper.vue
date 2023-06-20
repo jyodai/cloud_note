@@ -50,8 +50,8 @@ export default {
   methods: {
     setOption () {
       const defaultOption = {
-        width      : '650px',
-        height     : '500px',
+        width      : '60%',
+        height     : '60%',
         beforeOpen : () => {},
       }
       this.option = Object.assign(defaultOption, this.modalOption)
@@ -95,7 +95,6 @@ export default {
   .modal__content {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 0px 10px;
   }
   .modal__action {
     display: flex;

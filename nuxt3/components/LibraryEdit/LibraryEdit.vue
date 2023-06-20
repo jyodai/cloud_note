@@ -8,10 +8,19 @@
         ライブラリ編集
       </template>
       <template #modalContent>
-        <div>
-          <v-text-field
-            v-model="newFileName"
-          />
+        <div class="g-table-edit">
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  ファイル名
+                </th>
+                <td>
+                  <input type="text" v-model="newFileName">
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </template>
       <template #modalAction>
@@ -38,8 +47,6 @@ export default {
     return {
       modalName   : 'LibraryEdit',
       modalOption : {
-        width      : '550px',
-        height     : '400px',
         beforeOpen : this.beforeOpen,
       },
       uploadFiles : null,
