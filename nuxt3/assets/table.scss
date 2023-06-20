@@ -39,7 +39,8 @@
 
   th,
   td {
-    padding: 5px 10px;
+    width: calc(100% - 20px);
+    padding: 10px 10px;
     border-right: 1px solid #555555;
   }
 

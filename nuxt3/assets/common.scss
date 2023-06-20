@@ -32,6 +32,13 @@ html {
   color: #EEEEEE !important;
 }
 
+input[type="text"] {
+  width: 100%;
+  padding : 5px;
+  color: #EEEEEE;
+  border: 1px solid #555555;
+}
+
 /*スクロールバー全体*/
 ::-webkit-scrollbar {
   width: 8px;
