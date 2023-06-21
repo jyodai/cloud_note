@@ -30,7 +30,7 @@
       </div>
       <div class="content">
         <template v-if="menu.edit.show">
-          <div @click="openLibrary">
+          <div @click="openModal('LibraryList')">
             <v-icon size="14">
               mdi-checkbox-blank-circle
             </v-icon>
@@ -38,6 +38,12 @@
           </div>
         </template>
         <template v-if="menu.setting.show">
+          <div @click="openModal('UserList')">
+            <v-icon size="14">
+              mdi-checkbox-blank-circle
+            </v-icon>
+            ユーザー
+          </div>
           <div @click="logout">
             <v-icon size="14">
               mdi-checkbox-blank-circle
@@ -98,8 +104,8 @@ export default {
       const mainPanel = document.getElementById('mainPanel')
       mainPanel.style.width = '100%'
     },
-    openLibrary () {
-      this.$vfm.show('LibraryList')
+    openModal(key) {
+      this.$vfm.show(key)
     },
     logout () {
       this.$store.dispatch('User/logout')
