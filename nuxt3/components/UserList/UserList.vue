@@ -8,7 +8,7 @@
       </template>
       <template #modalContent>
         <div class="content-header">
-          <v-btn class="mb-2" @click="openAddImageLibrary()">
+          <v-btn class="mb-2" @click="openAdd()">
             追加
           </v-btn>
         </div>
