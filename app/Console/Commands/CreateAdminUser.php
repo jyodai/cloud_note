@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class AdminUserCreate extends Command
+class CreateAdminUser extends Command
 {
     /**
      * The name and signature of the console command.
