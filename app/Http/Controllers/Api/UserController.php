@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -17,14 +18,14 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::select('id', 'name', 'email')->get();
-        return response()->json($users);
+        $users = User::all();
+        return UserResource::collection($users);
     }
 
     public function show(int $id)
     {
         $user = User::select('id', 'name', 'email')->find($id);
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function store(Request $request)
@@ -35,7 +36,7 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
             'api_token' => Str::random(60),
         ]);
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function update(int $id ,Request $request)
@@ -46,7 +47,7 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
         ]);
         $user = User::find($id);
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     public function destroy(int $id)
