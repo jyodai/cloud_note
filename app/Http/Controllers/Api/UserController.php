@@ -27,6 +27,17 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function store(Request $request)
+    {
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'api_token' => Str::random(60),
+        ]);
+        return response()->json($user);
+    }
+
     public function destroy(int $id)
     {
         User::destroy($id);
