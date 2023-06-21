@@ -27,6 +27,12 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function destroy(int $id)
+    {
+        User::destroy($id);
+        return response()->noContent();
+    }
+
     public function createToken(Request $request)
     {
         $email = $request->email;
