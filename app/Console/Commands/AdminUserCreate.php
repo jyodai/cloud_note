@@ -55,8 +55,7 @@ class AdminUserCreate extends Command
             'api_token' => Str::random(60),
         ]);
 
-        echo 'user name : ' . $user['name'] . "\n";
-        echo 'user password : ' . $user['password'] . "\n";
-        echo "\n";
+        $this->info('User name: ' . $user['name']);
+        $this->info('User password: ' . $user['password']);
     }
 }
