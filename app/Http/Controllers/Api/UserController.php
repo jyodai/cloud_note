@@ -38,6 +38,17 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function update(int $id ,Request $request)
+    {
+        User::find($id)->update([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+        ]);
+        $user = User::find($id);
+        return response()->json($user);
+    }
+
     public function destroy(int $id)
     {
         User::destroy($id);
