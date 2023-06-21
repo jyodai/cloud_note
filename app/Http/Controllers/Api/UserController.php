@@ -7,11 +7,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
     public function __construct()
     {
+    }
+
+    public function index()
+    {
+        $users = User::select('id', 'name', 'email')->get();
+        return response()->json($users);
+    }
+
+    public function show(int $id)
+    {
+        $user = User::select('id', 'name', 'email')->find($id);
+        return response()->json($user);
     }
 
     public function createToken(Request $request)
