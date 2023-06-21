@@ -2,16 +2,61 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function __construct()
     {
+    }
+
+    public function index(): AnonymousResourceCollection
+    {
+        $users = User::all();
+        return UserResource::collection($users);
+    }
+
+    public function show(int $id): UserResource
+
+    {
+        $user = User::select('id', 'name', 'email')->find($id);
+        return new UserResource($user);
+    }
+
+    public function store(Request $request): UserResource
+    {
+        $user = User::create([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'api_token' => Str::random(60),
+        ]);
+        return new UserResource($user);
+    }
+
+    public function update(int $id ,Request $request): UserResource
+    {
+        User::find($id)->update([
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+        ]);
+        $user = User::find($id);
+        return new UserResource($user);
+    }
+
+    public function destroy(int $id): Response
+    {
+        User::destroy($id);
+        return response()->noContent();
     }
 
     public function createToken(Request $request)
