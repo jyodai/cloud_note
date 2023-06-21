@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,16 @@ Route::get("/user",function(){
 Route::post("users/token", 'Api\UserController@createToken');
 
 Route::middleware(['auth_api'])->group(function () {
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
     Route::delete("users/token", 'Api\UserController@deleteToken');
+
 
     Route::get   ('notes'      , 'Api\NoteController@getNote');
     Route::put   ('notes/{id}' , 'Api\NoteController@updateNote');
