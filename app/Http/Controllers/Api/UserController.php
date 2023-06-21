@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
@@ -16,19 +18,20 @@ class UserController extends Controller
     {
     }
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $users = User::all();
         return UserResource::collection($users);
     }
 
-    public function show(int $id)
+    public function show(int $id): UserResource
+
     {
         $user = User::select('id', 'name', 'email')->find($id);
         return new UserResource($user);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): UserResource
     {
         $user = User::create([
             'name'      => $request->name,
@@ -39,7 +42,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(int $id ,Request $request)
+    public function update(int $id ,Request $request): UserResource
     {
         User::find($id)->update([
             'name'      => $request->name,
@@ -50,7 +53,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): Response
     {
         User::destroy($id);
         return response()->noContent();
