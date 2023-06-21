@@ -20,6 +20,10 @@
       v-if="reload.userAdd"
       @reloadModal="reloadModal"
     />
+    <user-edit
+      v-if="reload.userEdit"
+      @reloadModal="reloadModal"
+    />
   </div>
 </template>
 
@@ -29,6 +33,7 @@ import LibraryAdd from '~/components/LibraryAdd/LibraryAdd.vue'
 import LibraryEdit from '~/components/LibraryEdit/LibraryEdit.vue'
 import UserList from '~/components/UserList/UserList.vue'
 import UserAdd from '~/components/UserAdd/UserAdd.vue'
+import UserEdit from '~/components/UserEdit/UserEdit.vue'
 
 export default {
   components: {
@@ -37,6 +42,7 @@ export default {
     LibraryEdit,
     UserList,
     UserAdd,
+    UserEdit,
   },
   data () {
     return {
@@ -46,6 +52,7 @@ export default {
         libraryEdit : true,
         userList    : true,
         userAdd     : true,
+        userEdit    : true,
       },
     }
   },
