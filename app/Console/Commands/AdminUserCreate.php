@@ -41,21 +41,24 @@ class AdminUserCreate extends Command
      */
     public function handle()
     {
-        $user = [
+        $userModel = new User();
+        $password = Str::random(8);
+        $data = [
             'name'      => 'admin',
             'user_type' => C_User::USER_TYPE_ADMIN,
             'email'     => 'admin@example.com',
-            'password'  => Str::random(8),
-        ];
-        User::create([
-            'name'      => $user['name'],
-            'user_type' => $user['user_type'],
-            'email'     => $user['email'],
-            'password'  => Hash::make($user['password']),
+            'password'  => Hash::make($password),
             'api_token' => Str::random(60),
-        ]);
+        ];
 
-        $this->info('User name: ' . $user['name']);
-        $this->info('User password: ' . $user['password']);
+        if ($userModel->existsUser($data['email'])) {
+            $this->error('User with the same email already exists.');
+            return;
+        }
+
+        $user = $userModel->create($data);
+
+        $this->info('User name: ' . $user->name);
+        $this->info('User password: ' . $password);
     }
 }
