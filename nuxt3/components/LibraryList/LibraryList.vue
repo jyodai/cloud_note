@@ -2,11 +2,15 @@
   <div class="library-list">
     <modal
       :modal-name="modalName"
+      :modal-option="modalOption"
     >
       <template #modalTitle>
         ライブラリ一覧
       </template>
-      <template #modalContent>
+      <template
+        #modalContent
+        v-if="visible"
+      >
         <div class="content-header">
           <v-btn class="mb-2" @click="openAddImageLibrary()">
             追加
@@ -66,15 +70,18 @@ export default {
   data () {
     return {
       modalName : 'LibraryList',
+      modalOption : {
+        beforeOpen : this.beforeOpen,
+      },
+      visible : false,
       fileList  : null,
     }
   },
-  created () {
-    const num = 0
-    this.getFileList(num)
-  },
-  mounted () {},
   methods: {
+    beforeOpen () {
+      const num = 0
+      this.getFileList(num)
+    },
     closeModal () {
       this.$vfm.hide('LibraryList')
       this.$emit('reloadModal', 'libraryList')
@@ -84,6 +91,7 @@ export default {
       const url = this.$config.public.apiUrl + '/libraries/files' + queryStr
       const response = await this.$axios.get(url)
       this.fileList = response
+      this.visible = true;
     },
     getFileHtml (str) {
       const copyFrom = document.createElement('textarea')
