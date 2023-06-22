@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.css',
     '~/assets/common.scss',
     '~/assets/table.scss',
+    'vue-final-modal/style.css',
   ],
   build: {
     transpile: ['vuetify'],

@@ -52,8 +52,7 @@ export default {
   mounted () {},
   methods: {
     closeModal () {
-      this.$vfm.hide('LibraryAdd')
-      this.$emit('reloadModal', 'libraryAdd')
+      this.$vfm.close('LibraryAdd')
     },
     async addFile () {
       const url = this.$config.public.apiUrl + '/libraries/files';

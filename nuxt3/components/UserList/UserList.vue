@@ -98,16 +98,15 @@ export default {
       this.visible = true;
     },
     closeModal () {
-      this.$vfm.hide('UserList')
-      this.$emit('reloadModal', 'userList')
+      this.$vfm.close('UserList')
     },
     openAdd () {
-      this.$vfm.show('UserAdd')
+      this.$vfm.open('UserAdd')
     },
     openEdit (user) {
       const modal = this.$vfm.get('UserEdit')
-      modal[0].params = { user, }
-      this.$vfm.show('UserEdit')
+      modal.params = { user, }
+      this.$vfm.open('UserEdit')
     },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {

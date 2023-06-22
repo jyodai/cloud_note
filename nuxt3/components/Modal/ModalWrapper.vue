@@ -2,9 +2,10 @@
   <div ref="modal" class="modal">
     <vue-final-modal
       v-model="showModal"
-      classes="modal-container"
+      class="modal-container"
       content-class="modal-content"
-      :name="modalName"
+      :modal-id="modalName"
+      :teleportTo="false"
       @before-open="option.beforeOpen"
     >
       <span class="modal__title">
@@ -21,9 +22,11 @@
 </template>
 
 <script>
+import { VueFinalModal } from 'vue-final-modal';
 
 export default {
   components: {
+    VueFinalModal,
   },
   props: {
     modalName: {
@@ -39,13 +42,12 @@ export default {
     return {
       showModal : false,
       option    : null,
+      width     : "",
+      height    : "",
     }
   },
   created () {
     this.setOption()
-  },
-  mounted () {
-    this.setSize()
   },
   methods: {
     setOption () {
@@ -55,12 +57,8 @@ export default {
         beforeOpen : () => {},
       }
       this.option = Object.assign(defaultOption, this.modalOption)
-    },
-    setSize () {
-      const componentElement = this.$refs.modal
-      const element = componentElement.getElementsByClassName('modal-content')
-      element[0].style.width = this.option.width
-      element[0].style.height = this.option.height
+      this.width = this.option.width;
+      this.height = this.option.height;
     },
   },
 }
@@ -76,6 +74,8 @@ export default {
     align-items: center;
   }
   :deep(.modal-content) {
+    width: v-bind(width);
+    height: v-bind(height);
     position: relative;
     display: flex;
     flex-direction: column;

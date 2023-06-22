@@ -34,7 +34,7 @@
     "prismjs": "^1.29.0",
     "splitpanes": "^3.1.5",
     "v-contextmenu": "^3.0.0",
-    "vue-final-modal": "^3.4.11",
+    "vue-final-modal": "^4.4.2",
     "vuedraggable": "^4.1.0",
     "vuetify": "^3.3.3",
     "vuex": "^4.0.2"

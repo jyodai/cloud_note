@@ -82,7 +82,7 @@ export default {
     },
     async loadParams () {
       const modal = this.$vfm.get('UserEdit')
-      const params = modal[0].params
+      const params = modal.params
       const id = params.user.id
 
       const url = this.$config.public.apiUrl + '/users/' + id;
@@ -90,8 +90,7 @@ export default {
       this.user = response.data
     },
     close () {
-      this.$vfm.hide('UserEdit')
-      this.$emit('reloadModal', 'userEdit')
+      this.$vfm.close('UserEdit')
     },
     async save () {
       const url = this.$config.public.apiUrl + '/users/' + this.user.id;
