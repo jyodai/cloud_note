@@ -105,7 +105,7 @@ export default {
     },
     openEdit (user) {
       const modal = this.$vfm.get('UserEdit')
-      modal[0].params = { user, }
+      modal.params = { user, }
       this.$vfm.open('UserEdit')
     },
     async deleteUser (user) {

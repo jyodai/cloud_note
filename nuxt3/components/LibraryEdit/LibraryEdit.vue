@@ -61,7 +61,7 @@ export default {
     },
     loadParams () {
       const modal = this.$vfm.get('LibraryEdit')
-      const params = modal[0].params
+      const params = modal.params
 
       this.originFileName = params.fileName
       this.newFileName = params.fileName

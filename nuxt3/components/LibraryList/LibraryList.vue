@@ -110,7 +110,7 @@ export default {
     },
     openEdit (fileName) {
       const modal = this.$vfm.get('LibraryEdit')
-      modal[0].params = { fileName, }
+      modal.params = { fileName, }
       this.$vfm.open('LibraryEdit')
     },
     async deleteFile (fileName) {
