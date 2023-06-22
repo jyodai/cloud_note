@@ -18,14 +18,11 @@ $ docker-compose up -d
 #### コンテナ内での作業
 
 ```
-コンテナに入る
-$ make sh
-
 Laravel, Nuxtのビルド
 $ make build
 
-テストユーザーの生成
-$ php artisan user:create
+管理者ユーザーの生成(※パスワードを記録を忘れないようにする)
+$ make create_admin_user
 
 Nuxtのサーバ起動
 $ make nw
@@ -35,18 +32,8 @@ $ make nw
 
 https://127.0.0.1:8887/cloud-note/login
 
-以下でログイン可能。
-
-* mail : hoge@example.com
-* pw : hoge
-
 ### 2回目以降
 
-2回目以降は、
-```
-$ make sh
-```
-でコンテナに入って、
 ```
 $ make nw
 ```
