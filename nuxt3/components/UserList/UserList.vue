@@ -85,8 +85,8 @@ export default {
   mounted () {},
   methods: {
     async load () {
-      const queryStr = '?token=' + this.$store.getters['User/getToken'];
-      const response = await this.$axios.get(this.$config.public.apiUrl + '/users' + queryStr)
+      const url = this.$config.public.apiUrl + '/users';
+      const response = await this.$axios.get(url);
       this.users = response.data
     },
     closeModal () {
@@ -107,13 +107,7 @@ export default {
       }
 
       const url = this.$config.public.apiUrl + '/users/' + user.id;
-      const params = {
-        token : this.$store.getters['User/getToken'],
-      }
-      const config = {
-        params,
-      };
-      const response = await this.$axios.delete(url, config)
+      const response = await this.$axios.delete(url)
 
       this.load();
     },

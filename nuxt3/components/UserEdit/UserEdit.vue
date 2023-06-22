@@ -85,18 +85,16 @@ export default {
       const params = modal[0].params
       const id = params.user.id
 
-      const queryStr = '?token=' + this.$store.getters['User/getToken'];
-      const response = await this.$axios.get(this.$config.public.apiUrl + '/users/' + id + queryStr)
+      const url = this.$config.public.apiUrl + '/users/' + id;
+      const response = await this.$axios.get(url)
       this.user = response.data
-      console.log(this.user)
     },
     close () {
       this.$vfm.hide('UserEdit')
       this.$emit('reloadModal', 'userEdit')
     },
     async save () {
-      const queryStr = '?token=' + this.$store.getters['User/getToken'];
-      const url = this.$config.public.apiUrl + '/users/' + this.user.id + queryStr
+      const url = this.$config.public.apiUrl + '/users/' + this.user.id;
       const params = this.user;
       await this.$axios.put(url, params)
       this.close()

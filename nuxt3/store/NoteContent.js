@@ -17,10 +17,10 @@ const getters = {
 }
 
 const actions = {
-  async loadSelectContent ({ rootState, commit, }, data) {
+  async loadSelectContent ({commit, }, data) {
     const noteId = data.noteId
-    const queryStr = '?token=' + rootState.User.token + '&noteId=' + noteId
-    const response = await this.$axios.get(this.$config.public.apiUrl + '/note_content' + queryStr)
+    const url = this.$config.public.apiUrl + '/note_content?noteId=' + noteId
+    const response = await this.$axios.get(url)
     await commit('setSelectContent', response)
   },
   unsetSelectContent ({ commit, }) {
@@ -35,17 +35,12 @@ const actions = {
     selectContent.content = data.content
     commit('setSelectContent', selectContent)
 
-    const params = new URLSearchParams()
-    params.append('token', rootState.User.token)
-    params.append('noteId', data.id)
-    params.append('content', data.content)
-    const config = {
-      headers: {
-        'X-HTTP-Method-Override' : 'PUT',
-        'Content-Type'           : 'application/x-www-form-urlencoded',
-      },
-    }
-    await this.$axios.post(this.$config.public.apiUrl + '/note_content', params, config)
+    const url = this.$config.public.apiUrl + '/note_content';
+    const params = {
+      noteId : data.id,
+      content : data.content,
+    };
+    await this.$axios.put(url, params)
       .then((res) => {
       }).catch((e) => {
         alert('メモの保存の失敗しました')

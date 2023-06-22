@@ -74,8 +74,7 @@ export default {
       this.$emit('reloadModal', 'userAdd')
     },
     async save () {
-      const queryStr = '?token=' + this.$store.getters['User/getToken'];
-      const url = this.$config.public.apiUrl + '/users' + queryStr
+      const url = this.$config.public.apiUrl + '/users';
       const params = this.user;
       await this.$axios.post(url, params)
       this.close()

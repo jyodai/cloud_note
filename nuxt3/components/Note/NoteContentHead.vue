@@ -31,8 +31,8 @@ export default {
         this.notePath = 'ファイル未選択'
         return
       }
-      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
-      const response = await this.$axios.get(this.$config.public.apiUrl + '/notes' + queryStr)
+      const url = this.$config.public.apiUrl + '/notes?noteId=' + noteId;
+      const response = await this.$axios.get(url)
       this.notePath = response.path
     },
     openNoteFile () {
