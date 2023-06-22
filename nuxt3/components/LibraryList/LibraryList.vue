@@ -107,12 +107,12 @@ export default {
       alert('HTMLをコピーしました')
     },
     openAddImageLibrary () {
-      this.$vfm.show('LibraryAdd')
+      this.$vfm.open('LibraryAdd')
     },
     openEdit (fileName) {
       const modal = this.$vfm.get('LibraryEdit')
       modal[0].params = { fileName, }
-      this.$vfm.show('LibraryEdit')
+      this.$vfm.open('LibraryEdit')
     },
     async deleteFile (fileName) {
       const url = this.$config.public.apiUrl + '/libraries/files';

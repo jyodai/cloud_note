@@ -109,7 +109,7 @@ export default {
       mainPanel.style.width = '100%'
     },
     openModal(key) {
-      this.$vfm.show(key)
+      this.$vfm.open(key)
     },
     logout () {
       this.$store.dispatch('User/logout')

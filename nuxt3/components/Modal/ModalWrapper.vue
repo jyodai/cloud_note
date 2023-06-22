@@ -2,7 +2,7 @@
   <div ref="modal" class="modal">
     <vue-final-modal
       v-model="showModal"
-      classes="modal-container"
+      class="modal-container"
       content-class="modal-content"
       :name="modalName"
       @before-open="option.beforeOpen"
