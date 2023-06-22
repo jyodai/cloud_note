@@ -9,30 +9,34 @@
           @node-folded-changed="nodeFoldedChanged"
         >
           <template v-slot="{node, index, path, tree}">
-            <span
-              v-if="node.data.hasChild"
-              @click="tree.toggleFold(node, path); toggle(node)"
-            >
-              <v-icon v-if="node.$folded" size="12">
-                mdi-folder
-              </v-icon>
-              <v-icon v-else size="12">
-                mdi-folder-open
-              </v-icon>
-            </span>
-
-            <span v-else>
-              <v-icon size="12">
-                mdi-file-outline
-              </v-icon>
-            </span>
-
-            <span
+            <div
+              class="tree-node-container"
+              :class="{'select-node': selectTreeNoteId === node.data.id}"
               @click="setNote(node.data)"
               @mouseup.right="selectNoteTree(node.data)"
             >
-              {{ node.title }}
-            </span>
+              <span
+                v-if="node.data.hasChild"
+                @click="tree.toggleFold(node, path); toggle(node)"
+              >
+                <v-icon v-if="node.$folded" size="12">
+                  mdi-folder
+                </v-icon>
+                <v-icon v-else size="12">
+                  mdi-folder-open
+                </v-icon>
+              </span>
+
+              <span v-else>
+                <v-icon size="12">
+                  mdi-file-outline
+                </v-icon>
+              </span>
+
+              <span>
+                {{ node.title }}
+              </span>
+            </div>
           </template>
         </Tree>
       </div>
@@ -70,6 +74,11 @@ export default {
         return this.$store.getters['NoteTree/getTree']
       },
     },
+    selectTreeNoteId : {
+      get () {
+        return this.$store.getters['NoteTree/getSelectNoteId']
+      },
+    },
   },
   watch: {
     noteLoadFlag (newVal, oldVal) {
@@ -101,6 +110,7 @@ export default {
         this.$store.dispatch('NoteTab/setNoteTab', Object.assign({}, note))
       }
       this.$store.dispatch('NoteTab/setSelectNote', note)
+      this.selectNoteTree(note);
     },
     selectNoteTree (note) {
       this.$store.dispatch('NoteTree/setSelectTree', note)
@@ -193,6 +203,15 @@ export default {
         .tree-node {
           border:none;
           padding:0;
+          .tree-node-container {
+            cursor: pointer;
+            &:hover {
+              background: #666666;
+            }
+          }
+          .select-node {
+            opacity: 0.6;
+          }
         }
     }
   }
