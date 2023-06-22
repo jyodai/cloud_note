@@ -91,7 +91,6 @@ export default {
     },
     close () {
       this.$vfm.close('UserEdit')
-      this.$emit('reloadModal', 'userEdit')
     },
     async save () {
       const url = this.$config.public.apiUrl + '/users/' + this.user.id;

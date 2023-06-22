@@ -68,7 +68,6 @@ export default {
     },
     closeModal () {
       this.$vfm.close('LibraryEdit')
-      this.$emit('reloadModal', 'libraryEdit')
     },
     async editFile () {
       const url = this.$config.public.apiUrl + '/libraries/files';

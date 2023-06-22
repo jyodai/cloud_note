@@ -99,7 +99,6 @@ export default {
     },
     closeModal () {
       this.$vfm.close('UserList')
-      this.$emit('reloadModal', 'userList')
     },
     openAdd () {
       this.$vfm.open('UserAdd')

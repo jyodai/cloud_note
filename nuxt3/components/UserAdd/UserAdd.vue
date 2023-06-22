@@ -71,7 +71,6 @@ export default {
   methods: {
     close () {
       this.$vfm.close('UserAdd')
-      this.$emit('reloadModal', 'userAdd')
     },
     async save () {
       const url = this.$config.public.apiUrl + '/users';

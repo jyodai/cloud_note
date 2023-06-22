@@ -53,7 +53,6 @@ export default {
   methods: {
     closeModal () {
       this.$vfm.close('LibraryAdd')
-      this.$emit('reloadModal', 'libraryAdd')
     },
     async addFile () {
       const url = this.$config.public.apiUrl + '/libraries/files';

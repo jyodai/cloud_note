@@ -84,7 +84,6 @@ export default {
     },
     closeModal () {
       this.$vfm.close('LibraryList')
-      this.$emit('reloadModal', 'libraryList')
     },
     async getFileList (num) {
       const queryStr = '?type=list' + '&num=' + num
