@@ -19,7 +19,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const registerConst = (store) => {
     store.$const = nuxtApp.$const;
-    console.log(store)
   }
 
   const store = createStore({
