@@ -15,7 +15,7 @@ $ git config --local core.hooksPath .githooks
 $ docker-compose up -d
 ```
 
-#### コンテナ内での作業
+#### 開発環境の構築
 
 ```
 Laravel, Nuxtのビルド
