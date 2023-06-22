@@ -113,7 +113,7 @@ export default {
     },
     logout () {
       this.$store.dispatch('User/logout')
-      navigateTo('/login')
+      window.location.href = '/login';
     },
   },
 }
