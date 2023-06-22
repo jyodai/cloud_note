@@ -42,13 +42,12 @@ export default {
     return {
       showModal : false,
       option    : null,
+      width     : "",
+      height    : "",
     }
   },
   created () {
     this.setOption()
-  },
-  mounted () {
-    this.setSize()
   },
   methods: {
     setOption () {
@@ -58,12 +57,8 @@ export default {
         beforeOpen : () => {},
       }
       this.option = Object.assign(defaultOption, this.modalOption)
-    },
-    setSize () {
-      const componentElement = this.$refs.modal
-      const element = componentElement.getElementsByClassName('modal-content')
-      element[0].style.width = this.option.width
-      element[0].style.height = this.option.height
+      this.width = this.option.width;
+      this.height = this.option.height;
     },
   },
 }
@@ -79,6 +74,8 @@ export default {
     align-items: center;
   }
   :deep(.modal-content) {
+    width: v-bind(width);
+    height: v-bind(height);
     position: relative;
     display: flex;
     flex-direction: column;
