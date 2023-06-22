@@ -7,13 +7,15 @@
           :value="treeNodes"
           @drop="drop"
           @node-folded-changed="nodeFoldedChanged"
+          @click="selectNoteTree(null)"
+          @mouseup.right="selectNoteTree(null)"
         >
           <template v-slot="{node, index, path, tree}">
             <div
               class="tree-node-container"
               :class="{'select-node': selectTreeNoteId === node.data.id}"
-              @click="setNote(node.data)"
-              @mouseup.right="selectNoteTree(node.data)"
+              @click.stop="setNote(node.data)"
+              @mouseup.right.stop="selectNoteTree(node.data)"
             >
               <span
                 v-if="node.data.hasChild"

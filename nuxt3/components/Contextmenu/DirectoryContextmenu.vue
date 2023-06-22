@@ -69,6 +69,11 @@ export default {
       return await this.$axios.get(this.$config.public.apiUrl + '/notes' + queryStr)
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
+      if (noteId === null) {
+        alert('ノートが選択されていません');
+        return;
+      }
+
       const noteTitle = window.prompt('ノートのタイトルを入力してください。')
       if (!noteTitle) {
         alert('ノートのタイトルが空です')
