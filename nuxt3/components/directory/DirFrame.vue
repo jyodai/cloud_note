@@ -11,6 +11,7 @@
           <template v-slot="{node, index, path, tree}">
             <div
               class="tree-node-container"
+              :class="{'select-node': selectTreeNoteId === node.data.id}"
               @click="setNote(node.data)"
               @mouseup.right="selectNoteTree(node.data)"
             >
@@ -73,6 +74,11 @@ export default {
         return this.$store.getters['NoteTree/getTree']
       },
     },
+    selectTreeNoteId : {
+      get () {
+        return this.$store.getters['NoteTree/getSelectNoteId']
+      },
+    },
   },
   watch: {
     noteLoadFlag (newVal, oldVal) {
@@ -104,6 +110,7 @@ export default {
         this.$store.dispatch('NoteTab/setNoteTab', Object.assign({}, note))
       }
       this.$store.dispatch('NoteTab/setSelectNote', note)
+      this.selectNoteTree(note);
     },
     selectNoteTree (note) {
       this.$store.dispatch('NoteTree/setSelectTree', note)
@@ -201,6 +208,9 @@ export default {
             &:hover {
               background: #666666;
             }
+          }
+          .select-node {
+            opacity: 0.6;
           }
         }
     }
