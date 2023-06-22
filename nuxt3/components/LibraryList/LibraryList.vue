@@ -80,8 +80,9 @@ export default {
       this.$emit('reloadModal', 'libraryList')
     },
     async getFileList (num) {
-      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=list' + '&num=' + num
-      const response = await this.$axios.get(this.$config.public.apiUrl + '/libraries/files' + queryStr)
+      const queryStr = '?type=list' + '&num=' + num
+      const url = this.$config.public.apiUrl + '/libraries/files' + queryStr
+      const response = await this.$axios.get(url)
       this.fileList = response
     },
     getFileHtml (str) {
@@ -106,16 +107,17 @@ export default {
       this.$vfm.show('LibraryEdit')
     },
     async deleteFile (fileName) {
-      const params = new URLSearchParams()
-      params.append('token', this.$store.getters['User/getToken'])
-      params.append('originFileName', fileName)
+      const url = this.$config.public.apiUrl + '/libraries/files';
+      const params = {
+        originFileName : fileName,
+      };
       const config = {
         headers: {
           'X-HTTP-Method-Override' : 'DELETE',
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },
       }
-      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
+      const response = await this.$axios.post(url, params, config)
       alert(response.message)
 
       this.closeModal()

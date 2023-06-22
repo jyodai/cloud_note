@@ -24,15 +24,7 @@ const getters = {
 
 const actions = {
   async logout ({ commit, }) {
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    };
-    const token = sessionStorage.getItem('token')
-    const params = new URLSearchParams()
-    params.append('token', token)
-    await this.$axios.delete(this.$config.public.apiUrl + '/users/token', { data: params, }, config)
+    await this.$axios.delete(this.$config.public.apiUrl + '/users/token')
 
     if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
       sessionStorage.removeItem('token')

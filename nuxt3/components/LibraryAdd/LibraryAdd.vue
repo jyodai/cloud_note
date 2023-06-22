@@ -56,22 +56,19 @@ export default {
       this.$emit('reloadModal', 'libraryAdd')
     },
     async addFile () {
+      const url = this.$config.public.apiUrl + '/libraries/files';
       const params = new FormData()
-      params.append('token', this.$store.getters['User/getToken'])
       for (let i = 0; i < this.uploadFiles.length; i++) {
         params.append('file[]', this.uploadFiles[i])
       }
 
-      const response = await this.$axios.post(
-        this.$config.public.apiUrl + '/libraries/files',
-        params
-      )
+      const response = await this.$axios.post(url, params)
       alert(response.message)
 
       this.closeModal()
     },
-    selectedFile (e) {
-      this.uploadFiles = e
+    selectedFile (event) {
+      this.uploadFiles = event.target.files
     },
   },
 }

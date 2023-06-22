@@ -24,8 +24,7 @@ async function tokenCheck (app, store) {
 
   store.commit('User/setToken', token)
 
-  const queryStr = '?token=' + token
-  const response = await app.$axios.get(app.$config.public.apiUrl + '/user' + queryStr)
+  const response = await app.$axios.get(app.$config.public.apiUrl + '/user')
   if (response.user) {
     store.commit('User/setUser', response.user)
     store.commit('User/setIsAdminUser', response.user.user_type === app.$const.USER_TYPE_ADMIN)

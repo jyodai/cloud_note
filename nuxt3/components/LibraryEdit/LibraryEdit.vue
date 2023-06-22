@@ -71,17 +71,12 @@ export default {
       this.$emit('reloadModal', 'libraryEdit')
     },
     async editFile () {
-      const params = new URLSearchParams()
-      params.append('token', this.$store.getters['User/getToken'])
-      params.append('originFileName', this.originFileName)
-      params.append('newFileName', this.newFileName)
-      const config = {
-        headers: {
-          'X-HTTP-Method-Override' : 'PUT',
-          'Content-Type'           : 'application/x-www-form-urlencoded',
-        },
-      }
-      const response = await this.$axios.post(this.$config.public.apiUrl + '/libraries/files', params, config)
+      const url = this.$config.public.apiUrl + '/libraries/files';
+      const params = {
+        originFileName : this.originFileName,
+        newFileName    : this.newFileName,
+      };
+      const response = await this.$axios.put(url, params)
       alert(response.message)
 
       this.closeModal()

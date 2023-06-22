@@ -81,20 +81,18 @@ const actions = {
   setSelectTree ({ commit, }, note) {
     commit('setSelectNote', note)
   },
-  async loadTree ({ rootState, commit, dispatch, }) {
+  async loadTree ({ commit, }) {
     const restoreTreeLists = localStorage.getItem('restoreTreeLists') === null
       ? JSON.stringify([])
       : localStorage.getItem('restoreTreeLists')
 
-    const params = {
-      token: rootState.User.token,
-    }
+    const url = this.$config.public.apiUrl + '/tree';
+    const params = {}
     if (restoreTreeLists.length !== 0) {
       params.tree = restoreTreeLists
     }
     const config = { params, }
-    const response = await this.$axios
-      .get(this.$config.public.apiUrl + '/tree', config)
+    const response = await this.$axios.get(url, config)
 
     const rootNode = [
       {
@@ -107,15 +105,10 @@ const actions = {
     ]
     commit('setTree', rootNode)
   },
-  async loadChildrenTree ({ rootState, getters, commit, dispatch, }, id) {
-    const params = {
-      token: rootState.User.token,
-    }
+  async loadChildrenTree ({getters, commit}, id) {
     const url = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'children'
-    const config = { params, }
     this.noteLoadFlag = true
-    const response = await this.$axios
-      .get(url, config)
+    const response = await this.$axios.get(url)
     const addTreeNodes = convertTree(response)
 
     const parentTreeNode = getters.findTreeNode(getters.getTree, id)
@@ -167,11 +160,10 @@ const actions = {
 
     localStorage.setItem('restoreTreeLists', JSON.stringify(newRestoreLists))
   },
-  async moveNode ({ rootState, getters, commit, }, { id, position, }) {
+  async moveNode ({ getters, commit, }, { id, position, }) {
     const targetId = position.node.data.id
     const type = position.placement
     const params = {
-      token          : rootState.User.token,
       target_note_id : targetId,
       type,
     }
@@ -202,9 +194,8 @@ const actions = {
         break
     }
   },
-  async addNode ({ rootState, getters, commit, }, { data, }) {
+  async addNode ({ getters, commit, }, { data, }) {
     const params = {
-      token        : rootState.User.token,
       noteTitle    : data.noteTitle,
       parentNoteId : data.noteId,
       noteType     : data.noteType,
@@ -219,10 +210,9 @@ const actions = {
         commit('setHasChild', { node: parentNode, flag: true, })
       })
   },
-  async updateNode ({ rootState, getters, commit, }, { data, }) {
+  async updateNode ({ getters, commit, }, { data, }) {
     const noteId = data.noteId
     const params = {
-      token     : rootState.User.token,
       noteTitle : data.noteTitle,
     }
     const url = this.$config.public.apiUrl + '/notes' + '/' + noteId
@@ -234,16 +224,12 @@ const actions = {
         commit('setTitle', { node, title: response.title, })
       })
   },
-  async deleteNode ({ rootState, getters, commit, }, id = null) {
+  async deleteNode ({ getters, commit, }, id = null) {
     id = id === null ? getters.getSelectNoteId : id
 
-    const params = {
-      token: rootState.User.token,
-    }
     const url = this.$config.public.apiUrl + '/notes' + '/' + id
-    const config = { params, }
     const response = await this.$axios
-      .delete(url, config)
+      .delete(url)
       .then((response) => {
         const node = getters.findTreeNode(getters.getTree, id)
         const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)

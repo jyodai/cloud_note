@@ -25,11 +25,6 @@ export default {
     return {
       email    : '',
       password : '',
-      config   : {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
     }
   },
   mounted () {
@@ -37,10 +32,11 @@ export default {
   },
   methods: {
     async execLogin () {
+      const url = this.$config.public.apiUrl + '/users/token';
       const params = new URLSearchParams()
       params.append('email', this.email)
       params.append('password', this.password)
-      const response = await this.$axios.post(this.$config.public.apiUrl + '/users/token', params, this.config)
+      const response = await this.$axios.post(url, params)
         .catch((e) => {
           alert(e.message)
           return false
@@ -64,8 +60,8 @@ export default {
       }
     },
     async getUser (value) {
-      const queryStr = '?token=' + value
-      const response = await this.$axios.get(this.$config.public.apiUrl + '/user' + queryStr)
+      const url = this.$config.public.apiUrl + '/user';
+      const response = await this.$axios.get(url)
 
       if (response.user) {
         this.$store.commit('User/setUser', response.user)

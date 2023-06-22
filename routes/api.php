@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\UserController;
 
 Route::get("/user",function(){
     $requestData = request();
-    $token = hash('sha256', $requestData['token']);
+    $token = hash('sha256', $requestData->bearerToken());
     $user = \App\Models\User::where("api_token",$token)->first();
     if ($token && $user) {
         return [
@@ -38,6 +38,8 @@ Route::post("users/token", 'Api\UserController@createToken');
 
 Route::middleware(['auth_api'])->group(function () {
     Route::prefix('users')->group(function () {
+        Route::delete("/token", 'Api\UserController@deleteToken');
+
         Route::get('/', [UserController::class, 'index']);
         Route::post('/', [UserController::class, 'store']);
         Route::get('/{id}', [UserController::class, 'show']);
@@ -45,7 +47,6 @@ Route::middleware(['auth_api'])->group(function () {
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
 
-    Route::delete("users/token", 'Api\UserController@deleteToken');
 
 
     Route::get   ('notes'      , 'Api\NoteController@getNote');
