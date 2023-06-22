@@ -2,11 +2,15 @@
   <div class="user-list">
     <modal
       :modal-name="modalName"
+      :modal-option="modalOption"
     >
       <template #modalTitle>
         ユーザー一覧
       </template>
-      <template #modalContent>
+      <template
+        #modalContent
+        v-if="visible"
+      >
         <div class="content-header">
           <v-btn class="mb-2" @click="openAdd()">
             追加
@@ -76,18 +80,22 @@ export default {
   data () {
     return {
       modalName : 'UserList',
+      modalOption : {
+        beforeOpen : this.beforeOpen,
+      },
+      visible : false,
       users  : null,
     }
   },
-  created () {
-    this.load();
-  },
-  mounted () {},
   methods: {
+    beforeOpen () {
+      this.load();
+    },
     async load () {
       const url = this.$config.public.apiUrl + '/users';
       const response = await this.$axios.get(url);
       this.users = response.data
+      this.visible = true;
     },
     closeModal () {
       this.$vfm.hide('UserList')
