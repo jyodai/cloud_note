@@ -27,7 +27,7 @@ class UserController extends Controller
     public function show(int $id): UserResource
 
     {
-        $user = User::select('id', 'name', 'email')->find($id);
+        $user = User::find($id);
         return new UserResource($user);
     }
 
