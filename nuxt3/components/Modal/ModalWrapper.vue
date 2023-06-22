@@ -6,7 +6,6 @@
       content-class="modal-content"
       :modal-id="modalName"
       :teleportTo="false"
-      :displayDirective="'show'"
       @before-open="option.beforeOpen"
     >
       <span class="modal__title">

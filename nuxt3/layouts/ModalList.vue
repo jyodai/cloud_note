@@ -1,29 +1,11 @@
 <template>
   <div>
-    <library-list
-      v-if="reload.libraryList"
-      @reloadModal="reloadModal"
-    />
-    <library-add
-      v-if="reload.libraryAdd"
-      @reloadModal="reloadModal"
-    />
-    <library-edit
-      v-if="reload.libraryEdit"
-      @reloadModal="reloadModal"
-    />
-    <user-list
-      v-if="reload.userList"
-      @reloadModal="reloadModal"
-    />
-    <user-add
-      v-if="reload.userAdd"
-      @reloadModal="reloadModal"
-    />
-    <user-edit
-      v-if="reload.userEdit"
-      @reloadModal="reloadModal"
-    />
+    <library-list/>
+    <library-add/>
+    <library-edit/>
+    <user-list/>
+    <user-add/>
+    <user-edit/>
   </div>
 </template>
 
@@ -43,25 +25,6 @@ export default {
     UserList,
     UserAdd,
     UserEdit,
-  },
-  data () {
-    return {
-      reload: {
-        libraryList : true,
-        libraryAdd  : true,
-        libraryEdit : true,
-        userList    : true,
-        userAdd     : true,
-        userEdit    : true,
-      },
-    }
-  },
-  mounted () {},
-  methods: {
-    reloadModal (key) {
-      this.reload[key] = false
-      this.$nextTick(() => (this.reload[key] = true))
-    },
   },
 }
 </script>
