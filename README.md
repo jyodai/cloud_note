@@ -12,7 +12,7 @@ $ git config --local core.hooksPath .githooks
 #### コンテナの作成
 
 ```
-$ docker-compose up -d
+$ make up
 ```
 
 #### 開発環境の構築
