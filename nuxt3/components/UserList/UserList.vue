@@ -42,7 +42,7 @@
                 </td>
                 <td>
                   <icon-list
-                    :show-icons="['edit', 'trash']"
+                    :show-icons="getShowIcons(user)"
                     @edit="openEdit(user)"
                     @trash="deleteUser(user)"
                   />
@@ -116,6 +116,16 @@ export default {
       const response = await this.$axios.delete(url, config)
 
       this.load();
+    },
+    getShowIcons (user) {
+      const icons = ['edit'];
+      if (!this.isAdminUser(user)) {
+        icons.push('trash')
+      }
+      return icons;
+    },
+    isAdminUser (user) {
+      return user.user_type === this.$const.USER_TYPE_ADMIN;
     },
   },
 }
