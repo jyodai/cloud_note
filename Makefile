@@ -8,6 +8,8 @@ help :
 	# build              ローカル環境のビルド
 	# buildxserver       本番環境アップデート時のビルド
 	# make inittetestdb  test用のデータベースをセットアップ
+	# create_admin_user  管理者ユーザーを作成
+	# cau                create_admin_userのエイリアス
 	# make nuxtwatch     Nuxt3の開発用サーバを起動
 	# make nw            nuxtwatchのエイリアス
 	# make test          Laravelのテストを実行
@@ -69,6 +71,13 @@ createUser :
 	'
 
 cu : createUser
+
+create_admin_user : 
+	docker-compose exec php /bin/bash -c ' \
+		php artisan user:create-admin; \
+	'
+
+cau : create_admin_user
 
 nuxtwatch :
 	docker-compose exec php /bin/bash -c ' \
