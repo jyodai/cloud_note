@@ -1,6 +1,7 @@
 const state = () => ({
-  user  : null,
-  token : null,
+  user        : null,
+  token       : null,
+  isAdminUser : false,
 })
 
 const mutations = {
@@ -10,11 +11,15 @@ const mutations = {
   setToken (state, token) {
     state.token = token
   },
+  setIsAdminUser (state, flag) {
+    state.isAdminUser = flag
+  },
 }
 
 const getters = {
-  getUser  : state => state.user,
-  getToken : state => state.token,
+  getUser     : state => state.user,
+  getToken    : state => state.token,
+  isAdminUser : state => state.isAdminUser,
 }
 
 const actions = {
