@@ -90,7 +90,7 @@ export default {
       this.user = response.data
     },
     close () {
-      this.$vfm.hide('UserEdit')
+      this.$vfm.close('UserEdit')
       this.$emit('reloadModal', 'userEdit')
     },
     async save () {

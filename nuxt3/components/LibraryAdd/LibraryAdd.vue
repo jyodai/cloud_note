@@ -52,7 +52,7 @@ export default {
   mounted () {},
   methods: {
     closeModal () {
-      this.$vfm.hide('LibraryAdd')
+      this.$vfm.close('LibraryAdd')
       this.$emit('reloadModal', 'libraryAdd')
     },
     async addFile () {

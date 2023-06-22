@@ -67,7 +67,7 @@ export default {
       this.newFileName = params.fileName
     },
     closeModal () {
-      this.$vfm.hide('LibraryEdit')
+      this.$vfm.close('LibraryEdit')
       this.$emit('reloadModal', 'libraryEdit')
     },
     async editFile () {

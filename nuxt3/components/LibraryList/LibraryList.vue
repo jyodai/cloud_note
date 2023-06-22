@@ -83,7 +83,7 @@ export default {
       this.getFileList(num)
     },
     closeModal () {
-      this.$vfm.hide('LibraryList')
+      this.$vfm.close('LibraryList')
       this.$emit('reloadModal', 'libraryList')
     },
     async getFileList (num) {

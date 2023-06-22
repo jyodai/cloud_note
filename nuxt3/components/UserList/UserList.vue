@@ -98,7 +98,7 @@ export default {
       this.visible = true;
     },
     closeModal () {
-      this.$vfm.hide('UserList')
+      this.$vfm.close('UserList')
       this.$emit('reloadModal', 'userList')
     },
     openAdd () {

@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     close () {
-      this.$vfm.hide('UserAdd')
+      this.$vfm.close('UserAdd')
       this.$emit('reloadModal', 'userAdd')
     },
     async save () {
