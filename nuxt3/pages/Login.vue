@@ -47,6 +47,7 @@ export default {
         })
       if (response.token) {
         this.$store.commit('User/setUser', response.user)
+        this.$store.commit('User/setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN)
         this.$store.commit('User/setToken', response.token)
         this.$emit('set')
         this.sessionSave(response.token)

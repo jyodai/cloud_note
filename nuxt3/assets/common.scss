@@ -39,6 +39,10 @@ input[type="text"] {
   border: 1px solid #555555;
 }
 
+input[type="text"]:disabled {
+  opacity: 0.4;
+}
+
 /*スクロールバー全体*/
 ::-webkit-scrollbar {
   width: 8px;

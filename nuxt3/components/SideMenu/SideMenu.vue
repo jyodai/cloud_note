@@ -38,7 +38,10 @@
           </div>
         </template>
         <template v-if="menu.setting.show">
-          <div @click="openModal('UserList')">
+          <div
+            v-if="isAdminUser"
+            @click="openModal('UserList')"
+          >
             <v-icon size="14">
               mdi-checkbox-blank-circle
             </v-icon>
@@ -63,6 +66,7 @@ export default {
   },
   data () {
     return {
+      isAdminUser : this.$store.getters['User/isAdminUser'],
       menu: {
         edit: {
           show: false,

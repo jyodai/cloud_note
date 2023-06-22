@@ -16,7 +16,11 @@
                   ユーザー名
                 </th>
                 <td>
-                  <input type="text" v-model="user.name">
+                  <input
+                    type="text"
+                    v-model="user.name"
+                    :disabled="isAdminUser(user)"
+                  >
                 </td>
               </tr>
               <tr>
@@ -24,7 +28,11 @@
                   メールアドレス
                 </th>
                 <td>
-                  <input type="text" v-model="user.email">
+                  <input
+                    type="text"
+                    v-model="user.email"
+                    :disabled="isAdminUser(user)"
+                  >
                 </td>
               </tr>
               <tr>
@@ -80,6 +88,7 @@ export default {
       const queryStr = '?token=' + this.$store.getters['User/getToken'];
       const response = await this.$axios.get(this.$config.public.apiUrl + '/users/' + id + queryStr)
       this.user = response.data
+      console.log(this.user)
     },
     close () {
       this.$vfm.hide('UserEdit')
@@ -91,7 +100,10 @@ export default {
       const params = this.user;
       await this.$axios.put(url, params)
       this.close()
-    }
+    },
+    isAdminUser (user) {
+      return user.user_type === this.$const.USER_TYPE_ADMIN;
+    },
   },
 }
 </script>

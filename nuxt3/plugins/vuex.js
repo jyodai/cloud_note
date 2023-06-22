@@ -7,7 +7,7 @@ import NoteContent from '~/store/NoteContent.js';
 
 
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxtApp) => {
   const registerAxios = (store) => {
     store.$axios = axios;
   };
@@ -16,6 +16,10 @@ export default defineNuxtPlugin(() => {
   const registerConfig = (store) => {
     store.$config = runtimeConfig;
   };
+
+  const registerConst = (store) => {
+    store.$const = nuxtApp.$const;
+  }
 
   const store = createStore({
     modules: {
@@ -27,6 +31,7 @@ export default defineNuxtPlugin(() => {
     plugins: [
       registerAxios,
       registerConfig,
+      registerConst,
     ]
   });
 
