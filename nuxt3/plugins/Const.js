@@ -4,6 +4,8 @@ export default defineNuxtPlugin(() => {
         const : {
           NOTE_TYPE_NORMAL : 'App\\Models\\NoteContent',
           NOTE_TYPE_TASK : 'App\\Models\\Task',
+
+          USER_TYPE_ADMIN : 1,
         }
       },
     };
