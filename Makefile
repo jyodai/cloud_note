@@ -24,13 +24,15 @@ shdb :
 	"
 
 build :
-	composer install
-	cp .env.example .env
-	chmod 777 -R ./storage/
-	php artisan key:generate
-	php artisan migrate
-	php artisan db:seed
-	cd nuxt && npm install && cp .env.example .env
+	docker-compose exec php /bin/bash -c ' \
+		composer install; \
+		cp .env.example .env; \
+		chmod 777 -R ./storage/; \
+		php artisan key:generate; \
+		php artisan migrate; \
+		php artisan db:seed; \
+		cd nuxt && npm install && cp .env.example .env; \
+	'
 
 buildxserver :
 	git pull origin master
