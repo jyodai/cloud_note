@@ -4,7 +4,9 @@
       v-model="showModal"
       class="modal-container"
       content-class="modal-content"
-      :name="modalName"
+      :modal-id="modalName"
+      :teleportTo="false"
+      :displayDirective="'show'"
       @before-open="option.beforeOpen"
     >
       <span class="modal__title">
@@ -21,9 +23,11 @@
 </template>
 
 <script>
+import { VueFinalModal } from 'vue-final-modal';
 
 export default {
   components: {
+    VueFinalModal,
   },
   props: {
     modalName: {
