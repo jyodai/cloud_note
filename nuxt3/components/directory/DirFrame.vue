@@ -9,31 +9,33 @@
           @node-folded-changed="nodeFoldedChanged"
         >
           <template v-slot="{node, index, path, tree}">
-            <span
-              v-if="node.data.hasChild"
-              @click="tree.toggleFold(node, path); toggle(node)"
-            >
-              <v-icon v-if="node.$folded" size="12">
-                mdi-folder
-              </v-icon>
-              <v-icon v-else size="12">
-                mdi-folder-open
-              </v-icon>
-            </span>
-
-            <span v-else>
-              <v-icon size="12">
-                mdi-file-outline
-              </v-icon>
-            </span>
-
-            <span
-              class="tree-title"
+            <div
+              class="tree-node-container"
               @click="setNote(node.data)"
               @mouseup.right="selectNoteTree(node.data)"
             >
-              {{ node.title }}
-            </span>
+              <span
+                v-if="node.data.hasChild"
+                @click="tree.toggleFold(node, path); toggle(node)"
+              >
+                <v-icon v-if="node.$folded" size="12">
+                  mdi-folder
+                </v-icon>
+                <v-icon v-else size="12">
+                  mdi-folder-open
+                </v-icon>
+              </span>
+
+              <span v-else>
+                <v-icon size="12">
+                  mdi-file-outline
+                </v-icon>
+              </span>
+
+              <span>
+                {{ node.title }}
+              </span>
+            </div>
           </template>
         </Tree>
       </div>
@@ -194,8 +196,11 @@ export default {
         .tree-node {
           border:none;
           padding:0;
-          .tree-title {
+          .tree-node-container {
             cursor: pointer;
+            &:hover {
+              background: #666666;
+            }
           }
         }
     }
