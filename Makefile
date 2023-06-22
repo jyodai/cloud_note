@@ -3,6 +3,9 @@ include .env
 all : help
 
 help : 
+	# up                 コンテナの起動
+	# stop               コンテナの停止
+	# restart            コンテナの再起動
 	# make sh            Docker ContainerにShellで接続
 	# make shdb          Docker ContainerにShellで接続後
 	# build              ローカル環境のビルド
@@ -14,6 +17,14 @@ help :
 	# make nw            nuxtwatchのエイリアス
 	# make test          Laravelのテストを実行
 	# make cert          Nuxt3の開発環境用の証明書を発行
+
+up :
+	docker-compose up -d
+
+stop :
+	docker-compose stop
+
+reset : stop up
 
 sh :
 	docker-compose exec php /bin/bash
