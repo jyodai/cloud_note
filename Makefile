@@ -3,15 +3,28 @@ include .env
 all : help
 
 help : 
-	# make sh            Docker ContainerにShellで接続
-	# make shdb          Docker ContainerにShellで接続後
-	# build              ローカル環境のビルド
-	# buildxserver       本番環境アップデート時のビルド
-	# make inittetestdb  test用のデータベースをセットアップ
-	# make nuxtwatch     Nuxt3の開発用サーバを起動
-	# make nw            nuxtwatchのエイリアス
-	# make test          Laravelのテストを実行
-	# make cert          Nuxt3の開発環境用の証明書を発行
+	# up                コンテナの起動
+	# stop              コンテナの停止
+	# restart           コンテナの再起動
+	# sh                Docker ContainerにShellで接続
+	# shdb              Docker ContainerにShellで接続後
+	# build             ローカル環境のビルド
+	# buildxserver      本番環境アップデート時のビルド
+	# inittetestdb      test用のデータベースをセットアップ
+	# create_admin_user 管理者ユーザーを作成
+	# cau               create_admin_userのエイリアス
+	# nuxtwatch         Nuxt3の開発用サーバを起動
+	# nw                nuxtwatchのエイリアス
+	# test              Laravelのテストを実行
+	# cert              Nuxt3の開発環境用の証明書を発行
+
+up :
+	docker-compose up -d
+
+stop :
+	docker-compose stop
+
+reset : stop up
 
 sh :
 	docker-compose exec php /bin/bash
@@ -22,13 +35,15 @@ shdb :
 	"
 
 build :
-	composer install
-	cp .env.example .env
-	chmod 777 -R ./storage/
-	php artisan key:generate
-	php artisan migrate
-	php artisan db:seed
-	cd nuxt && npm install && cp .env.example .env
+	docker-compose exec php /bin/bash -c ' \
+		composer install; \
+		cp .env.example .env; \
+		chmod 777 -R ./storage/; \
+		php artisan key:generate; \
+		php artisan migrate; \
+		php artisan db:seed; \
+		cd nuxt && npm install && cp .env.example .env; \
+	'
 
 buildxserver :
 	git pull origin master
@@ -69,6 +84,13 @@ createUser :
 	'
 
 cu : createUser
+
+create_admin_user : 
+	docker-compose exec php /bin/bash -c ' \
+		php artisan user:create-admin; \
+	'
+
+cau : create_admin_user
 
 nuxtwatch :
 	docker-compose exec php /bin/bash -c ' \
