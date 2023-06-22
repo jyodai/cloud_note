@@ -28,6 +28,7 @@
             </span>
 
             <span
+              class="tree-title"
               @click="setNote(node.data)"
               @mouseup.right="selectNoteTree(node.data)"
             >
@@ -193,6 +194,9 @@ export default {
         .tree-node {
           border:none;
           padding:0;
+          .tree-title {
+            cursor: pointer;
+          }
         }
     }
   }
