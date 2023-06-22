@@ -8,7 +8,7 @@ help :
 	# build              ローカル環境のビルド
 	# buildxserver       本番環境アップデート時のビルド
 	# make inittetestdb  test用のデータベースをセットアップ
-	# make nuxtwatch     開発時のVue自動ビルドを実行
+	# make nuxtwatch     Nuxt3の開発用サーバを起動
 	# make nw            nuxtwatchのエイリアス
 	# make test          Laravelのテストを実行
 	# make cert          Nuxt3の開発環境用の証明書を発行
@@ -71,7 +71,9 @@ createUser :
 cu : createUser
 
 nuxtwatch :
-	cd nuxt && npm run dev
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3 && npm run dev; \
+	'
 
 nw : nuxtwatch
 
