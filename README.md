@@ -31,10 +31,3 @@ $ make nw
 以下のURLでアクセス可能になる。
 
 https://127.0.0.1:8887/cloud-note/login
-
-### 2回目以降
-
-```
-$ make nw
-```
-でNuxtのサーバを起動すればよい。
