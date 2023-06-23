@@ -27,55 +27,15 @@ export default {
       password : '',
     }
   },
-  mounted () {
-    this.sessionCheck()
-  },
   methods: {
     async execLogin () {
-      const url = this.$config.public.apiUrl + '/users/token';
-      const params = new URLSearchParams()
-      params.append('email', this.email)
-      params.append('password', this.password)
-      const response = await this.$axios.post(url, params)
-        .catch((e) => {
-          alert(e.message)
-          return false
-        })
-      if (response.token) {
-        this.$store.commit('User/setUser', response.user)
-        this.$store.commit('User/setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN)
-        this.$store.commit('User/setToken', response.token)
-        this.$emit('set')
-        this.sessionSave(response.token)
-        this.$router.push('/')
-      }
-
-      if (response.message) {
-        alert(response.message)
-      }
-    },
-    sessionSave (token) {
-      if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
-        sessionStorage.setItem('token', token)
-      }
-    },
-    async getUser (value) {
-      const url = this.$config.public.apiUrl + '/user';
-      const response = await this.$axios.get(url)
-
-      if (response.user) {
-        this.$store.commit('User/setUser', response.user)
-        this.$store.commit('User/setToken', value)
-        this.$emit('set')
-      }
-    },
-    sessionCheck () {
-      if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
-        // ストレージ使用可能
-        const token = sessionStorage.getItem('token')
-        if (token) {
-          this.getUser(token)
-        }
+      const params = {
+        'email'    : this.email,
+        'password' : this.password,
+      };
+      await this.$store.dispatch('User/login', params);
+      if (this.$store.getters['User/getUser']) {
+        this.$router.push('/');
       }
     },
   },
