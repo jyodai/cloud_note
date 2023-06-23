@@ -23,6 +23,19 @@ const getters = {
 }
 
 const actions = {
+  async login ({ commit, }, params) {
+    const url = this.$config.public.apiUrl + '/users/token';
+    await this.$axios.post(url, params)
+      .then((response) => {
+        commit('setUser', response.user)
+        commit('setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN)
+        commit('setToken', response.token)
+        sessionSave(response.token)
+      })
+      .catch((e) => {
+        alert(e.message)
+      })
+  },
   async logout ({ commit, }) {
     await this.$axios.delete(this.$config.public.apiUrl + '/users/token')
 
@@ -32,6 +45,12 @@ const actions = {
 
     commit('setUser', null)
   },
+}
+
+function sessionSave (token) {
+  if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
+    sessionStorage.setItem('token', token)
+  }
 }
 
 export default {
