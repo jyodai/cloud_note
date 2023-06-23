@@ -19,7 +19,7 @@
             >
               <span
                 v-if="node.data.hasChild"
-                @click="tree.toggleFold(node, path); toggle(node)"
+                @click.stop="tree.toggleFold(node, path);"
               >
                 <v-icon v-if="node.$folded" size="12">
                   mdi-folder
