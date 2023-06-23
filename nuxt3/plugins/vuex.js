@@ -21,6 +21,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     store.$const = nuxtApp.$const;
   }
 
+  const registerUtil = (store) => {
+    store.$util = nuxtApp.$util;
+  }
+
   const store = createStore({
     modules: {
       User,
@@ -32,6 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       registerAxios,
       registerConfig,
       registerConst,
+      registerUtil,
     ]
   });
 

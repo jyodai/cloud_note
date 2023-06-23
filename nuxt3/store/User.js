@@ -30,7 +30,7 @@ const actions = {
         commit('setUser', response.user)
         commit('setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN)
         commit('setToken', response.token)
-        sessionSave(response.token)
+        this.$util.sessionStorage.set('token', response.token)
       })
       .catch((e) => {
         alert(e.message)
@@ -38,11 +38,7 @@ const actions = {
   },
   async logout ({ commit, }) {
     await this.$axios.delete(this.$config.public.apiUrl + '/users/token')
-
-    if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
-      sessionStorage.removeItem('token')
-    }
-
+    this.$util.sessionStorage.remove('token')
     commit('setUser', null)
   },
   async setUser ({ commit, }) {
@@ -51,12 +47,6 @@ const actions = {
     commit('setToken', response.token)
     commit('setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN)
   },
-}
-
-function sessionSave (token) {
-  if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
-    sessionStorage.setItem('token', token)
-  }
 }
 
 export default {

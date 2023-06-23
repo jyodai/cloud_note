@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
-  if (tokenCheck() === false) {
+  if (!app.$util.sessionStorage.exists('token')) {
     return navigateTo('/login')
   }
 
@@ -12,16 +12,3 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   return
 })
-
-function tokenCheck () {
-  if (!('sessionStorage' in window) || (window.sessionStorage === null)) {
-    // ストレージ使用不可
-    return false
-  }
-
-  const token = sessionStorage.getItem('token')
-  if (!token) {
-    return false
-  }
-  return true;
-}
