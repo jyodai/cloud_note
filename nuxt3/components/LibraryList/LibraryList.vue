@@ -107,9 +107,11 @@ export default {
     },
     openAddImageLibrary () {
       this.$vfm.open('LibraryAdd')
+      this.$vfm.setClosedCallback('LibraryAdd', () => { this.beforeOpen() })
     },
     openEdit (fileName) {
       this.$vfm.open('LibraryEdit', {fileName, })
+      this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen() })
     },
     async deleteFile (fileName) {
       const url = this.$config.public.apiUrl + '/libraries/files';

@@ -102,9 +102,11 @@ export default {
     },
     openAdd () {
       this.$vfm.open('UserAdd')
+      this.$vfm.setClosedCallback('UserAdd', () => { this.beforeOpen() })
     },
     openEdit (user) {
       this.$vfm.open('UserEdit', {user, })
+      this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen() })
     },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {
