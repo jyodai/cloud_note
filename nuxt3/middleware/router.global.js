@@ -4,14 +4,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
-  if (await tokenCheck(app, app.$store) === false) {
+  if (tokenCheck() === false) {
     return navigateTo('/login')
   }
+
+  await app.$store.dispatch('User/setUser');
 
   return
 })
 
-async function tokenCheck (app, store) {
+function tokenCheck () {
   if (!('sessionStorage' in window) || (window.sessionStorage === null)) {
     // ストレージ使用不可
     return false
@@ -21,14 +23,5 @@ async function tokenCheck (app, store) {
   if (!token) {
     return false
   }
-
-  store.commit('User/setToken', token)
-
-  const response = await app.$axios.get(app.$config.public.apiUrl + '/user')
-  if (response.user) {
-    store.commit('User/setUser', response.user)
-    store.commit('User/setIsAdminUser', response.user.user_type === app.$const.USER_TYPE_ADMIN)
-  }
-
-  return true
+  return true;
 }
