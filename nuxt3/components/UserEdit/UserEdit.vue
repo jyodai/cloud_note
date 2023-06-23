@@ -81,22 +81,21 @@ export default {
       this.loadParams()
     },
     async loadParams () {
-      const modal = this.$vfm.get('UserEdit')
-      const params = modal.params
+      const params = this.$vfm.getParams('UserEdit');
       const id = params.user.id
 
       const url = this.$config.public.apiUrl + '/users/' + id;
       const response = await this.$axios.get(url)
       this.user = response.data
     },
-    close () {
-      this.$vfm.close('UserEdit')
+    close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
+      this.$vfm.close('UserEdit', closeType);
     },
     async save () {
       const url = this.$config.public.apiUrl + '/users/' + this.user.id;
       const params = this.user;
       await this.$axios.put(url, params)
-      this.close()
+      this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
     },
     isAdminUser (user) {
       return user.user_type === this.$const.USER_TYPE_ADMIN;

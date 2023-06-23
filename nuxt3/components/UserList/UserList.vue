@@ -98,15 +98,15 @@ export default {
       this.visible = true;
     },
     closeModal () {
-      this.$vfm.close('UserList')
+      this.$vfm.close('UserList', this.$config.MODAL_CLOSE_TYPE_CLOSE);
     },
     openAdd () {
       this.$vfm.open('UserAdd')
+      this.$vfm.setClosedCallback('UserAdd', () => { this.beforeOpen() })
     },
     openEdit (user) {
-      const modal = this.$vfm.get('UserEdit')
-      modal.params = { user, }
-      this.$vfm.open('UserEdit')
+      this.$vfm.open('UserEdit', {user, })
+      this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen() })
     },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {

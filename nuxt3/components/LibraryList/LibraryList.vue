@@ -83,7 +83,7 @@ export default {
       this.getFileList(num)
     },
     closeModal () {
-      this.$vfm.close('LibraryList')
+      this.$vfm.close('LibraryList', this.$const.MODAL_CLOSE_TYPE_CLOSE);
     },
     async getFileList (num) {
       const queryStr = '?type=list' + '&num=' + num
@@ -107,11 +107,11 @@ export default {
     },
     openAddImageLibrary () {
       this.$vfm.open('LibraryAdd')
+      this.$vfm.setClosedCallback('LibraryAdd', () => { this.beforeOpen() })
     },
     openEdit (fileName) {
-      const modal = this.$vfm.get('LibraryEdit')
-      modal.params = { fileName, }
-      this.$vfm.open('LibraryEdit')
+      this.$vfm.open('LibraryEdit', {fileName, })
+      this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen() })
     },
     async deleteFile (fileName) {
       const url = this.$config.public.apiUrl + '/libraries/files';

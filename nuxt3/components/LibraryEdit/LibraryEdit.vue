@@ -60,14 +60,13 @@ export default {
       this.loadParams()
     },
     loadParams () {
-      const modal = this.$vfm.get('LibraryEdit')
-      const params = modal.params
+      const params = this.$vfm.getParams('LibraryEdit');
 
       this.originFileName = params.fileName
       this.newFileName = params.fileName
     },
-    closeModal () {
-      this.$vfm.close('LibraryEdit')
+    closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
+      this.$vfm.close('LibraryEdit', closeType);
     },
     async editFile () {
       const url = this.$config.public.apiUrl + '/libraries/files';
@@ -78,7 +77,7 @@ export default {
       const response = await this.$axios.put(url, params)
       alert(response.message)
 
-      this.closeModal()
+      this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
     },
     setGetParam () {
     },
