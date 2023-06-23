@@ -66,14 +66,14 @@ class UserController extends Controller
         if ($user) {
             if ($this->overAttempts($user)) {
                 $ret ["message"] = "100回ログインに失敗しました。アカウントはロック中です";
-                return $ret;
+                return response($ret, 401);
             };
         }
 
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             $ret ["message"] = "メールアドレス、若しくはパスワードが間違っています";
-            return $ret;
+            return response($ret, 401);
         }
 
         $token = Str::random(60);
