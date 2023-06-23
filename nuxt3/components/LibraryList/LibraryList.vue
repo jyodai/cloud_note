@@ -109,9 +109,7 @@ export default {
       this.$vfm.open('LibraryAdd')
     },
     openEdit (fileName) {
-      const modal = this.$vfm.get('LibraryEdit')
-      modal.params = { fileName, }
-      this.$vfm.open('LibraryEdit')
+      this.$vfm.open('LibraryEdit', {fileName, })
     },
     async deleteFile (fileName) {
       const url = this.$config.public.apiUrl + '/libraries/files';

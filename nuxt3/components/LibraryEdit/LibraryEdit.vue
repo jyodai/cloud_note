@@ -60,8 +60,7 @@ export default {
       this.loadParams()
     },
     loadParams () {
-      const modal = this.$vfm.get('LibraryEdit')
-      const params = modal.params
+      const params = this.$vfm.getParams('LibraryEdit');
 
       this.originFileName = params.fileName
       this.newFileName = params.fileName

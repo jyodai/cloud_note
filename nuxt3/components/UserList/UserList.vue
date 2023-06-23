@@ -104,9 +104,7 @@ export default {
       this.$vfm.open('UserAdd')
     },
     openEdit (user) {
-      const modal = this.$vfm.get('UserEdit')
-      modal.params = { user, }
-      this.$vfm.open('UserEdit')
+      this.$vfm.open('UserEdit', {user, })
     },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {

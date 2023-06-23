@@ -42,6 +42,11 @@ export default class VueFinalModal {
     modal.params = params;
   }
 
+  getParams(id) {
+    const modal = this.get(id);
+    return modal.params;
+  }
+
   unsetParams (id) {
     const modal = this.get(id);
     if ('params' in modal) {
