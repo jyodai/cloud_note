@@ -56,7 +56,7 @@ const actions = {
       return
     }
 
-    const noteTabArray = JSON.parse(localStorage.getItem('noteTab'))
+    const noteTabArray = this.$util.localStorage.get('noteTab');
     if (noteTabArray) {
       noteTabArray.forEach((note) => {
         if (rootState.User.user.id === note.user_id) {
@@ -65,7 +65,7 @@ const actions = {
       })
       dispatch('saveLocalStorage')
     } else {
-      localStorage.setItem('noteTab', JSON.stringify([]))
+      this.$util.localStorage.set('noteTab', [])
     }
   },
   setNoteTab ({ commit, dispatch, }, note) {
@@ -94,7 +94,7 @@ const actions = {
   },
   saveLocalStorage ({ getters, }) {
     const noteTab = getters.getNoteTab
-    localStorage.setItem('noteTab', JSON.stringify(noteTab))
+    this.$util.localStorage.set('noteTab', noteTab);
   },
 }
 
