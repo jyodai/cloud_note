@@ -129,8 +129,8 @@ export default {
     openModal(key) {
       this.$vfm.open(key)
     },
-    logout () {
-      this.$store.dispatch('User/logout')
+    async logout () {
+      await this.$store.dispatch('User/logout')
       window.location.href = '/login';
     },
   },
