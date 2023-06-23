@@ -7,17 +7,26 @@
         </v-icon>
       </div>
       <div class="content">
-        <div class="icon-box g-center" @click="openNote">
+        <div
+          class="icon-box g-center g-pointer"
+          @click="openNote"
+        >
           <v-icon size="25">
             mdi-file-tree-outline
           </v-icon>
         </div>
-        <div class="icon-box g-center" @click="changeMenu('edit')">
+        <div
+          class="icon-box g-center g-pointer"
+          @click="changeMenu('edit')"
+        >
           <v-icon size="25">
             mdi-application-edit-outline
           </v-icon>
         </div>
-        <div class="icon-box g-center" @click="changeMenu('setting')">
+        <div
+          class="icon-box g-center g-pointer"
+          @click="changeMenu('setting')"
+        >
           <v-icon size="25">
             mdi-cog
           </v-icon>
@@ -30,7 +39,10 @@
       </div>
       <div class="content">
         <template v-if="menu.edit.show">
-          <div @click="openModal('LibraryList')">
+          <div
+            @click="openModal('LibraryList')"
+            class="g-pointer"
+          >
             <v-icon size="14">
               mdi-checkbox-blank-circle
             </v-icon>
@@ -41,14 +53,20 @@
           <div
             v-if="isAdminUser"
             @click="openModal('UserList')"
+            class="g-pointer"
           >
             <v-icon size="14">
               mdi-checkbox-blank-circle
             </v-icon>
             ユーザー
           </div>
-          <div @click="logout">
-            <v-icon size="14">
+          <div
+            @click="logout"
+            class="g-pointer"
+          >
+            <v-icon
+              size="14"
+            >
               mdi-checkbox-blank-circle
             </v-icon>
             ログアウト
