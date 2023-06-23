@@ -51,8 +51,8 @@ export default {
   created () {},
   mounted () {},
   methods: {
-    closeModal () {
-      this.$vfm.close('LibraryAdd')
+    closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
+      this.$vfm.close('LibraryAdd', closeType);
     },
     async addFile () {
       const url = this.$config.public.apiUrl + '/libraries/files';
@@ -64,7 +64,7 @@ export default {
       const response = await this.$axios.post(url, params)
       alert(response.message)
 
-      this.closeModal()
+      this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
     },
     selectedFile (event) {
       this.uploadFiles = event.target.files

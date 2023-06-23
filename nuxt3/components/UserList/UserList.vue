@@ -98,7 +98,7 @@ export default {
       this.visible = true;
     },
     closeModal () {
-      this.$vfm.close('UserList')
+      this.$vfm.close('UserList', this.$config.MODAL_CLOSE_TYPE_CLOSE);
     },
     openAdd () {
       this.$vfm.open('UserAdd')

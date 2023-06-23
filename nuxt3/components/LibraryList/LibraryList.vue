@@ -83,7 +83,7 @@ export default {
       this.getFileList(num)
     },
     closeModal () {
-      this.$vfm.close('LibraryList')
+      this.$vfm.close('LibraryList', this.$const.MODAL_CLOSE_TYPE_CLOSE);
     },
     async getFileList (num) {
       const queryStr = '?type=list' + '&num=' + num
