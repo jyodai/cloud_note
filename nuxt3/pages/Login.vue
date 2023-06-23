@@ -27,9 +27,6 @@ export default {
       password : '',
     }
   },
-  mounted () {
-    this.sessionCheck()
-  },
   methods: {
     async execLogin () {
       const params = {
@@ -39,25 +36,6 @@ export default {
       await this.$store.dispatch('User/login', params);
       if (this.$store.getters['User/getUser']) {
         this.$router.push('/');
-      }
-    },
-    async getUser (value) {
-      const url = this.$config.public.apiUrl + '/user';
-      const response = await this.$axios.get(url)
-
-      if (response.user) {
-        this.$store.commit('User/setUser', response.user)
-        this.$store.commit('User/setToken', value)
-        this.$emit('set')
-      }
-    },
-    sessionCheck () {
-      if (('sessionStorage' in window) && (window.sessionStorage !== null)) {
-        // ストレージ使用可能
-        const token = sessionStorage.getItem('token')
-        if (token) {
-          this.getUser(token)
-        }
       }
     },
   },
