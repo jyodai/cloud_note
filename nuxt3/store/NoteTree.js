@@ -147,6 +147,9 @@ const actions = {
   removeRestoreTreeData ({ getters, }, id) {
     const restoreLists = this.$util.localStorage.get('restoreTreeLists')
     const index = restoreLists.indexOf(id)
+    if (index === -1) {
+      return;
+    }
     restoreLists.splice(index, 1)
 
     // ネスト内の子ファイルが開いていた場合の対策
