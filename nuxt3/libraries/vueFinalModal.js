@@ -31,6 +31,25 @@ export default class VueFinalModal {
     this.vfm.close(id);
     this.unsetParams(id);
     this.setClosedInfo(id, closeType);
+    this.execClosedCallback(id);
+    this.unsetClosedCallback(id);
+  }
+
+  setClosedCallback(id, callback) {
+    const modal = this.get(id);
+    modal.closedCallback = callback;
+  }
+
+  unsetClosedCallback(id) {
+    const modal = this.get(id);
+    delete modal.closedCallback
+  }
+
+  execClosedCallback(id) {
+    const modal = this.get(id);
+    if ('closedCallback' in modal) {
+      modal.closedCallback();
+    }
   }
 
   get (id) {
@@ -50,7 +69,7 @@ export default class VueFinalModal {
   unsetParams (id) {
     const modal = this.get(id);
     if ('params' in modal) {
-      modal.params = {};
+      delete modal.params;
     }
   }
 }
