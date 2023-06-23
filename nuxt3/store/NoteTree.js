@@ -82,14 +82,13 @@ const actions = {
     commit('setSelectNote', note)
   },
   async loadTree ({ commit, }) {
-    const restoreTreeLists = localStorage.getItem('restoreTreeLists') === null
-      ? JSON.stringify([])
-      : localStorage.getItem('restoreTreeLists')
+    const restoreTreeLists = this.$util.localStorage.exists('restoreTreeLists')
+      ? this.$util.localStorage.get('restoreTreeLists')
+      : [];
 
     const url = this.$config.public.apiUrl + '/tree';
-    const params = {}
-    if (restoreTreeLists.length !== 0) {
-      params.tree = restoreTreeLists
+    const params = {
+      tree : JSON.stringify(restoreTreeLists),
     }
     const config = { params, }
     const response = await this.$axios.get(url, config)
@@ -134,7 +133,7 @@ const actions = {
     await dispatch('removeRestoreTreeData', id)
   },
   addRestoreTreeData (state, id) {
-    let restore = JSON.parse(localStorage.getItem('restoreTreeLists'))
+    let restore = this.$util.localStorage.get('restoreTreeLists');
     if (restore === null) {
       restore = []
     }
@@ -143,10 +142,10 @@ const actions = {
       restore.push(id)
     }
 
-    localStorage.setItem('restoreTreeLists', JSON.stringify(restore))
+    this.$util.localStorage.set('restoreTreeLists', restore)
   },
   removeRestoreTreeData ({ getters, }, id) {
-    const restoreLists = JSON.parse(localStorage.getItem('restoreTreeLists'))
+    const restoreLists = this.$util.localStorage.get('restoreTreeLists')
     const index = restoreLists.indexOf(id)
     restoreLists.splice(index, 1)
 
@@ -158,7 +157,7 @@ const actions = {
       }
     })
 
-    localStorage.setItem('restoreTreeLists', JSON.stringify(newRestoreLists))
+    this.$util.localStorage.set('restoreTreeLists', newRestoreLists)
   },
   async moveNode ({ getters, commit, }, { id, position, }) {
     const targetId = position.node.data.id
