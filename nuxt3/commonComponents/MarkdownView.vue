@@ -153,6 +153,7 @@ export default {
 }
 </script>
 
+<!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style lang="scss">
 .markdown-area {
   font-family: 'Noto Sans JP', sans-serif;

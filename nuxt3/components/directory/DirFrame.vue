@@ -195,6 +195,7 @@ export default {
 }
 </style>
 
+<!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style lang="scss">
 .he-tree {
   width: 100%;
