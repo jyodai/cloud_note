@@ -14,6 +14,9 @@ module.exports = {
     mermaid : true,
     Prism   : false,
   },
+  plugins : [
+    'align-assignments',
+  ],
   rules: {
     indent : ['error', 2],
     eqeqeq : 'error', // 厳密な比較のみ許可
@@ -34,6 +37,6 @@ module.exports = {
     // 以降プラグインから追加
 
     // 垂直方向のイコールを揃える
-    'eslint-plugin-align-assignments' : [2, { 'requiresOnly' : false}],
+    "align-assignments/align-assignments": [2, { "requiresOnly": false } ]
   },
 }
