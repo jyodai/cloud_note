@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .title-area {
   width: 100%;
   text-align: left;

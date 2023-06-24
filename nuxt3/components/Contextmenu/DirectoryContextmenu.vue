@@ -153,6 +153,7 @@ ParentId : ${note.parent_note_id}
 }
 </style>
 
+<!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style>
 /* Todo:グローバルなスタイルはどこかにまとめる */
 .v-contextmenu {

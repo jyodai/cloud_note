@@ -28,7 +28,7 @@ export default {
       default : () => { return {} },
     },
   },
-  emit : [
+  emits : [
     'saveNote',
     'blur',
   ],
@@ -99,6 +99,7 @@ export default {
 }
 </script>
 
+<!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style lang="scss">
 .markdown-edit {
   height: 100%;
