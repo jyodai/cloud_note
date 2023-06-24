@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const app = useNuxtApp()
-  if (to.name === 'Login') {
+  if (to.name === 'login') {
     return
   }
 
