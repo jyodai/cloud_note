@@ -41,8 +41,22 @@ module.exports = {
     ],
     'no-var'      : 2, //varを禁止
     'no-debugger' : 'warn',
+    
 
     // 以降プラグインから追加
+
+    "vue/multi-word-component-names": [
+      "error",
+      {
+        "ignores": [
+          'index',
+          'login',
+          'default',
+          'dashboard',
+          'error',
+        ],
+      }
+    ],
 
     // 垂直方向のイコールを揃える
     "align-assignments/align-assignments" : [2, { "requiresOnly" : false } ]
