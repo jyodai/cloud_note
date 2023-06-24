@@ -45,10 +45,10 @@ module.exports = {
 
     // 以降プラグインから追加
 
-    'vue/multi-word-component-names': [
+    'vue/multi-word-component-names' : [
       'error',
       {
-        'ignores': [
+        'ignores' : [
           'index',
           'login',
           'default',
