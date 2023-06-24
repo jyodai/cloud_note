@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   root          : true,
   parserOptions : {
@@ -11,8 +12,15 @@ module.exports = {
     'plugin:vue-scoped-css/vue3-recommended',
   ],
   globals : {
-    mermaid : true,
-    Prism   : false,
+    mermaid                   : true,
+    Prism                     : false,
+    process                   : false,
+    defineNuxtPlugin          : false,
+    defineNuxtRouteMiddleware : false,
+    useRuntimeConfig          : false,
+    setPageLayout             : false,
+    navigateTo                : false,
+    useNuxtApp                : false,
   },
   plugins : [
     'align-assignments',
