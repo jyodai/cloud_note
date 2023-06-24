@@ -45,10 +45,10 @@ module.exports = {
 
     // 以降プラグインから追加
 
-    "vue/multi-word-component-names": [
-      "error",
+    'vue/multi-word-component-names': [
+      'error',
       {
-        "ignores": [
+        'ignores': [
           'index',
           'login',
           'default',
@@ -59,6 +59,6 @@ module.exports = {
     ],
 
     // 垂直方向のイコールを揃える
-    "align-assignments/align-assignments" : [2, { "requiresOnly" : false } ]
+    'align-assignments/align-assignments' : [2, { 'requiresOnly' : false } ]
   },
 }
