@@ -19,16 +19,16 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-dark.css'
 
 export default {
-  components: {
+  components : {
     codemirror,
   },
-  props: {
-    content: {
+  props : {
+    content : {
       type    : Object,
       default : () => {},
     },
   },
-  emit: [
+  emit : [
     'saveNote',
     'blur',
   ],
@@ -47,19 +47,19 @@ export default {
         lineWrapping    : false,
         theme           : 'base16-dark',
         extraKeys       : {
-          Tab: (cm) => {
+          Tab : (cm) => {
             if (cm.somethingSelected()) {
               cm.execCommand('indentMore')
               return
             }
             cm.execCommand('insertSoftTab')
           },
-          'Shift-Tab': cm => cm.execCommand('indentLess'),
+          'Shift-Tab' : cm => cm.execCommand('indentLess'),
         },
       },
     }
   },
-  watch: {
+  watch : {
     content () {
       this.reset()
     },
@@ -76,7 +76,7 @@ export default {
       }
     }, false)
   },
-  methods: {
+  methods : {
     reset () {
       this.codemirrorContent = this.content.content
       this.contentChangeFlag = false
@@ -88,12 +88,12 @@ export default {
       this.contentChangeFlag = true
     },
     onBlur () {
-      this.$emit('blur', { id: this.content.id, content: this.codemirrorContent, })
+      this.$emit('blur', { id : this.content.id, content : this.codemirrorContent, })
       this.contentChangeFlag = false
     },
     // ctrl + s で発火
     saveNote () {
-      this.$emit('saveNote', { id: this.content.id, content: this.codemirrorContent, })
+      this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, })
       this.contentChangeFlag = false
     },
   },

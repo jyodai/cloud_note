@@ -1,9 +1,16 @@
 <template>
   <splitpanes class="dashboard">
-    <pane id="sidePanel" size="0" class="side-panel">
+    <pane
+      id="sidePanel"
+      size="0"
+      class="side-panel"
+    >
       <side-menu />
     </pane>
-    <pane id="mainPanel" class="main-panel">
+    <pane
+      id="mainPanel"
+      class="main-panel"
+    >
       <splitpanes horizontal>
         <pane size="100">
           <div class="content-area">
@@ -23,7 +30,7 @@ import ModalList from './ModalList'
 import SideMenu from '~/components/SideMenu/SideMenu.vue'
 
 export default {
-  components: {
+  components : {
     Splitpanes,
     Pane,
     SideMenu,
@@ -35,7 +42,7 @@ export default {
   },
   mounted () {
   },
-  methods: {
+  methods : {
   },
 }
 </script>

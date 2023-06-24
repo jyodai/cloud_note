@@ -16,7 +16,10 @@
                   ファイル名
                 </th>
                 <td>
-                  <input type="text" v-model="newFileName">
+                  <input
+                    v-model="newFileName"
+                    type="text"
+                  >
                 </td>
               </tr>
             </tbody>
@@ -39,7 +42,7 @@ import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
   },
@@ -55,7 +58,7 @@ export default {
   },
   created () {},
   mounted () {},
-  methods: {
+  methods : {
     beforeOpen () {
       this.loadParams()
     },
@@ -63,14 +66,14 @@ export default {
       const params = this.$vfm.getParams('LibraryEdit');
 
       this.originFileName = params.fileName
-      this.newFileName = params.fileName
+      this.newFileName    = params.fileName
     },
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryEdit', closeType);
     },
     async editFile () {
-      const url = this.$config.public.apiUrl + '/libraries/files';
-      const params = {
+      const url      = this.$config.public.apiUrl + '/libraries/files';
+      const params   = {
         originFileName : this.originFileName,
         newFileName    : this.newFileName,
       };

@@ -1,10 +1,28 @@
 <template>
-  <v-card width="400px" class="mx-auto mt-5">
+  <v-card
+    width="400px"
+    class="mx-auto mt-5"
+  >
     <v-form class="mx-auto pa-3">
-      <v-text-field v-model="email" prepend-icon="mdi-account-circle" autocomplete="email" type="email" label="email" />
-      <v-text-field v-model="password" prepend-icon="mdi-lock" sautocomplete="current-password" type="password" label="パスワード" />
+      <v-text-field
+        v-model="email"
+        prepend-icon="mdi-account-circle"
+        autocomplete="email"
+        type="email"
+        label="email"
+      />
+      <v-text-field
+        v-model="password"
+        prepend-icon="mdi-lock"
+        sautocomplete="current-password"
+        type="password"
+        label="パスワード"
+      />
       <v-card-actions>
-        <v-btn class="info" @click="execLogin()">
+        <v-btn
+          class="info"
+          @click="execLogin()"
+        >
           ログイン
         </v-btn>
       </v-card-actions>
@@ -19,7 +37,7 @@ setPageLayout(false);
 <script>
 
 export default {
-  components: {
+  components : {
   },
   data () {
     return {
@@ -27,7 +45,7 @@ export default {
       password : '',
     }
   },
-  methods: {
+  methods : {
     async execLogin () {
       const params = {
         'email'    : this.email,

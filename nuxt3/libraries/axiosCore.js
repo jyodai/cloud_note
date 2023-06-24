@@ -4,7 +4,7 @@ import sessionStorage from '~/utils/sessionStorage.js';
 const instance = axios.create({});
 
 instance.interceptors.request.use((config) => {
-  const token = sessionStorage.get('token');
+  const token                     = sessionStorage.get('token');
   config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });

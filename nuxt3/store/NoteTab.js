@@ -1,6 +1,6 @@
 const state = () => ({
-  noteTab: [], // ノートObjectを格納
-  selectNote: null,
+  noteTab    : [], // ノートObjectを格納
+  selectNote : null,
 })
 
 const mutations = {
@@ -33,7 +33,7 @@ const getters = {
   getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
   findNote        : state => (id) => {
     const noteTab = state.noteTab
-    const index = noteTab.findIndex(value => value.id === id)
+    const index   = noteTab.findIndex(value => value.id === id)
     if (index === -1) {
       return null
     }
@@ -99,7 +99,7 @@ const actions = {
 }
 
 export default {
-  namespaced: true,
+  namespaced : true,
   state,
   mutations,
   getters,

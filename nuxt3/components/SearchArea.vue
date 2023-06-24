@@ -9,21 +9,33 @@
       @keydown.enter="search()"
       @keydown.esc="searchRemove()"
     >
-    <input id="search_left_box" class="search_box" type="checkbox" value="1" checked>L
-    <input id="search_right_box" class="search_box" type="checkbox" value="1" checked>R
+    <input
+      id="search_left_box"
+      class="search_box"
+      type="checkbox"
+      value="1"
+      checked
+    >L
+    <input
+      id="search_right_box"
+      class="search_box"
+      type="checkbox"
+      value="1"
+      checked
+    >R
   </div>
 </template>
 
 <script>
 
 export default {
-  methods: {
+  methods : {
     search () {
       this.searchRemove()
 
       const rightBox = document.getElementById('search_right_box')
-      const leftBox = document.getElementById('search_left_box')
-      const nodeIds = []
+      const leftBox  = document.getElementById('search_left_box')
+      const nodeIds  = []
       if (rightBox.checked) {
         nodeIds.push('rightMarkdownarea')
       }
@@ -41,14 +53,14 @@ export default {
     },
     searchExec (node) {
       const searchString = document.getElementById('search_area').value
-      const att = 'serch_highlight'
-      const start = '!!!start_highlight!!!'
-      const end = '!!!end_hithlight!!!'
+      const att          = 'serch_highlight'
+      const start        = '!!!start_highlight!!!'
+      const end          = '!!!end_hithlight!!!'
 
       if (node.nodeType === 3) {
-        const RegularExp = new RegExp(searchString, 'g')
+        const RegularExp    = new RegExp(searchString, 'g')
         const ReplaceString = start + searchString + end
-        node.textContent = node.textContent.replace(RegularExp, ReplaceString)
+        node.textContent    = node.textContent.replace(RegularExp, ReplaceString)
       }
 
       for (let i = 0; i < node.childNodes.length; i++) {
@@ -56,9 +68,9 @@ export default {
       }
 
       if (node.id === 'rightMarkdownarea' || node.id === 'leftMarkdownarea') {
-        const RegularExp = new RegExp(start + searchString + end, 'g')
+        const RegularExp    = new RegExp(start + searchString + end, 'g')
         const ReplaceString = '<span class="' + att + '">' + searchString + '</span>'
-        node.innerHTML = node.innerHTML.replace(RegularExp, ReplaceString)
+        node.innerHTML      = node.innerHTML.replace(RegularExp, ReplaceString)
       }
     },
     searchRemove () {
@@ -73,8 +85,8 @@ export default {
     },
     searchRemoveExec (node) {
       const searchString = '<span class="serch_highlight">(.*?)</span>'
-      const RegularExp = new RegExp(searchString, 'g')
-      node.innerHTML = node.innerHTML.replace(RegularExp, '$1')
+      const RegularExp   = new RegExp(searchString, 'g')
+      node.innerHTML     = node.innerHTML.replace(RegularExp, '$1')
     },
   },
 }

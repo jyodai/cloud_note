@@ -19,11 +19,11 @@
 <script>
 
 export default {
-  components: {
+  components : {
   },
   data () {
     return {
-      title: 'Memo',
+      title : 'Memo',
     }
   },
   mounted () {

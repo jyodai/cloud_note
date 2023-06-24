@@ -19,20 +19,20 @@
 <script>
 
 export default {
-  emit: [
+  emit : [
     'save',
     'delete',
     'close',
   ],
-  props: {
-    visibleLists: {
+  props : {
+    visibleLists : {
       type    : Array,
       default : () => [],
     },
   },
   data () {
     return {
-      buttonLists: [
+      buttonLists : [
         {
           name  : 'save',
           label : '保存',
@@ -51,7 +51,7 @@ export default {
       ],
     }
   },
-  methods: {
+  methods : {
     save () {
       this.$emit('save')
     },

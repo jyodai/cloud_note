@@ -26,28 +26,28 @@ import NoteContentHead from './NoteContentHead.vue'
 import NoteContentBody from './NoteContentBody.vue'
 
 export default {
-  components: {
+  components : {
     NoteTab,
     NoteContentHead,
     NoteContentBody,
   },
   data () {
     return {
-      note: null,
+      note : null,
     }
   },
-  computed: {
+  computed : {
     changeSelectNote () {
       return this.$store.getters['NoteTab/getSelectNote']
     },
   },
-  watch: {
+  watch : {
     changeSelectNote (newVal, oldVal) {
       this.note = newVal
     },
   },
   mounted () {},
-  methods: {},
+  methods : {},
 }
 </script>
 

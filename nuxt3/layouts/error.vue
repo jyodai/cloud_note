@@ -16,7 +16,7 @@
 export default {
   layout : 'empty',
   props  : {
-    error: {
+    error : {
       type    : Object,
       default : null,
     },

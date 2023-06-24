@@ -8,11 +8,14 @@
         ライブラリ一覧
       </template>
       <template
-        #modalContent
         v-if="visible"
+        #modalContent
       >
         <div class="content-header">
-          <v-btn class="mb-2" @click="openAddImageLibrary()">
+          <v-btn
+            class="mb-2"
+            @click="openAddImageLibrary()"
+          >
             追加
           </v-btn>
         </div>
@@ -28,7 +31,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="file in fileList" :key="file.fileName">
+              <tr
+                v-for="file in fileList"
+                :key="file.fileName"
+              >
                 <td
                   @click="getFileHtml(file.fileHtml)"
                 >
@@ -62,22 +68,22 @@ import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 import IconList from '~/commonComponents/IconList.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
     IconList,
   },
   data () {
     return {
-      modalName : 'LibraryList',
+      modalName   : 'LibraryList',
       modalOption : {
         beforeOpen : this.beforeOpen,
       },
-      visible : false,
-      fileList  : null,
+      visible  : false,
+      fileList : null,
     }
   },
-  methods: {
+  methods : {
     beforeOpen () {
       const num = 0
       this.getFileList(num)
@@ -87,13 +93,13 @@ export default {
     },
     async getFileList (num) {
       const queryStr = '?type=list' + '&num=' + num
-      const url = this.$config.public.apiUrl + '/libraries/files' + queryStr
+      const url      = this.$config.public.apiUrl + '/libraries/files' + queryStr
       const response = await this.$axios.get(url)
-      this.fileList = response
-      this.visible = true;
+      this.fileList  = response
+      this.visible   = true;
     },
     getFileHtml (str) {
-      const copyFrom = document.createElement('textarea')
+      const copyFrom       = document.createElement('textarea')
       copyFrom.textContent = str
 
       const bodyElm = document.getElementsByTagName('body')[0]
@@ -114,12 +120,12 @@ export default {
       this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen() })
     },
     async deleteFile (fileName) {
-      const url = this.$config.public.apiUrl + '/libraries/files';
-      const params = {
+      const url      = this.$config.public.apiUrl + '/libraries/files';
+      const params   = {
         originFileName : fileName,
       };
-      const config = {
-        headers: {
+      const config   = {
+        headers : {
           'X-HTTP-Method-Override' : 'DELETE',
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },

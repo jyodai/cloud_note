@@ -8,8 +8,8 @@ export default defineNuxtPlugin(() => {
     typography : false, // 言語に依存しないきれいな 置換 + 引用符 を有効にします。
   })
   return {
-      provide: {
-        md : instance,
-      },
-    };
+    provide : {
+      md : instance,
+    },
+  };
 });
