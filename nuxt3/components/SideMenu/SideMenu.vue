@@ -93,46 +93,46 @@ export default {
           show : false,
         },
       },
-    }
+    };
   },
   methods : {
     openNote () {
-      this.$router.push('/')
+      this.$router.push('/');
     },
     changeMenu (menu) {
       if (this.menu[menu].show) {
-        this.closePanel()
-        this.allCloseMenu()
-        return
+        this.closePanel();
+        this.allCloseMenu();
+        return;
       }
-      this.allCloseMenu()
-      this.menu[menu].show = true
-      this.openPanel()
+      this.allCloseMenu();
+      this.menu[menu].show = true;
+      this.openPanel();
     },
     allCloseMenu () {
       Object.keys(this.menu).forEach(function (key) {
-        this.menu[key].show = false
-      }.bind(this))
+        this.menu[key].show = false;
+      }.bind(this));
     },
     openPanel () {
-      const sidePanel       = document.getElementById('sidePanel')
-      sidePanel.style.width = '100%'
+      const sidePanel       = document.getElementById('sidePanel');
+      sidePanel.style.width = '100%';
     },
     closePanel () {
-      const sidePanel       = document.getElementById('sidePanel')
-      sidePanel.style.width = '0%'
-      const mainPanel       = document.getElementById('mainPanel')
-      mainPanel.style.width = '100%'
+      const sidePanel       = document.getElementById('sidePanel');
+      sidePanel.style.width = '0%';
+      const mainPanel       = document.getElementById('mainPanel');
+      mainPanel.style.width = '100%';
     },
     openModal(key) {
-      this.$vfm.open(key)
+      this.$vfm.open(key);
     },
     async logout () {
-      await this.$store.dispatch('User/logout')
+      await this.$store.dispatch('User/logout');
       window.location.href = '/login';
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

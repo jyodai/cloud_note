@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import codemirror from 'codemirror-editor-vue3'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/base16-dark.css'
+import codemirror from 'codemirror-editor-vue3';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/base16-dark.css';
 
 export default {
   components : {
@@ -25,7 +25,7 @@ export default {
   props : {
     content : {
       type    : Object,
-      default : () => { return {} },
+      default : () => { return {}; },
     },
   },
   emits : [
@@ -49,54 +49,54 @@ export default {
         extraKeys       : {
           Tab : (cm) => {
             if (cm.somethingSelected()) {
-              cm.execCommand('indentMore')
-              return
+              cm.execCommand('indentMore');
+              return;
             }
-            cm.execCommand('insertSoftTab')
+            cm.execCommand('insertSoftTab');
           },
           'Shift-Tab' : cm => cm.execCommand('indentLess'),
         },
       },
-    }
+    };
   },
   watch : {
     content () {
-      this.reset()
+      this.reset();
     },
   },
   created () {
-    this.codemirrorContent = this.content.content
+    this.codemirrorContent = this.content.content;
   },
   mounted () {
     window.addEventListener('beforeunload', (e) => {
       if (this.contentChangeFlag) {
         // 空文字をセットすることでconfirmが出力される
-        e.returnValue = ''
+        e.returnValue = '';
       }
-    }, false)
+    }, false);
   },
   methods : {
     reset () {
-      this.codemirrorContent = this.content.content
-      this.contentChangeFlag = false
+      this.codemirrorContent = this.content.content;
+      this.contentChangeFlag = false;
     },
     contentChange () {
       if (this.content.content === this.codemirrorContent) {
-        return
+        return;
       }
-      this.contentChangeFlag = true
+      this.contentChangeFlag = true;
     },
     onBlur () {
-      this.$emit('blur', { id : this.content.id, content : this.codemirrorContent, })
-      this.contentChangeFlag = false
+      this.$emit('blur', { id : this.content.id, content : this.codemirrorContent, });
+      this.contentChangeFlag = false;
     },
     // ctrl + s で発火
     saveNote () {
-      this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, })
-      this.contentChangeFlag = false
+      this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, });
+      this.contentChangeFlag = false;
     },
   },
-}
+};
 </script>
 
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->

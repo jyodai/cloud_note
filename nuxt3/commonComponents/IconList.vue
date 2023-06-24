@@ -33,25 +33,25 @@ export default {
         {
           key   : 'edit',
           icon  : 'mdi-pencil-outline',
-          event : () => { this.edit() },
+          event : () => { this.edit(); },
         },
         {
           key   : 'trash',
           icon  : 'mdi-trash-can-outline',
-          event : () => { this.trash() },
+          event : () => { this.trash(); },
         },
       ],
-    }
+    };
   },
   methods : {
     edit () {
-      this.$emit('edit')
+      this.$emit('edit');
     },
     trash () {
-      this.$emit('trash')
+      this.$emit('trash');
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

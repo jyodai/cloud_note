@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue'
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
-import IconList from '~/commonComponents/IconList.vue'
+import Modal from '../Modal/ModalWrapper.vue';
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
+import IconList from '~/commonComponents/IconList.vue';
 
 export default {
   components : {
@@ -91,7 +91,7 @@ export default {
       },
       visible : false,
       users   : null,
-    }
+    };
   },
   methods : {
     beforeOpen () {
@@ -100,34 +100,34 @@ export default {
     async load () {
       const url      = this.$config.public.apiUrl + '/users';
       const response = await this.$axios.get(url);
-      this.users     = response.data
+      this.users     = response.data;
       this.visible   = true;
     },
     closeModal () {
       this.$vfm.close('UserList', this.$config.MODAL_CLOSE_TYPE_CLOSE);
     },
     openAdd () {
-      this.$vfm.open('UserAdd')
-      this.$vfm.setClosedCallback('UserAdd', () => { this.beforeOpen() })
+      this.$vfm.open('UserAdd');
+      this.$vfm.setClosedCallback('UserAdd', () => { this.beforeOpen(); });
     },
     openEdit (user) {
-      this.$vfm.open('UserEdit', {user, })
-      this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen() })
+      this.$vfm.open('UserEdit', {user, });
+      this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen(); });
     },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {
-        return
+        return;
       }
 
       const url = this.$config.public.apiUrl + '/users/' + user.id;
-      await this.$axios.delete(url)
+      await this.$axios.delete(url);
 
       this.load();
     },
     getShowIcons (user) {
       const icons = ['edit'];
       if (!this.isAdminUser(user)) {
-        icons.push('trash')
+        icons.push('trash');
       }
       return icons;
     },
@@ -135,7 +135,7 @@ export default {
       return user.user_type === this.$const.USER_TYPE_ADMIN;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

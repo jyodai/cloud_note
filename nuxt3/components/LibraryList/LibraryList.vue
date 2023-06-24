@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue'
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
-import IconList from '~/commonComponents/IconList.vue'
+import Modal from '../Modal/ModalWrapper.vue';
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
+import IconList from '~/commonComponents/IconList.vue';
 
 export default {
   components : {
@@ -81,43 +81,43 @@ export default {
       },
       visible  : false,
       fileList : null,
-    }
+    };
   },
   methods : {
     beforeOpen () {
-      const num = 0
-      this.getFileList(num)
+      const num = 0;
+      this.getFileList(num);
     },
     closeModal () {
       this.$vfm.close('LibraryList', this.$const.MODAL_CLOSE_TYPE_CLOSE);
     },
     async getFileList (num) {
-      const queryStr = '?type=list' + '&num=' + num
-      const url      = this.$config.public.apiUrl + '/libraries/files' + queryStr
-      const response = await this.$axios.get(url)
-      this.fileList  = response
+      const queryStr = '?type=list' + '&num=' + num;
+      const url      = this.$config.public.apiUrl + '/libraries/files' + queryStr;
+      const response = await this.$axios.get(url);
+      this.fileList  = response;
       this.visible   = true;
     },
     getFileHtml (str) {
-      const copyFrom       = document.createElement('textarea')
-      copyFrom.textContent = str
+      const copyFrom       = document.createElement('textarea');
+      copyFrom.textContent = str;
 
-      const bodyElm = document.getElementsByTagName('body')[0]
-      bodyElm.appendChild(copyFrom)
+      const bodyElm = document.getElementsByTagName('body')[0];
+      bodyElm.appendChild(copyFrom);
 
-      copyFrom.select()
-      document.execCommand('copy')
+      copyFrom.select();
+      document.execCommand('copy');
 
-      bodyElm.removeChild(copyFrom)
-      alert('HTMLをコピーしました')
+      bodyElm.removeChild(copyFrom);
+      alert('HTMLをコピーしました');
     },
     openAddImageLibrary () {
-      this.$vfm.open('LibraryAdd')
-      this.$vfm.setClosedCallback('LibraryAdd', () => { this.beforeOpen() })
+      this.$vfm.open('LibraryAdd');
+      this.$vfm.setClosedCallback('LibraryAdd', () => { this.beforeOpen(); });
     },
     openEdit (fileName) {
-      this.$vfm.open('LibraryEdit', {fileName, })
-      this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen() })
+      this.$vfm.open('LibraryEdit', {fileName, });
+      this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen(); });
     },
     async deleteFile (fileName) {
       const url      = this.$config.public.apiUrl + '/libraries/files';
@@ -129,14 +129,14 @@ export default {
           'X-HTTP-Method-Override' : 'DELETE',
           'Content-Type'           : 'application/x-www-form-urlencoded',
         },
-      }
-      const response = await this.$axios.post(url, params, config)
-      alert(response.message)
+      };
+      const response = await this.$axios.post(url, params, config);
+      alert(response.message);
 
-      this.closeModal()
+      this.closeModal();
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

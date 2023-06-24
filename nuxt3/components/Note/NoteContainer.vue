@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import NoteTab from './NoteTab.vue'
-import NoteContentHead from './NoteContentHead.vue'
-import NoteContentBody from './NoteContentBody.vue'
+import NoteTab from './NoteTab.vue';
+import NoteContentHead from './NoteContentHead.vue';
+import NoteContentBody from './NoteContentBody.vue';
 
 export default {
   components : {
@@ -34,19 +34,19 @@ export default {
   data () {
     return {
       note : null,
-    }
+    };
   },
   computed : {
     changeSelectNote () {
-      return this.$store.getters['NoteTab/getSelectNote']
+      return this.$store.getters['NoteTab/getSelectNote'];
     },
   },
   watch : {
     changeSelectNote (newVal) {
-      this.note = newVal
+      this.note = newVal;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

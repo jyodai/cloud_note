@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue'
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
+import Modal from '../Modal/ModalWrapper.vue';
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 
 export default {
   components : {
@@ -54,17 +54,17 @@ export default {
       },
       uploadFiles : null,
       newFileName : null,
-    }
+    };
   },
   methods : {
     beforeOpen () {
-      this.loadParams()
+      this.loadParams();
     },
     loadParams () {
       const params = this.$vfm.getParams('LibraryEdit');
 
-      this.originFileName = params.fileName
-      this.newFileName    = params.fileName
+      this.originFileName = params.fileName;
+      this.newFileName    = params.fileName;
     },
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryEdit', closeType);
@@ -75,13 +75,13 @@ export default {
         originFileName : this.originFileName,
         newFileName    : this.newFileName,
       };
-      const response = await this.$axios.put(url, params)
-      alert(response.message)
+      const response = await this.$axios.put(url, params);
+      alert(response.message);
 
       this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

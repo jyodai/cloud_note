@@ -1,102 +1,102 @@
 const state = () => ({
   noteTab    : [], // ノートObjectを格納
   selectNote : null,
-})
+});
 
 const mutations = {
   setSelectNote (state, note) {
-    state.selectNote = note
+    state.selectNote = note;
   },
   unsetSelectNote (state) {
-    state.selectNote = null
+    state.selectNote = null;
   },
   setNoteTab (state, note) {
-    state.noteTab.push(note)
+    state.noteTab.push(note);
   },
   updateNote (state, { note, data, }) {
-    note.title = data.noteTitle
+    note.title = data.noteTitle;
   },
   removeNoteTab (state, noteId) {
-    const index = state.noteTab.findIndex(value => value.id === noteId)
+    const index = state.noteTab.findIndex(value => value.id === noteId);
     if (index !== -1) {
-      state.noteTab.splice(index, 1)
+      state.noteTab.splice(index, 1);
     }
   },
   unsetNoteTab (state) {
-    state.noteTab = []
+    state.noteTab = [];
   },
-}
+};
 
 const getters = {
   getNoteTab      : state => state.noteTab,
   getSelectNote   : state => state.selectNote,
   getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
   findNote        : state => (id) => {
-    const noteTab = state.noteTab
-    const index   = noteTab.findIndex(value => value.id === id)
+    const noteTab = state.noteTab;
+    const index   = noteTab.findIndex(value => value.id === id);
     if (index === -1) {
-      return null
+      return null;
     }
-    return noteTab[index]
+    return noteTab[index];
   },
-}
+};
 
 const actions = {
   setSelectNote ({commit}, note) {
-    commit('setSelectNote', note)
+    commit('setSelectNote', note);
   },
   unsetSelectNote ({ commit, }) {
-    commit('unsetSelectNote')
+    commit('unsetSelectNote');
   },
   initNoteTab ({ commit, }) {
-    commit('unsetNoteTab')
+    commit('unsetNoteTab');
   },
   loadNoteTab ({ rootState, state, commit, dispatch, }) {
     if (state.noteTab.length !== 0) {
-      return
+      return;
     }
 
     const noteTabArray = this.$util.localStorage.get('noteTab');
     if (noteTabArray) {
       noteTabArray.forEach((note) => {
         if (rootState.User.user.id === note.user_id) {
-          commit('setNoteTab', note)
+          commit('setNoteTab', note);
         }
-      })
-      dispatch('saveLocalStorage')
+      });
+      dispatch('saveLocalStorage');
     } else {
-      this.$util.localStorage.set('noteTab', [])
+      this.$util.localStorage.set('noteTab', []);
     }
   },
   setNoteTab ({ commit, dispatch, }, note) {
-    commit('setNoteTab', note)
+    commit('setNoteTab', note);
 
-    dispatch('saveLocalStorage')
+    dispatch('saveLocalStorage');
   },
   updateNote ({ commit, getters, dispatch, }, { data, }) {
-    const note = getters.findNote(data.noteId)
-    commit('updateNote', { note, data, })
+    const note = getters.findNote(data.noteId);
+    commit('updateNote', { note, data, });
 
-    dispatch('saveLocalStorage')
+    dispatch('saveLocalStorage');
   },
   removeNoteTab ({ commit, dispatch, }, id) {
-    commit('removeNoteTab', id)
+    commit('removeNoteTab', id);
 
-    dispatch('saveLocalStorage')
+    dispatch('saveLocalStorage');
   },
   moveNoteTab ({ commit, dispatch, }, noteTabArray) {
-    commit('unsetNoteTab')
+    commit('unsetNoteTab');
     noteTabArray.forEach((note) => {
-      commit('setNoteTab', note)
-    })
+      commit('setNoteTab', note);
+    });
 
-    dispatch('saveLocalStorage')
+    dispatch('saveLocalStorage');
   },
   saveLocalStorage ({ getters, }) {
-    const noteTab = getters.getNoteTab
+    const noteTab = getters.getNoteTab;
     this.$util.localStorage.set('noteTab', noteTab);
   },
-}
+};
 
 export default {
   namespaced : true,
@@ -104,4 +104,4 @@ export default {
   mutations,
   getters,
   actions,
-}
+};

@@ -1,39 +1,39 @@
 const state = () => ({
   selectContent : null,
-})
+});
 
 const mutations = {
   setSelectContent (state, note) {
-    state.selectContent = note
+    state.selectContent = note;
   },
   unsetSelectContent (state) {
-    state.selectContent = null
+    state.selectContent = null;
   },
-}
+};
 
 const getters = {
   getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
   getSelectContent : state => state.selectContent,
-}
+};
 
 const actions = {
   async loadSelectContent ({commit, }, data) {
-    const noteId   = data.noteId
-    const url      = this.$config.public.apiUrl + '/note_content?noteId=' + noteId
-    const response = await this.$axios.get(url)
-    await commit('setSelectContent', response)
+    const noteId   = data.noteId;
+    const url      = this.$config.public.apiUrl + '/note_content?noteId=' + noteId;
+    const response = await this.$axios.get(url);
+    await commit('setSelectContent', response);
   },
   unsetSelectContent ({ commit, }) {
-    commit('unsetSelectContent')
+    commit('unsetSelectContent');
   },
   async updateSelectContent ({ getters, commit, }, data) {
-    const selectContent = Object.assign({}, getters.getSelectContent)
+    const selectContent = Object.assign({}, getters.getSelectContent);
     if (data.content === selectContent.content) {
-      return
+      return;
     }
 
-    selectContent.content = data.content
-    commit('setSelectContent', selectContent)
+    selectContent.content = data.content;
+    commit('setSelectContent', selectContent);
 
     const url    = this.$config.public.apiUrl + '/note_content';
     const params = {
@@ -42,10 +42,10 @@ const actions = {
     };
     await this.$axios.put(url, params)
       .catch(() => {
-        alert('メモの保存の失敗しました')
-      })
+        alert('メモの保存の失敗しました');
+      });
   },
-}
+};
 
 export default {
   namespaced : true,
@@ -53,4 +53,4 @@ export default {
   mutations,
   getters,
   actions,
-}
+};

@@ -46,7 +46,7 @@ export default class VueFinalModal {
 
   #unsetClosedCallback(id) {
     const modal = this.get(id);
-    delete modal.closedCallback
+    delete modal.closedCallback;
   }
 
   #execClosedCallback(id) {
