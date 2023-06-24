@@ -1,9 +1,8 @@
 module.exports = {
   root          : true,
   parserOptions : {
-    // JavaScriptの非標準の構文もlintできるようにするパッケージ
-    parser            : '@babel/eslint-parser',
-    requireConfigFile : false,
+    'ecmaVersion' : 2020,
+    'parser'      : '@typescript-eslint/parser',
   },
   extends: [
     'plugin:vue/vue3-recommended',
