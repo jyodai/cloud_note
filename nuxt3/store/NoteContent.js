@@ -41,8 +41,7 @@ const actions = {
       content : data.content,
     };
     await this.$axios.put(url, params)
-      .then(() => {
-      }).catch(() => {
+      .catch(() => {
         alert('メモの保存の失敗しました')
       })
   },

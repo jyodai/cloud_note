@@ -46,8 +46,6 @@ export default {
       this.note = newVal
     },
   },
-  mounted () {},
-  methods : {},
 }
 </script>
 

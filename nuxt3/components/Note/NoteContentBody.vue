@@ -39,7 +39,7 @@ export default {
   props : {
     note : {
       type    : Object,
-      default : () => {},
+      default : () => { return {} },
     },
   },
   data () {

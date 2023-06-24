@@ -36,14 +36,6 @@ export default {
     SideMenu,
     ModalList,
   },
-  data () {
-    return {
-    }
-  },
-  mounted () {
-  },
-  methods : {
-  },
 }
 </script>
 

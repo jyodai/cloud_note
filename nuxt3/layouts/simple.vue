@@ -26,7 +26,5 @@ export default {
       title : 'Memo',
     }
   },
-  mounted () {
-  },
 }
 </script>

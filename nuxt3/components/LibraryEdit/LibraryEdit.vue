@@ -56,8 +56,6 @@ export default {
       newFileName : null,
     }
   },
-  created () {},
-  mounted () {},
   methods : {
     beforeOpen () {
       this.loadParams()
@@ -81,8 +79,6 @@ export default {
       alert(response.message)
 
       this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
-    },
-    setGetParam () {
     },
   },
 }

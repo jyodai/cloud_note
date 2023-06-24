@@ -64,10 +64,6 @@ export default {
       },
     }
   },
-  watch : {
-  },
-  mounted () {
-  },
   methods : {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId']
