@@ -19,17 +19,17 @@
 <script>
 
 export default {
-  emits : [
-    'save',
-    'delete',
-    'close',
-  ],
   props : {
     visibleLists : {
       type    : Array,
       default : () => [],
     },
   },
+  emits : [
+    'save',
+    'delete',
+    'close',
+  ],
   data () {
     return {
       buttonLists : [
