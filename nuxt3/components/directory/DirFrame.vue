@@ -10,7 +10,7 @@
           @click="selectNoteTree(null)"
           @mouseup.right="selectNoteTree(null)"
         >
-          <template #default="{node, index, path, tree}">
+          <template #default="{node, path, tree}">
             <div
               class="tree-node-container"
               :class="{'select-node': selectTreeNoteId === node.data.id}"
