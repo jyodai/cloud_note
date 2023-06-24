@@ -15,28 +15,20 @@ module.exports = {
     Prism   : false,
   },
   rules: {
+    indent : ['error', 2],
+    eqeqeq : 'error', // 厳密な比較のみ許可
     camelcase      : 'off',
-    'comma-dangle' : [
-      'error',
-      {
-        arrays    : 'always',
-        objects   : 'always',
-        imports   : 'never',
-        exports   : 'never',
-        functions : 'never',
-      },
-    ],
-    'prefer-const' : 2,
+    'prefer-const' : 2, //再代入がなければConst
+    // 垂直方向のコロンを揃える
     'key-spacing'  : [
-      'error',
+      2,
       {
-        align: {
-          beforeColon : true,
-          afterColon  : true,
-          on          : 'colon',
-        },
+        'beforeColon' : true,
+        'afterColon'  : true,
+        'align'       : 'colon',
       },
     ],
-    'no-var': 2,
+    'no-var': 2, //varを禁止
+    'no-debugger' : 'warn',
   },
 }
