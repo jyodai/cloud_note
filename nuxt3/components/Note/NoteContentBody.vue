@@ -7,7 +7,7 @@
     <markdown-edit
       class="content-edit"
       :content="content"
-      @saveNote="saveNote"
+      @save-note="saveNote"
       @blur="blur"
     />
     <markdown-view
