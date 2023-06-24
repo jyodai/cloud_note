@@ -95,8 +95,6 @@ export default {
       },
     }
   },
-  mounted () {
-  },
   methods : {
     openNote () {
       this.$router.push('/')

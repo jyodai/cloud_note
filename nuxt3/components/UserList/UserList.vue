@@ -119,8 +119,8 @@ export default {
         return
       }
 
-      const url      = this.$config.public.apiUrl + '/users/' + user.id;
-      const response = await this.$axios.delete(url)
+      const url = this.$config.public.apiUrl + '/users/' + user.id;
+      await this.$axios.delete(url)
 
       this.load();
     },

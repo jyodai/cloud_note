@@ -51,8 +51,6 @@ export default {
       uploadFiles : null,
     }
   },
-  created () {},
-  mounted () {},
   methods : {
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryAdd', closeType);

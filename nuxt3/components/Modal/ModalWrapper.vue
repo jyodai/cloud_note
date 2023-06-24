@@ -38,7 +38,7 @@ export default {
     },
     modalOption : {
       type    : Object,
-      default : () => {},
+      default : () => { return {} },
     },
   },
   data () {
@@ -57,7 +57,7 @@ export default {
       const defaultOption = {
         width      : '60%',
         height     : '60%',
-        beforeOpen : () => {},
+        beforeOpen : () => { return },
       }
       this.option         = Object.assign(defaultOption, this.modalOption)
       this.width          = this.option.width;

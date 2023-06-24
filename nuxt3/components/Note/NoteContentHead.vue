@@ -21,7 +21,7 @@ export default {
     },
   },
   watch : {
-    changeSelectNote (newVal, oldVal) {
+    changeSelectNote (newVal) {
       this.getNotePath(newVal.id)
     },
   },

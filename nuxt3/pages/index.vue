@@ -26,14 +26,6 @@ export default {
     DirFrame,
     NoteFrame,
   },
-  data () {
-    return {
-    }
-  },
-  mounted () {
-  },
-  methods : {
-  },
 }
 </script>
 

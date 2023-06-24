@@ -25,7 +25,7 @@ export default {
   props : {
     content : {
       type    : Object,
-      default : () => {},
+      default : () => { return {} },
     },
   },
   emit : [
@@ -68,9 +68,8 @@ export default {
     this.codemirrorContent = this.content.content
   },
   mounted () {
-    const self = this
-    window.addEventListener('beforeunload', function (e) {
-      if (self.contentChangeFlag) {
+    window.addEventListener('beforeunload', (e) => {
+      if (this.contentChangeFlag) {
         // 空文字をセットすることでconfirmが出力される
         e.returnValue = ''
       }
