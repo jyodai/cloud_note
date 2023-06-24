@@ -43,7 +43,7 @@ export default {
     return {
       email    : '',
       password : '',
-    }
+    };
   },
   methods : {
     async execLogin () {
@@ -57,6 +57,6 @@ export default {
       }
     },
   },
-}
+};
 
 </script>

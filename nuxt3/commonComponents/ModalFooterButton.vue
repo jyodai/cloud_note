@@ -49,23 +49,23 @@ export default {
           event : () => this.close(),
         },
       ],
-    }
+    };
   },
   methods : {
     save () {
-      this.$emit('save')
+      this.$emit('save');
     },
     delete () {
-      this.$emit('delete')
+      this.$emit('delete');
     },
     close () {
-      this.$emit('close')
+      this.$emit('close');
     },
     isVisible (name) {
-      return this.visibleLists.includes(name)
+      return this.visibleLists.includes(name);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

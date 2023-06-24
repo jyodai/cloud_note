@@ -38,7 +38,7 @@ export default {
     },
     modalOption : {
       type    : Object,
-      default : () => { return {} },
+      default : () => { return {}; },
     },
   },
   data () {
@@ -47,24 +47,24 @@ export default {
       option    : null,
       width     : "",
       height    : "",
-    }
+    };
   },
   created () {
-    this.setOption()
+    this.setOption();
   },
   methods : {
     setOption () {
       const defaultOption = {
         width      : '60%',
         height     : '60%',
-        beforeOpen : () => { return },
-      }
-      this.option         = Object.assign(defaultOption, this.modalOption)
+        beforeOpen : () => { return; },
+      };
+      this.option         = Object.assign(defaultOption, this.modalOption);
       this.width          = this.option.width;
       this.height         = this.option.height;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

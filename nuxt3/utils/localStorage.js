@@ -17,4 +17,4 @@ export default {
     const value = this.get(key);
     return value ? true : false;
   }
-}
+};

@@ -19,11 +19,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const registerConst = (store) => {
     store.$const = nuxtApp.$const;
-  }
+  };
 
   const registerUtil = (store) => {
     store.$util = nuxtApp.$util;
-  }
+  };
 
   const store = createStore({
     modules : {

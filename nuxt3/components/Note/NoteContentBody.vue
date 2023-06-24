@@ -28,8 +28,8 @@
 
 <script>
 
-import MarkdownView from '~/commonComponents/MarkdownView.vue'
-import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue'
+import MarkdownView from '~/commonComponents/MarkdownView.vue';
+import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 
 export default {
   components : {
@@ -39,46 +39,46 @@ export default {
   props : {
     note : {
       type    : Object,
-      default : () => { return {} },
+      default : () => { return {}; },
     },
   },
   data () {
     return {
       showMarkdown : true,
-    }
+    };
   },
   computed : {
     content () {
-      return this.$store.getters['NoteContent/getSelectContent']
+      return this.$store.getters['NoteContent/getSelectContent'];
     },
   },
   watch : {
     async note (newVal) {
-      await this.load(newVal)
+      await this.load(newVal);
     },
   },
   async created () {
-    await this.load(this.note)
+    await this.load(this.note);
   },
   methods : {
     async load (note) {
-      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, })
+      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, });
     },
     changeEditor () {
       if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {
-        alert('ファイルが選択されていません')
-        return
+        alert('ファイルが選択されていません');
+        return;
       }
-      this.showMarkdown = !this.showMarkdown
+      this.showMarkdown = !this.showMarkdown;
     },
     blur (data) {
-      this.saveNote(data)
+      this.saveNote(data);
     },
     saveNote (data) {
-      this.$store.dispatch('NoteContent/updateSelectContent', data)
+      this.$store.dispatch('NoteContent/updateSelectContent', data);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

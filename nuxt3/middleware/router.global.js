@@ -1,14 +1,14 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const app = useNuxtApp()
+  const app = useNuxtApp();
   if (to.name === 'login') {
-    return
+    return;
   }
 
   if (!app.$util.sessionStorage.exists('token')) {
-    return navigateTo('/login')
+    return navigateTo('/login');
   }
 
   await app.$store.dispatch('User/setUser');
 
-  return
-})
+  return;
+});

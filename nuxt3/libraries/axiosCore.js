@@ -11,11 +11,11 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
   (response) => {
-    return response.data
+    return response.data;
   },
   (error) => {
     return Promise.reject(error.response.data);
   },
-)
+);
 
 export default instance;

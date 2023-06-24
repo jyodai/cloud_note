@@ -26,63 +26,63 @@
 </template>
 
 <script>
-import Draggable from 'vuedraggable'
+import Draggable from 'vuedraggable';
 
 export default {
   components : {
     Draggable,
   },
-  data () { return {} },
+  data () { return {}; },
   computed : {
     noteTab : {
       get () {
-        return this.$store.getters['NoteTab/getNoteTab']
+        return this.$store.getters['NoteTab/getNoteTab'];
       },
       set (noteTabArray) {
-        this.$store.dispatch('NoteTab/moveNoteTab', noteTabArray)
+        this.$store.dispatch('NoteTab/moveNoteTab', noteTabArray);
       },
     },
   },
   created () {
-    this.$store.dispatch('NoteTab/initNoteTab')
-    this.$store.dispatch('NoteTab/loadNoteTab')
+    this.$store.dispatch('NoteTab/initNoteTab');
+    this.$store.dispatch('NoteTab/loadNoteTab');
   },
   mounted () {
-    this.initSelectNote()
+    this.initSelectNote();
   },
   methods : {
     initSelectNote () {
-      const noteTab = this.$store.getters['NoteTab/getNoteTab']
+      const noteTab = this.$store.getters['NoteTab/getNoteTab'];
       if (noteTab.length === 0) {
-        return
+        return;
       }
-      this.$store.dispatch('NoteTab/setSelectNote', noteTab[0])
+      this.$store.dispatch('NoteTab/setSelectNote', noteTab[0]);
     },
     setNote (note) {
-      this.$store.dispatch('NoteTab/setSelectNote', note)
+      this.$store.dispatch('NoteTab/setSelectNote', note);
     },
     removeNoteTab (id) {
-      const nextNote = this.getNextNote(id)
-      this.$store.dispatch('NoteTab/removeNoteTab', id)
+      const nextNote = this.getNextNote(id);
+      this.$store.dispatch('NoteTab/removeNoteTab', id);
 
       if (id === this.$store.getters['NoteTab/getSelectNoteId']) {
-        this.$store.dispatch('NoteTab/unsetSelectNote')
+        this.$store.dispatch('NoteTab/unsetSelectNote');
         if (nextNote !== null) {
-          this.$store.dispatch('NoteTab/setSelectNote', nextNote)
+          this.$store.dispatch('NoteTab/setSelectNote', nextNote);
         }
       }
     },
     getNextNote (id) {
-      const noteTab = this.$store.getters['NoteTab/getNoteTab']
-      const index   = noteTab.findIndex(note => note.id === id)
-      let nextNote  = noteTab[index - 1] ? noteTab[index - 1] : null
+      const noteTab = this.$store.getters['NoteTab/getNoteTab'];
+      const index   = noteTab.findIndex(note => note.id === id);
+      let nextNote  = noteTab[index - 1] ? noteTab[index - 1] : null;
       if (nextNote === null && noteTab.length > 1) {
-        nextNote = noteTab[1]
+        nextNote = noteTab[1];
       }
-      return nextNote
+      return nextNote;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

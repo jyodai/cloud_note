@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import { Splitpanes, Pane } from 'splitpanes'
-import 'splitpanes/dist/splitpanes.css'
-import ModalList from './ModalList'
-import SideMenu from '~/components/SideMenu/SideMenu.vue'
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
+import ModalList from './ModalList';
+import SideMenu from '~/components/SideMenu/SideMenu.vue';
 
 export default {
   components : {
@@ -36,7 +36,7 @@ export default {
     SideMenu,
     ModalList,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

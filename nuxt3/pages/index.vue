@@ -14,10 +14,10 @@ setPageLayout("dashboard");
 </script>
 
 <script>
-import { Splitpanes, Pane } from 'splitpanes'
-import 'splitpanes/dist/splitpanes.css'
-import NoteFrame from '../components/Note/NoteContainer.vue'
-import DirFrame from '../components/directory/DirFrame.vue'
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
+import NoteFrame from '../components/Note/NoteContainer.vue';
+import DirFrame from '../components/directory/DirFrame.vue';
 
 export default {
   components : {
@@ -26,7 +26,7 @@ export default {
     DirFrame,
     NoteFrame,
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

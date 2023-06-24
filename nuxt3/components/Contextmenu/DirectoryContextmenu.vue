@@ -42,7 +42,7 @@ import {
   Contextmenu,
   ContextmenuItem,
   ContextmenuSubmenu
-} from 'v-contextmenu'
+} from 'v-contextmenu';
 import 'v-contextmenu/dist/themes/default.css';
 
 export default {
@@ -62,13 +62,13 @@ export default {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
       },
-    }
+    };
   },
   methods : {
     async getNote () {
-      const noteId = this.$store.getters['NoteTree/getSelectNoteId']
-      const url    = this.$config.public.apiUrl + '/notes' + '?noteId=' + noteId
-      return await this.$axios.get(url)
+      const noteId = this.$store.getters['NoteTree/getSelectNoteId'];
+      const url    = this.$config.public.apiUrl + '/notes' + '?noteId=' + noteId;
+      return await this.$axios.get(url);
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       if (noteId === null) {
@@ -76,69 +76,69 @@ export default {
         return;
       }
 
-      const noteTitle = window.prompt('ノートのタイトルを入力してください。')
+      const noteTitle = window.prompt('ノートのタイトルを入力してください。');
       if (!noteTitle) {
-        alert('ノートのタイトルが空です')
-        return
+        alert('ノートのタイトルが空です');
+        return;
       }
 
       const data = {
         noteId,
         noteType,
         noteTitle,
-      }
-      await this.$store.dispatch('NoteTree/addNode', { data, })
+      };
+      await this.$store.dispatch('NoteTree/addNode', { data, });
     },
     async editNote (noteId = null) {
-      const noteTitle = window.prompt('ノートのタイトルを入力してください。')
+      const noteTitle = window.prompt('ノートのタイトルを入力してください。');
       if (!noteTitle) {
-        alert('ノートのタイトルが空です')
-        return
+        alert('ノートのタイトルが空です');
+        return;
       }
 
       const data = {
         noteId,
         noteTitle,
-      }
-      await this.$store.dispatch('NoteTree/updateNode', { data, })
+      };
+      await this.$store.dispatch('NoteTree/updateNode', { data, });
       if (this.$store.getters['NoteTab/findNote'](data.noteId)) {
-        await this.$store.dispatch('NoteTab/updateNote', { data, })
+        await this.$store.dispatch('NoteTab/updateNote', { data, });
       }
     },
     // Todo:編集 Modalを開いてそこでプロパティも一緒に出す
     async deleteNote () {
       if (!confirm('ファイルを削除します')) {
-        return
+        return;
       }
-      const deleteInfo = await this.$store.dispatch('NoteTree/deleteNode')
-      this.deleteNoteTab(deleteInfo)
-      this.deleteNoteContent(deleteInfo)
+      const deleteInfo = await this.$store.dispatch('NoteTree/deleteNode');
+      this.deleteNoteTab(deleteInfo);
+      this.deleteNoteContent(deleteInfo);
     },
     deleteNoteTab (deleteInfo) {
       deleteInfo.deleteNoteId.forEach(
         (noteId) => {
-          this.$store.dispatch('NoteTab/removeNoteTab', noteId)
+          this.$store.dispatch('NoteTab/removeNoteTab', noteId);
         }
-      )
+      );
     },
     deleteNoteContent (deleteInfo) {
-      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId']
+      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId'];
       if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
-        this.$store.dispatch('NoteTab/unsetSelectNote')
+        this.$store.dispatch('NoteTab/unsetSelectNote');
       }
     },
     async property () {
-      const note = await this.getNote()
+      const note = await this.getNote();
       const str  = `タイトル : ${note.title}
 ID : ${note.id}
 ParentId : ${note.parent_note_id}
 表示順 : ${note.display_num}
 階層 : ${note.hierarchy}
-`
-      window.alert(str)
+`;
+      window.alert(str);
     },
   },
-}
+};
 
 </script>
 

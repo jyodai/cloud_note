@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue'
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
+import Modal from '../Modal/ModalWrapper.vue';
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 
 export default {
   components : {
@@ -75,7 +75,7 @@ export default {
         email    : '',
         password : '',
       },
-    }
+    };
   },
   methods : {
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
@@ -84,11 +84,11 @@ export default {
     async save () {
       const url    = this.$config.public.apiUrl + '/users';
       const params = this.user;
-      await this.$axios.post(url, params)
+      await this.$axios.post(url, params);
       this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
     }
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

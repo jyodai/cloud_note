@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue'
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
+import Modal from '../Modal/ModalWrapper.vue';
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 
 export default {
   components : {
@@ -49,7 +49,7 @@ export default {
     return {
       modalName   : 'LibraryAdd',
       uploadFiles : null,
-    }
+    };
   },
   methods : {
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
@@ -57,21 +57,21 @@ export default {
     },
     async addFile () {
       const url    = this.$config.public.apiUrl + '/libraries/files';
-      const params = new FormData()
+      const params = new FormData();
       for (let i = 0; i < this.uploadFiles.length; i++) {
-        params.append('file[]', this.uploadFiles[i])
+        params.append('file[]', this.uploadFiles[i]);
       }
 
-      const response = await this.$axios.post(url, params)
-      alert(response.message)
+      const response = await this.$axios.post(url, params);
+      alert(response.message);
 
       this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
     },
     selectedFile (event) {
-      this.uploadFiles = event.target.files
+      this.uploadFiles = event.target.files;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
