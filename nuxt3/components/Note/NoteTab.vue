@@ -4,7 +4,7 @@
     item-key="id"
     class="note-tab thin-scroll-bar"
   >
-    <template #item="{ element, index }">
+    <template #item="{ element }">
       <div
         class="note-title g-up-down-center"
         :class="{select : element.id === $store.getters['NoteTab/getSelectNoteId']}"

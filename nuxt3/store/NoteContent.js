@@ -26,7 +26,7 @@ const actions = {
   unsetSelectContent ({ commit, }) {
     commit('unsetSelectContent')
   },
-  async updateSelectContent ({ rootState, getters, commit, }, data) {
+  async updateSelectContent ({ getters, commit, }, data) {
     const selectContent = Object.assign({}, getters.getSelectContent)
     if (data.content === selectContent.content) {
       return
@@ -41,8 +41,8 @@ const actions = {
       content : data.content,
     };
     await this.$axios.put(url, params)
-      .then((res) => {
-      }).catch((e) => {
+      .then(() => {
+      }).catch(() => {
         alert('メモの保存の失敗しました')
       })
   },

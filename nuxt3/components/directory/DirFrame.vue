@@ -89,7 +89,7 @@ export default {
     },
   },
   watch : {
-    noteLoadFlag (newVal, oldVal) {
+    noteLoadFlag (newVal) {
       if (newVal) {
         const targetElementId = 'dir-frame'
         this.$util.load.createLoadScreen(targetElementId)
@@ -124,8 +124,6 @@ export default {
       this.$store.dispatch('NoteTree/setSelectTree', note)
     },
     async drop (event) {
-      const tree = this.$refs.tree;
-
       const id       = event.dragNode.data.id
       const position = this.getPosition(event.dragNode, event.targetPath);
 

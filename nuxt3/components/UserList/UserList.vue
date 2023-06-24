@@ -120,7 +120,7 @@ export default {
       }
 
       const url      = this.$config.public.apiUrl + '/users/' + user.id;
-      const response = await this.$axios.delete(url)
+      await this.$axios.delete(url)
 
       this.load();
     },

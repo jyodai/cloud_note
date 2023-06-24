@@ -42,7 +42,7 @@ export default {
     },
   },
   watch : {
-    changeSelectNote (newVal, oldVal) {
+    changeSelectNote (newVal) {
       this.note = newVal
     },
   },
