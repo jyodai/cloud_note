@@ -28,7 +28,7 @@ export default {
       default : () => { return {} },
     },
   },
-  emit : [
+  emits : [
     'saveNote',
     'blur',
   ],

@@ -19,7 +19,7 @@
 <script>
 
 export default {
-  emit : [
+  emits : [
     'save',
     'delete',
     'close',
