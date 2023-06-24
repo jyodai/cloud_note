@@ -30,5 +30,10 @@ module.exports = {
     ],
     'no-var': 2, //varを禁止
     'no-debugger' : 'warn',
+
+    // 以降プラグインから追加
+
+    // 垂直方向のイコールを揃える
+    'eslint-plugin-align-assignments' : [2, { 'requiresOnly' : false}],
   },
 }
