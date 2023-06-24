@@ -8,36 +8,36 @@
 <script>
 
 export default {
-  components: {
+  components : {
   },
   data () {
     return {
-      notePath: 'ファイル未選択',
+      notePath : 'ファイル未選択',
     }
   },
-  computed: {
+  computed : {
     changeSelectNote () {
       return this.$store.getters['NoteTab/getSelectNote']
     },
   },
-  watch: {
+  watch : {
     changeSelectNote (newVal, oldVal) {
       this.getNotePath(newVal.id)
     },
   },
-  methods: {
+  methods : {
     async getNotePath (noteId) {
       if (!noteId) {
         this.notePath = 'ファイル未選択'
         return
       }
-      const url = this.$config.public.apiUrl + '/notes?noteId=' + noteId;
+      const url      = this.$config.public.apiUrl + '/notes?noteId=' + noteId;
       const response = await this.$axios.get(url)
-      this.notePath = response.path
+      this.notePath  = response.path
     },
     openNoteFile () {
       let noteId = null
-      noteId = this.$store.getters['NoteContent/getSelectNoteId']
+      noteId     = this.$store.getters['NoteContent/getSelectNoteId']
       if (!noteId) {
         return alert('ファイルが開いていません')
       }

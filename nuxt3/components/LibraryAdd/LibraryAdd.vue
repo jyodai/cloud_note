@@ -17,7 +17,10 @@
               @change="selectedFile"
             />
           </div>
-          <div v-for="uploadFile in uploadFiles" :key="uploadFile.name">
+          <div
+            v-for="uploadFile in uploadFiles"
+            :key="uploadFile.name"
+          >
             {{ uploadFile.name }}
           </div>
         </div>
@@ -38,7 +41,7 @@ import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
   },
@@ -50,12 +53,12 @@ export default {
   },
   created () {},
   mounted () {},
-  methods: {
+  methods : {
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryAdd', closeType);
     },
     async addFile () {
-      const url = this.$config.public.apiUrl + '/libraries/files';
+      const url    = this.$config.public.apiUrl + '/libraries/files';
       const params = new FormData()
       for (let i = 0; i < this.uploadFiles.length; i++) {
         params.append('file[]', this.uploadFiles[i])

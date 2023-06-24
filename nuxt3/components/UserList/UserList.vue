@@ -8,11 +8,14 @@
         ユーザー一覧
       </template>
       <template
-        #modalContent
         v-if="visible"
+        #modalContent
       >
         <div class="content-header">
-          <v-btn class="mb-2" @click="openAdd()">
+          <v-btn
+            class="mb-2"
+            @click="openAdd()"
+          >
             追加
           </v-btn>
         </div>
@@ -34,7 +37,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in users" :key="user.id">
+              <tr
+                v-for="user in users"
+                :key="user.id"
+              >
                 <td>
                   {{ user.id }}
                 </td>
@@ -72,30 +78,30 @@ import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 import IconList from '~/commonComponents/IconList.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
     IconList,
   },
   data () {
     return {
-      modalName : 'UserList',
+      modalName   : 'UserList',
       modalOption : {
         beforeOpen : this.beforeOpen,
       },
       visible : false,
-      users  : null,
+      users   : null,
     }
   },
-  methods: {
+  methods : {
     beforeOpen () {
       this.load();
     },
     async load () {
-      const url = this.$config.public.apiUrl + '/users';
+      const url      = this.$config.public.apiUrl + '/users';
       const response = await this.$axios.get(url);
-      this.users = response.data
-      this.visible = true;
+      this.users     = response.data
+      this.visible   = true;
     },
     closeModal () {
       this.$vfm.close('UserList', this.$config.MODAL_CLOSE_TYPE_CLOSE);
@@ -113,7 +119,7 @@ export default {
         return
       }
 
-      const url = this.$config.public.apiUrl + '/users/' + user.id;
+      const url      = this.$config.public.apiUrl + '/users/' + user.id;
       const response = await this.$axios.delete(url)
 
       this.load();

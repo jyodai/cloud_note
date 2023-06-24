@@ -1,11 +1,11 @@
 <template>
   <div>
-    <library-list/>
-    <library-add/>
-    <library-edit/>
-    <user-list/>
-    <user-add/>
-    <user-edit/>
+    <library-list />
+    <library-add />
+    <library-edit />
+    <user-list />
+    <user-add />
+    <user-edit />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import UserAdd from '~/components/UserAdd/UserAdd.vue'
 import UserEdit from '~/components/UserEdit/UserEdit.vue'
 
 export default {
-  components: {
+  components : {
     LibraryList,
     LibraryAdd,
     LibraryEdit,

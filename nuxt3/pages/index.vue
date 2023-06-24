@@ -20,7 +20,7 @@ import NoteFrame from '../components/Note/NoteContainer.vue'
 import DirFrame from '../components/directory/DirFrame.vue'
 
 export default {
-  components: {
+  components : {
     Splitpanes,
     Pane,
     DirFrame,
@@ -32,7 +32,7 @@ export default {
   },
   mounted () {
   },
-  methods: {
+  methods : {
   },
 }
 </script>

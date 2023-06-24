@@ -10,7 +10,7 @@
           @click="selectNoteTree(null)"
           @mouseup.right="selectNoteTree(null)"
         >
-          <template v-slot="{node, index, path, tree}">
+          <template #default="{node, index, path, tree}">
             <div
               class="tree-node-container"
               :class="{'select-node': selectTreeNoteId === node.data.id}"
@@ -21,10 +21,16 @@
                 v-if="node.data.hasChild"
                 @click.stop="tree.toggleFold(node, path);"
               >
-                <v-icon v-if="node.$folded" size="12">
+                <v-icon
+                  v-if="node.$folded"
+                  size="12"
+                >
                   mdi-folder
                 </v-icon>
-                <v-icon v-else size="12">
+                <v-icon
+                  v-else
+                  size="12"
+                >
                   mdi-folder-open
                 </v-icon>
               </span>
@@ -53,25 +59,25 @@ import { Tree, Fold, Draggable, } from 'he-tree-vue'
 import 'he-tree-vue/dist/he-tree-vue.css'
 
 export default {
-  components: {
+  components : {
     DirectoryContextmenu,
-    Tree: Tree.mixPlugins([Fold, Draggable])
+    Tree : Tree.mixPlugins([Fold, Draggable])
   },
   data () {
     return {
       treeNodes : [],
       notes     : '',
       config    : {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded',
         },
       },
       noteLoadFlag : false,
       dragNoteId   : null,
     }
   },
-  computed: {
-    storeTreeNodes: {
+  computed : {
+    storeTreeNodes : {
       get () {
         return this.$store.getters['NoteTree/getTree']
       },
@@ -82,7 +88,7 @@ export default {
       },
     },
   },
-  watch: {
+  watch : {
     noteLoadFlag (newVal, oldVal) {
       if (newVal) {
         const targetElementId = 'dir-frame'
@@ -91,12 +97,12 @@ export default {
         this.$util.load.deleteLoadScreen()
       }
     },
-    storeTreeNodes: {
+    storeTreeNodes : {
       handler () {
-        const tree = this.$store.getters['NoteTree/getDisplayTree']
+        const tree     = this.$store.getters['NoteTree/getDisplayTree']
         this.treeNodes = this.$util.object.clone(tree)
       },
-      deep: true,
+      deep : true,
     },
   },
   async created () {
@@ -104,9 +110,9 @@ export default {
     await this.$store.dispatch('NoteTree/loadTree')
       .finally(() => { this.noteLoadFlag = false })
   },
-  methods: {
+  methods : {
     setNote (note) {
-      const noteTab = this.$store.getters['NoteTab/getNoteTab']
+      const noteTab       = this.$store.getters['NoteTab/getNoteTab']
       const existsNoteTab = noteTab.findIndex(value => value.id === note.id)
       if (existsNoteTab === -1) {
         this.$store.dispatch('NoteTab/setNoteTab', Object.assign({}, note))
@@ -120,7 +126,7 @@ export default {
     async drop (event) {
       const tree = this.$refs.tree;
 
-      const id   = event.dragNode.data.id
+      const id       = event.dragNode.data.id
       const position = this.getPosition(event.dragNode, event.targetPath);
 
       this.noteLoadFlag = true
@@ -130,11 +136,11 @@ export default {
         })
     },
     getPosition(node, path) {
-      const tree = this.$refs.tree;
-      const position = {}
+      const tree       = this.$refs.tree;
+      const position   = {}
       const parentNode = tree.getNodeParentByPath(path);
       if (!parentNode || parentNode.data.hasChild) {
-        let lastPath = path.pop();
+        const lastPath = path.pop();
         if (lastPath === 0) {
           path.push(lastPath + 1);
           position.placement = 'before';
@@ -144,7 +150,7 @@ export default {
         }
         position.node = tree.getNodeByPath(path)
       } else {
-        position.node = parentNode;
+        position.node      = parentNode;
         position.placement = 'inside';
       }
       return position
@@ -160,13 +166,13 @@ export default {
       }
     },
     async openToggle (node) {
-      const id = node.data.id
+      const id          = node.data.id
       this.noteLoadFlag = true
       await this.$store.dispatch('NoteTree/openNode', id)
         .finally(() => { this.noteLoadFlag = false })
     },
     async closeToggle (node) {
-      const id = node.data.id
+      const id          = node.data.id
       this.noteLoadFlag = true
       await this.$store.dispatch('NoteTree/closeNode', id)
         .finally(() => { this.noteLoadFlag = false })

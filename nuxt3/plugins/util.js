@@ -12,8 +12,8 @@ const util = {
 
 export default defineNuxtPlugin(() => {
   return {
-      provide: {
-        util,
-      },
-    };
+    provide : {
+      util,
+    },
+  };
 });

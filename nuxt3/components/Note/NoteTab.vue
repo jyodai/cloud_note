@@ -1,12 +1,23 @@
 <template>
-  <draggable v-model="noteTab" item-key="id" class="note-tab thin-scroll-bar">
+  <draggable
+    v-model="noteTab"
+    item-key="id"
+    class="note-tab thin-scroll-bar"
+  >
     <template #item="{ element, index }">
       <div
         class="note-title g-up-down-center"
         :class="{select : element.id === $store.getters['NoteTab/getSelectNoteId']}"
       >
-        <span class="title" @click="setNote(element)">{{ element.title }}</span>
-        <v-icon class="close-icon" size="14" @click="removeNoteTab(element.id)">
+        <span
+          class="title"
+          @click="setNote(element)"
+        >{{ element.title }}</span>
+        <v-icon
+          class="close-icon"
+          size="14"
+          @click="removeNoteTab(element.id)"
+        >
           mdi-close-thick
         </v-icon>
       </div>
@@ -18,12 +29,12 @@
 import Draggable from 'vuedraggable'
 
 export default {
-  components: {
+  components : {
     Draggable,
   },
   data () { return {} },
-  computed: {
-    noteTab: {
+  computed : {
+    noteTab : {
       get () {
         return this.$store.getters['NoteTab/getNoteTab']
       },
@@ -39,7 +50,7 @@ export default {
   mounted () {
     this.initSelectNote()
   },
-  methods: {
+  methods : {
     initSelectNote () {
       const noteTab = this.$store.getters['NoteTab/getNoteTab']
       if (noteTab.length === 0) {
@@ -63,8 +74,8 @@ export default {
     },
     getNextNote (id) {
       const noteTab = this.$store.getters['NoteTab/getNoteTab']
-      const index = noteTab.findIndex(note => note.id === id)
-      let nextNote = noteTab[index - 1] ? noteTab[index - 1] : null
+      const index   = noteTab.findIndex(note => note.id === id)
+      let nextNote  = noteTab[index - 1] ? noteTab[index - 1] : null
       if (nextNote === null && noteTab.length > 1) {
         nextNote = noteTab[1]
       }

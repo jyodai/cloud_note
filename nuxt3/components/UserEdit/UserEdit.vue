@@ -17,8 +17,8 @@
                 </th>
                 <td>
                   <input
-                    type="text"
                     v-model="user.name"
+                    type="text"
                     :disabled="isAdminUser(user)"
                   >
                 </td>
@@ -29,8 +29,8 @@
                 </th>
                 <td>
                   <input
-                    type="text"
                     v-model="user.email"
+                    type="text"
                     :disabled="isAdminUser(user)"
                   >
                 </td>
@@ -40,7 +40,10 @@
                   パスワード
                 </th>
                 <td>
-                  <input type="text" v-model="user.password">
+                  <input
+                    v-model="user.password"
+                    type="text"
+                  >
                 </td>
               </tr>
             </tbody>
@@ -63,7 +66,7 @@ import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
   },
@@ -76,23 +79,23 @@ export default {
       user : {},
     }
   },
-  methods: {
+  methods : {
     beforeOpen () {
       this.loadParams()
     },
     async loadParams () {
       const params = this.$vfm.getParams('UserEdit');
-      const id = params.user.id
+      const id     = params.user.id
 
-      const url = this.$config.public.apiUrl + '/users/' + id;
+      const url      = this.$config.public.apiUrl + '/users/' + id;
       const response = await this.$axios.get(url)
-      this.user = response.data
+      this.user      = response.data
     },
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('UserEdit', closeType);
     },
     async save () {
-      const url = this.$config.public.apiUrl + '/users/' + this.user.id;
+      const url    = this.$config.public.apiUrl + '/users/' + this.user.id;
       const params = this.user;
       await this.$axios.put(url, params)
       this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);

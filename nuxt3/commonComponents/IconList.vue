@@ -6,10 +6,10 @@
     <v-icon
       v-if="showIcons.includes(icon.key)"
       size="20"
-      @click='icon.event()'
-      class='icon'
+      class="icon"
+      @click="icon.event()"
     >
-    {{ icon.icon }}
+      {{ icon.icon }}
     </v-icon>
   </template>
 </template>
@@ -17,33 +17,33 @@
 <script>
 
 export default {
-  emits: [
-    "edit",
-    "trash",
-  ],
-  props: {
-    showIcons: {
-      type : Array,
+  props : {
+    showIcons : {
+      type    : Array,
       default : () => [],
     },
   },
+  emits : [
+    "edit",
+    "trash",
+  ],
   data () {
     return {
       icons : [
         {
-            key : 'edit',
-            icon  : 'mdi-pencil-outline',
-            event : () => { this.edit() },
+          key   : 'edit',
+          icon  : 'mdi-pencil-outline',
+          event : () => { this.edit() },
         },
         {
-            key : 'trash',
-            icon  : 'mdi-trash-can-outline',
-            event : () => { this.trash() },
+          key   : 'trash',
+          icon  : 'mdi-trash-can-outline',
+          event : () => { this.trash() },
         },
       ],
     }
   },
-  methods: {
+  methods : {
     edit () {
       this.$emit('edit')
     },

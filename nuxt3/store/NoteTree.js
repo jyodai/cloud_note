@@ -86,11 +86,11 @@ const actions = {
       ? this.$util.localStorage.get('restoreTreeLists')
       : [];
 
-    const url = this.$config.public.apiUrl + '/tree';
-    const params = {
+    const url      = this.$config.public.apiUrl + '/tree';
+    const params   = {
       tree : JSON.stringify(restoreTreeLists),
     }
-    const config = { params, }
+    const config   = { params, }
     const response = await this.$axios.get(url, config)
 
     const rootNode = [
@@ -105,9 +105,9 @@ const actions = {
     commit('setTree', rootNode)
   },
   async loadChildrenTree ({getters, commit}, id) {
-    const url = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'children'
-    this.noteLoadFlag = true
-    const response = await this.$axios.get(url)
+    const url          = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'children'
+    this.noteLoadFlag  = true
+    const response     = await this.$axios.get(url)
     const addTreeNodes = convertTree(response)
 
     const parentTreeNode = getters.findTreeNode(getters.getTree, id)
@@ -128,7 +128,7 @@ const actions = {
     commit('setFolded', { node, flag, })
 
     const parentTreeNode = getters.findTreeNode(getters.getTree, id)
-    commit('setChildrenTree', { parentTreeNode, addTreeNodes: [], })
+    commit('setChildrenTree', { parentTreeNode, addTreeNodes : [], })
 
     await dispatch('removeRestoreTreeData', id)
   },
@@ -146,7 +146,7 @@ const actions = {
   },
   removeRestoreTreeData ({ getters, }, id) {
     const restoreLists = this.$util.localStorage.get('restoreTreeLists')
-    const index = restoreLists.indexOf(id)
+    const index        = restoreLists.indexOf(id)
     if (index === -1) {
       return;
     }
@@ -164,36 +164,36 @@ const actions = {
   },
   async moveNode ({ getters, commit, }, { id, position, }) {
     const targetId = position.node.data.id
-    const type = position.placement
-    const params = {
+    const type     = position.placement
+    const params   = {
       target_note_id : targetId,
       type,
     }
-    const url = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'move'
+    const url      = this.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'move'
     const response = await this.$axios.put(url, params)
 
-    const node = getters.findTreeNode(getters.getTree, id)
+    const node       = getters.findTreeNode(getters.getTree, id)
     const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)
     commit('deleteNode', { parentNode, id, })
     if (parentNode.children.length === 0) {
-      commit('setHasChild', { node: parentNode, flag: false, })
+      commit('setHasChild', { node : parentNode, flag : false, })
     }
 
     const insertNode = node
-    commit('setNodeData', { node: insertNode, data: response, })
+    commit('setNodeData', { node : insertNode, data : response, })
     const insertParentNode = getters.findTreeNode(getters.getTree, insertNode.data.parent_note_id)
-    commit('setHasChild', { node: insertParentNode, flag: true, })
+    commit('setHasChild', { node : insertParentNode, flag : true, })
 
     switch (type) {
-      case 'before':
-        commit('setBeforeTree', { parentNode: insertParentNode, beforeTargetId: targetId, insertNode, })
-        break
-      case 'after':
-        commit('setAfterTree', { parentNode: insertParentNode, afterTargetId: targetId, insertNode, })
-        break
-      case 'inside':
-        commit('setInsideTree', { parentNode: insertParentNode, insertNode, })
-        break
+    case 'before':
+      commit('setBeforeTree', { parentNode : insertParentNode, beforeTargetId : targetId, insertNode, })
+      break
+    case 'after':
+      commit('setAfterTree', { parentNode : insertParentNode, afterTargetId : targetId, insertNode, })
+      break
+    case 'inside':
+      commit('setInsideTree', { parentNode : insertParentNode, insertNode, })
+      break
     }
   },
   async addNode ({ getters, commit, }, { data, }) {
@@ -202,14 +202,14 @@ const actions = {
       parentNoteId : data.noteId,
       noteType     : data.noteType,
     }
-    const url = this.$config.public.apiUrl + '/notes'
+    const url    = this.$config.public.apiUrl + '/notes'
     await this.$axios
       .post(url, params)
       .then((response) => {
-        const node = convertNode(response)
+        const node       = convertNode(response)
         const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)
-        commit('setInsideTree', { parentNode, insertNode: node, })
-        commit('setHasChild', { node: parentNode, flag: true, })
+        commit('setInsideTree', { parentNode, insertNode : node, })
+        commit('setHasChild', { node : parentNode, flag : true, })
       })
   },
   async updateNode ({ getters, commit, }, { data, }) {
@@ -217,27 +217,27 @@ const actions = {
     const params = {
       noteTitle : data.noteTitle,
     }
-    const url = this.$config.public.apiUrl + '/notes' + '/' + noteId
+    const url    = this.$config.public.apiUrl + '/notes' + '/' + noteId
     await this.$axios
       .put(url, params)
       .then((response) => {
         const node = getters.findTreeNode(getters.getTree, response.id)
-        commit('setNodeData', { node, data: response, })
-        commit('setTitle', { node, title: response.title, })
+        commit('setNodeData', { node, data : response, })
+        commit('setTitle', { node, title : response.title, })
       })
   },
   async deleteNode ({ getters, commit, }, id = null) {
     id = id === null ? getters.getSelectNoteId : id
 
-    const url = this.$config.public.apiUrl + '/notes' + '/' + id
+    const url      = this.$config.public.apiUrl + '/notes' + '/' + id
     const response = await this.$axios
       .delete(url)
       .then((response) => {
-        const node = getters.findTreeNode(getters.getTree, id)
+        const node       = getters.findTreeNode(getters.getTree, id)
         const parentNode = getters.findTreeNode(getters.getTree, node.data.parent_note_id)
         commit('deleteNode', { parentNode, id, })
         if (parentNode.children.length === 0) {
-          commit('setHasChild', { node: parentNode, flag: false, })
+          commit('setHasChild', { node : parentNode, flag : false, })
         }
         return response
       })
@@ -271,7 +271,7 @@ function convertNode (node) {
 }
 
 export default {
-  namespaced: true,
+  namespaced : true,
   state,
   mutations,
   getters,

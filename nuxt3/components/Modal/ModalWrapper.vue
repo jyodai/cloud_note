@@ -1,11 +1,14 @@
 <template>
-  <div ref="modal" class="modal">
+  <div
+    ref="modal"
+    class="modal"
+  >
     <vue-final-modal
       v-model="showModal"
       class="modal-container"
       content-class="modal-content"
       :modal-id="modalName"
-      :teleportTo="false"
+      :teleport-to="false"
       @before-open="option.beforeOpen"
     >
       <span class="modal__title">
@@ -25,15 +28,15 @@
 import { VueFinalModal } from 'vue-final-modal';
 
 export default {
-  components: {
+  components : {
     VueFinalModal,
   },
-  props: {
-    modalName: {
+  props : {
+    modalName : {
       type    : String,
       default : '',
     },
-    modalOption: {
+    modalOption : {
       type    : Object,
       default : () => {},
     },
@@ -49,16 +52,16 @@ export default {
   created () {
     this.setOption()
   },
-  methods: {
+  methods : {
     setOption () {
       const defaultOption = {
         width      : '60%',
         height     : '60%',
         beforeOpen : () => {},
       }
-      this.option = Object.assign(defaultOption, this.modalOption)
-      this.width = this.option.width;
-      this.height = this.option.height;
+      this.option         = Object.assign(defaultOption, this.modalOption)
+      this.width          = this.option.width;
+      this.height         = this.option.height;
     },
   },
 }

@@ -32,27 +32,27 @@ import MarkdownView from '~/commonComponents/MarkdownView.vue'
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue'
 
 export default {
-  components: {
+  components : {
     MarkdownView,
     MarkdownEdit,
   },
-  props: {
-    note: {
+  props : {
+    note : {
       type    : Object,
       default : () => {},
     },
   },
   data () {
     return {
-      showMarkdown: true,
+      showMarkdown : true,
     }
   },
-  computed: {
+  computed : {
     content () {
       return this.$store.getters['NoteContent/getSelectContent']
     },
   },
-  watch: {
+  watch : {
     async note (newVal) {
       await this.load(newVal)
     },
@@ -60,9 +60,9 @@ export default {
   async created () {
     await this.load(this.note)
   },
-  methods: {
+  methods : {
     async load (note) {
-      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId: note.id, })
+      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, })
     },
     changeEditor () {
       if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {

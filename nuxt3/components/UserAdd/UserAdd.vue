@@ -15,7 +15,10 @@
                   ユーザー名
                 </th>
                 <td>
-                  <input type="text" v-model="user.name">
+                  <input
+                    v-model="user.name"
+                    type="text"
+                  >
                 </td>
               </tr>
               <tr>
@@ -23,7 +26,10 @@
                   メールアドレス
                 </th>
                 <td>
-                  <input type="text" v-model="user.email">
+                  <input
+                    v-model="user.email"
+                    type="text"
+                  >
                 </td>
               </tr>
               <tr>
@@ -31,7 +37,10 @@
                   パスワード
                 </th>
                 <td>
-                  <input type="text" v-model="user.password">
+                  <input
+                    v-model="user.password"
+                    type="text"
+                  >
                 </td>
               </tr>
             </tbody>
@@ -54,26 +63,26 @@ import Modal from '../Modal/ModalWrapper.vue'
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
-  components: {
+  components : {
     Modal,
     ModalFooterButton,
   },
   data () {
     return {
-      modalName   : 'UserAdd',
-      user : {
-        name : '',
-        email : '',
+      modalName : 'UserAdd',
+      user      : {
+        name     : '',
+        email    : '',
         password : '',
       },
     }
   },
-  methods: {
+  methods : {
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('UserAdd', closeType);
     },
     async save () {
-      const url = this.$config.public.apiUrl + '/users';
+      const url    = this.$config.public.apiUrl + '/users';
       const params = this.user;
       await this.$axios.post(url, params)
       this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);

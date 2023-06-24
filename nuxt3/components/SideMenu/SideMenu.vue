@@ -40,8 +40,8 @@
       <div class="content">
         <template v-if="menu.edit.show">
           <div
-            @click="openModal('LibraryList')"
             class="g-pointer"
+            @click="openModal('LibraryList')"
           >
             <v-icon size="14">
               mdi-checkbox-blank-circle
@@ -52,8 +52,8 @@
         <template v-if="menu.setting.show">
           <div
             v-if="isAdminUser"
-            @click="openModal('UserList')"
             class="g-pointer"
+            @click="openModal('UserList')"
           >
             <v-icon size="14">
               mdi-checkbox-blank-circle
@@ -61,8 +61,8 @@
             ユーザー
           </div>
           <div
-            @click="logout"
             class="g-pointer"
+            @click="logout"
           >
             <v-icon
               size="14"
@@ -80,24 +80,24 @@
 <script>
 
 export default {
-  components: {
+  components : {
   },
   data () {
     return {
       isAdminUser : this.$store.getters['User/isAdminUser'],
-      menu: {
-        edit: {
-          show: false,
+      menu        : {
+        edit : {
+          show : false,
         },
-        setting: {
-          show: false,
+        setting : {
+          show : false,
         },
       },
     }
   },
   mounted () {
   },
-  methods: {
+  methods : {
     openNote () {
       this.$router.push('/')
     },
@@ -117,13 +117,13 @@ export default {
       }.bind(this))
     },
     openPanel () {
-      const sidePanel = document.getElementById('sidePanel')
+      const sidePanel       = document.getElementById('sidePanel')
       sidePanel.style.width = '100%'
     },
     closePanel () {
-      const sidePanel = document.getElementById('sidePanel')
+      const sidePanel       = document.getElementById('sidePanel')
       sidePanel.style.width = '0%'
-      const mainPanel = document.getElementById('mainPanel')
+      const mainPanel       = document.getElementById('mainPanel')
       mainPanel.style.width = '100%'
     },
     openModal(key) {

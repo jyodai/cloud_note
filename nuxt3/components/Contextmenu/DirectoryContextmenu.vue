@@ -1,10 +1,16 @@
 <template>
   <div class="directory-contextmenu">
-    <div v-contextmenu:contextmenu class="contextmenu">
+    <div
+      v-contextmenu:contextmenu
+      class="contextmenu"
+    >
       <slot />
     </div>
     <contextmenu ref="contextmenu">
-      <contextmenu-submenu title="新規作成" class="contextmenu-sub">
+      <contextmenu-submenu
+        title="新規作成"
+        class="contextmenu-sub"
+      >
         <contextmenu-item @click="addNote(0)">
           ルートノート
         </contextmenu-item>
@@ -40,10 +46,10 @@ import {
 import 'v-contextmenu/dist/themes/default.css';
 
 export default {
-  directives: {
-    contextmenu: directive,
+  directives : {
+    contextmenu : directive,
   },
-  components: {
+  components : {
     Contextmenu,
     ContextmenuItem,
     ContextmenuSubmenu,
@@ -52,20 +58,20 @@ export default {
     return {
       note   : null,
       config : {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded',
         },
       },
     }
   },
-  watch: {
+  watch : {
   },
   mounted () {
   },
-  methods: {
+  methods : {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId']
-      const url = this.$config.public.apiUrl + '/notes' + '?noteId=' + noteId
+      const url    = this.$config.public.apiUrl + '/notes' + '?noteId=' + noteId
       return await this.$axios.get(url)
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
@@ -127,7 +133,7 @@ export default {
     },
     async property () {
       const note = await this.getNote()
-      const str = `タイトル : ${note.title}
+      const str  = `タイトル : ${note.title}
 ID : ${note.id}
 ParentId : ${note.parent_note_id}
 表示順 : ${note.display_num}

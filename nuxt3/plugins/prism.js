@@ -17,8 +17,8 @@ import 'prismjs/components/prism-json'
 
 export default defineNuxtPlugin(() => {
   return {
-      provide: {
-        prism: Prism,
-      },
-    };
+    provide : {
+      prism : Prism,
+    },
+  };
 });

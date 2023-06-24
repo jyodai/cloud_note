@@ -12,7 +12,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     store.$axios = axios;
   };
 
-  const runtimeConfig = useRuntimeConfig();
+  const runtimeConfig  = useRuntimeConfig();
   const registerConfig = (store) => {
     store.$config = runtimeConfig;
   };
@@ -26,13 +26,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   const store = createStore({
-    modules: {
+    modules : {
       User,
       NoteTab,
       NoteTree,
       NoteContent,
     },
-    plugins: [
+    plugins : [
       registerAxios,
       registerConfig,
       registerConst,
@@ -41,8 +41,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   });
 
   return {
-      provide: {
-        store,
-      },
-    };
+    provide : {
+      store,
+    },
+  };
 });

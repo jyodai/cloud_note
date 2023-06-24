@@ -12,23 +12,23 @@
 import Mermaid from 'mermaid/dist/mermaid'
 
 export default {
-  props: {
-    content: {
+  props : {
+    content : {
       type    : Object,
       default : () => {},
     },
   },
   data () {
     return {
-      markdown: '',
+      markdown : '',
     }
   },
-  computed: {
+  computed : {
     changeNote () {
       return this.content
     },
   },
-  watch: {
+  watch : {
     changeNote (newVal) {
       this.markdown = this.beforeMarkdown(newVal.content)
     },
@@ -43,12 +43,12 @@ export default {
   mounted () {
     this.afterMarkdown()
   },
-  methods: {
+  methods : {
     initializeMermaid () {
       Mermaid.initialize({
         theme          : 'dark',
         themeVariables : {
-          darkMode: true,
+          darkMode : true,
         },
       })
     },
@@ -101,11 +101,11 @@ export default {
       this.$prism.highlightAll()
     },
     toc () {
-      const area = 'markdownArea'
-      const tocMark = '<div id="toc"></div>'
+      const area         = 'markdownArea'
+      const tocMark      = '<div id="toc"></div>'
       const markdonwHtml = document.getElementById(area)
 
-      const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      const elements     = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
       const headElements = []
       elements.forEach(function (element) {
         if (element.parentElement.id === area) {
@@ -124,11 +124,11 @@ export default {
 
       let i = 1
       headElements.forEach(function (headElement) {
-        let headNum = headElement.outerHTML.match(/<h(.*?)>/)
-        headNum = headNum[1]
+        let headNum     = headElement.outerHTML.match(/<h(.*?)>/)
+        headNum         = headNum[1]
         const headTitle = headElement.innerText
         const headClass = 'head_content_' + headNum
-        const headId = 'head_link_' + i
+        const headId    = 'head_link_' + i
 
         const anchor = document.createElement('li')
         anchor.classList.add(headClass)
