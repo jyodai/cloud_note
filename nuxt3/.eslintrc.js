@@ -9,6 +9,7 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
     'eslint:recommended',
+    'plugin:vue-scoped-css/vue3-recommended',
   ],
   globals: {
     mermaid : true,
