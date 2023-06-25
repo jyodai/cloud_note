@@ -61,13 +61,13 @@ class NoteTest extends TestCase
     public function createTestData($parentNoteId = 0, $hierarchy = 1)
     {
         for ($i = 0; $i < 3; $i++) {
-            $data = [
+            $data              = [
                 'parentNoteId' => $parentNoteId,
                 'user_id'      => 1,
                 'title'        => 'hoge',
             ];
-            $note = new Note();
-            $createNote = $note->create($data);
+            $note              = new Note();
+            $createNote        = $note->create($data);
             $createNote->title = $createNote->id;
             $createNote->save();
 
@@ -80,9 +80,9 @@ class NoteTest extends TestCase
 
 /**
  * [テストデータの構成]
- * 
+ *
  * createTestDataメソッドで生成されるデータ
- * 
+ *
  * noteId : 1, title : 1
  *     noteId : 2, title : 2
  *         noteId : 3, title : 3
@@ -123,5 +123,4 @@ class NoteTest extends TestCase
  *         noteId : 38, title : 38
  *         noteId : 39, title : 39
  */
-
 }

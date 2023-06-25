@@ -40,7 +40,7 @@ class ConvertLibrary extends Command
     {
         echo "\n";
         $noteContents = NoteContent::get();
-        $domain = config('app.xserver_domain');
+        $domain       = config('app.xserver_domain');
         foreach ($noteContents as $noteContent) {
             $search         = $domain . '/memo-web/backend/public/api/libraries/files';
             $replace        = $domain . '/cloud_note/public/api/libraries/files';

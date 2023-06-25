@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
 use App\Models\Note;
 
 class NotesTableSeeder extends Seeder
 {
     protected $note;
-    public function __construct(){
+    public function __construct()
+    {
         $this->note = new Note();
     }
     /**

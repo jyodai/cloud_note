@@ -39,7 +39,7 @@ class ChangeUserPassword extends Command
      */
     public function handle()
     {
-        $id = $this->argument('id');
+        $id       = $this->argument('id');
         $password = $this->argument('password');
 
         $user = User::find($id);
@@ -54,4 +54,3 @@ class ChangeUserPassword extends Command
         $this->info('Password updated successfully for User ID: ' . $id);
     }
 }
-

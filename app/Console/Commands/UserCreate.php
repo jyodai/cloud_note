@@ -42,28 +42,28 @@ class UserCreate extends Command
     {
         $users = [
             [
-                'name'    => 'hoge',
+                'name'     => 'hoge',
                 'email'    => 'hoge@example.com',
-                'password' => 'hoge'
+                'password' => 'hoge',
             ],
             [
-                'name'    => 'fuga',
+                'name'     => 'fuga',
                 'email'    => 'fuga@example.com',
-                'password' => 'fuga'
+                'password' => 'fuga',
             ],
             [
-                'name'    => 'piyo',
+                'name'     => 'piyo',
                 'email'    => 'piyo@example.com',
-                'password' => 'piyo'
+                'password' => 'piyo',
             ],
         ];
 
         echo "\n";
         foreach ($users as $user) {
             User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => Hash::make($user['password']),
+                'name'      => $user['name'],
+                'email'     => $user['email'],
+                'password'  => Hash::make($user['password']),
                 'api_token' => Str::random(60),
             ]);
 

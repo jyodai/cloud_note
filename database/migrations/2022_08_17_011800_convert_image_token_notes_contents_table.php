@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use \App\Models\Note;
-use \App\Models\NoteContent;
+use App\Models\Note;
+use App\Models\NoteContent;
 
 class ConvertImageTokenNotesContentsTable extends Migration
 {
@@ -21,10 +21,10 @@ class ConvertImageTokenNotesContentsTable extends Migration
             $notes = Note::get()->where('user_id', $user->id);
             foreach ($notes as $note) {
                 $noteContent = NoteContent::where('note_id', $note->id)->first();
-                $pattern = $user->api_image_token;
-                
+                $pattern     = $user->api_image_token;
+
                 if (strpos($noteContent->content, $pattern)) {
-                    $replaceContent = str_replace($pattern, $replace, $noteContent->content);
+                    $replaceContent       = str_replace($pattern, $replace, $noteContent->content);
                     $noteContent->content = $replaceContent;
                     $noteContent->save();
                 }
@@ -45,10 +45,10 @@ class ConvertImageTokenNotesContentsTable extends Migration
             $notes = Note::get()->where('user_id', $user->id);
             foreach ($notes as $note) {
                 $noteContent = NoteContent::where('note_id', $note->id)->first();
-                $replace = $user->api_image_token;
-                
+                $replace     = $user->api_image_token;
+
                 if (strpos($noteContent->content, $pattern)) {
-                    $replaceContent = str_replace($pattern, $replace, $noteContent->content);
+                    $replaceContent       = str_replace($pattern, $replace, $noteContent->content);
                     $noteContent->content = $replaceContent;
                     $noteContent->save();
                 }

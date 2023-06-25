@@ -42,8 +42,8 @@ class CreateAdminUser extends Command
     public function handle()
     {
         $userModel = new User();
-        $password = Str::random(8);
-        $data = [
+        $password  = Str::random(8);
+        $data      = [
             'name'      => 'admin',
             'user_type' => C_User::USER_TYPE_ADMIN,
             'email'     => 'admin@example.com',

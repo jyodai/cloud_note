@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Components;
 
 class Comp_File

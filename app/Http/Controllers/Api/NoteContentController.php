@@ -19,7 +19,7 @@ class NoteContentController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->user= auth()->user();
+            $this->user = auth()->user();
             return $next($request);
         });
     }
@@ -27,7 +27,7 @@ class NoteContentController extends Controller
     public function getContent(Request $request)
     {
         $noteId = $request->noteId ? (int) $request->noteId : null;
-        $ret = Note::find($noteId)->content;
+        $ret    = Note::find($noteId)->content;
         return response()->json($ret);
     }
 
@@ -41,7 +41,7 @@ class NoteContentController extends Controller
 
         $content = is_null($request->content) ? '' : $request->content;
 
-        $entity = NoteContent::where('id', $noteId)->first();
+        $entity          = NoteContent::where('id', $noteId)->first();
         $entity->content = $content;
         $entity->save();
     }
