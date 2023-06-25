@@ -22,4 +22,6 @@
 
   <exclude-pattern>!*.php</exclude-pattern>
 
+  <arg name="colors" />
+
 </ruleset>
