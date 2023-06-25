@@ -4,5 +4,5 @@ namespace App\Consts;
 
 class User
 {
-    const USER_TYPE_ADMIN = 1;
+    public const USER_TYPE_ADMIN = 1;
 }
