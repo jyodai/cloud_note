@@ -2,7 +2,6 @@ const state = () => ({
   user        : null,
   token       : null,
   isAdminUser : false,
-  test : 'test',
 });
 
 const mutations = {
