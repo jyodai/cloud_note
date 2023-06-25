@@ -15,4 +15,11 @@
     <exclude name="Squiz.Arrays.ArrayDeclaration.SpaceInEmptyArray" />
   </rule>
 
+  <file>app</file>
+  <file>config</file>
+  <file>database</file>
+  <file>tests</file>
+
+  <exclude-pattern>!*.php</exclude-pattern>
+
 </ruleset>
