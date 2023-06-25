@@ -14,5 +14,5 @@ jobs:
         working-directory: ./nuxt3
 
       - name: ESLint
-        run: npm run eslint
+        run: npm run lint
         working-directory: ./nuxt3
