@@ -20,4 +20,6 @@
   <file>database</file>
   <file>tests</file>
 
+  <exclude-pattern>!*.php</exclude-pattern>
+
 </ruleset>
