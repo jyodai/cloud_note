@@ -19,7 +19,7 @@ class NoteController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->user= auth()->user();
+            $this->user = auth()->user();
             return $next($request);
         });
     }
@@ -33,7 +33,7 @@ class NoteController extends Controller
     public function getNote(Request $request)
     {
         $noteId = $request->noteId ? (int) $request->noteId : null;
-        $ret = Note::where('user_id', $this->user->id)
+        $ret    = Note::where('user_id', $this->user->id)
         ->where('id', $noteId)
         ->first();
         return response()->json($ret);
@@ -49,7 +49,7 @@ class NoteController extends Controller
 
         $noteTitle = $request->noteTitle;
 
-        $entity = Note::where('id', $noteId)->first();
+        $entity        = Note::where('id', $noteId)->first();
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
         $entity->save();
     }
@@ -57,22 +57,22 @@ class NoteController extends Controller
     public function addNote(Request $request)
     {
         $parentNoteId = (int) $request->parentNoteId;
-        $noteTitle = $request->noteTitle;
-        $noteType = $request->noteType;
+        $noteTitle    = $request->noteTitle;
+        $noteType     = $request->noteType;
 
-        $data = [
+        $data           = [
             'parentNoteId' => $parentNoteId,
-            'note_type' => $noteType,
-            'title'    => $noteTitle,
-            'user_id'  => $this->user->id,
+            'note_type'    => $noteType,
+            'title'        => $noteTitle,
+            'user_id'      => $this->user->id,
         ];
-        $noteEntity = new Note;
-        $note = $noteEntity->create($data);
+        $noteEntity     = new Note();
+        $note           = $noteEntity->create($data);
         $note->children = [];
         return response()->json($note);
     }
 
-    public function updateNote(int $noteId ,Request $request)
+    public function updateNote(int $noteId, Request $request)
     {
         if (empty($noteId)) {
             exit;
@@ -80,7 +80,7 @@ class NoteController extends Controller
 
         $noteTitle = $request['noteTitle'];
 
-        $entity = Note::find($noteId);
+        $entity        = Note::find($noteId);
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
         $entity->save();
 
@@ -90,10 +90,10 @@ class NoteController extends Controller
     public function deleteNote(int $noteId)
     {
         $deleteNoteId = [];
-        $model = new Note;
+        $model        = new Note();
 
-        $childNotes =$model->getChildNote($noteId);
-        foreach($childNotes as $childNote) {
+        $childNotes = $model->getChildNote($noteId);
+        foreach ($childNotes as $childNote) {
             $model->deleteNote($childNote['id']);
             $deleteNoteId[] = $childNote['id'];
         }

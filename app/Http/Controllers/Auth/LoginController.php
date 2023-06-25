@@ -21,7 +21,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
 
     /**
@@ -52,7 +51,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         // TODO トークンを削除する処理
-        
+
         $this->guard()->logout();
 
         $request->session()->invalidate();

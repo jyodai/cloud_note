@@ -14,8 +14,8 @@ class Comp_FileServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-          'comp_file',
-          'App\Http\Components\Comp_File'
+            'comp_file',
+            'App\Http\Components\Comp_File'
         );
     }
 
