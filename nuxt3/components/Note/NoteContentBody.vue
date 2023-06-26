@@ -2,7 +2,6 @@
   <div
     v-if="content !== null && showMarkdown === false"
     class="content"
-    @dblclick="changeEditor()"
   >
     <markdown-edit
       class="content-edit"
@@ -18,7 +17,6 @@
   <div
     v-else-if="content !== null && showMarkdown === true"
     class="content"
-    @dblclick="changeEditor()"
   >
     <markdown-view
       :content="content"
@@ -60,9 +58,22 @@ export default {
   async created () {
     await this.load(this.note);
   },
+  mounted() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  },
   methods : {
     async load (note) {
       await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, });
+    },
+    handleKeyDown(event) {
+      if (event.ctrlKey && event.key === 'e') {
+        event.preventDefault();
+        event.stopPropagation();
+        this.changeEditor();
+      }
     },
     changeEditor () {
       if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {
