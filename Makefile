@@ -50,6 +50,7 @@ build :
 		php artisan migrate; \
 		cd nuxt3 && npm install && cp .env.example .env; \
 	'
+	make cert
 
 buildxserver :
 	git pull origin master
