@@ -33,6 +33,7 @@
     "codemirror-editor-vue3": "^2.3.0",
     "he-tree-vue": "^3.1.2",
     "markdown-it": "^13.0.1",
+    "markdown-it-task-checkbox": "^1.0.6",
     "mermaid": "^10.2.3",
     "prismjs": "^1.29.0",
     "splitpanes": "^3.1.5",
