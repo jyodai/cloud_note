@@ -17,6 +17,10 @@ help :
 	# nw                nuxtwatchのエイリアス
 	# test              Laravelのテストを実行
 	# cert              Nuxt3の開発環境用の証明書を発行
+	# phpcs             phpcsを実行
+	# phpcbf            phpcbfを実行
+	# lint              ESLintでコードチェック
+	# lintfix           ESLintでコード整形
 
 up :
 	docker-compose up -d
@@ -108,4 +112,24 @@ test :
 cert :
 	docker-compose exec php /bin/bash -c ' \
 		cd nuxt3/ssl && mkcert localhost; \
+	'
+
+phpcs :
+	docker-compose exec php /bin/bash -c ' \
+		vendor/bin/phpcs; \
+	'
+
+phpcbf :
+	docker-compose exec php /bin/bash -c ' \
+		vendor/bin/phpcs; \
+	'
+
+lint :
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3 && npm run lint; \
+	'
+
+lintfix :
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3 && npm run lintfix; \
 	'
