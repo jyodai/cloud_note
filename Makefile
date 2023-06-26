@@ -1,3 +1,7 @@
+ifneq ($(wildcard .env), .env)
+$(shell cp .env.example .env)
+endif
+
 include .env
 
 all : help
@@ -41,13 +45,12 @@ shdb :
 build :
 	docker-compose exec php /bin/bash -c ' \
 		composer install; \
-		cp .env.example .env; \
 		chmod 777 -R ./storage/; \
 		php artisan key:generate; \
 		php artisan migrate; \
-		php artisan db:seed; \
-		cd nuxt && npm install && cp .env.example .env; \
+		cd nuxt3 && npm install && cp .env.example .env; \
 	'
+	make cert
 
 buildxserver :
 	git pull origin master
@@ -112,6 +115,7 @@ test :
 cert :
 	docker-compose exec php /bin/bash -c ' \
 		cd nuxt3/ssl && mkcert localhost; \
+		chown -R 1000:1000 ./; \
 	'
 
 phpcs :
