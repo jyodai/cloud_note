@@ -24,8 +24,9 @@ jobs:
         working-directory: ./nuxt3
 
       - name: composer install
-        run: composer clear-cache
-        run: composer install
+        run: |
+          composer clear-cache
+          composer install
 
       - name: PHPCS
         run: ./vendor/bin/phpcs
