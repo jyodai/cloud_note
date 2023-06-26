@@ -2,7 +2,7 @@
   <div
     v-if="content !== null && showMarkdown === false"
     class="content"
-    @click.ctrl="changeEditor()"
+    @dblclick="changeEditor()"
   >
     <markdown-edit
       class="content-edit"
@@ -18,7 +18,7 @@
   <div
     v-else-if="content !== null && showMarkdown === true"
     class="content"
-    @click.ctrl="changeEditor()"
+    @dblclick="changeEditor()"
   >
     <markdown-view
       :content="content"
