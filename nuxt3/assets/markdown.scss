@@ -69,15 +69,31 @@
 
   ul {
     white-space : normal;
+    list-style-type: disc;
+    margin-left: 3em;
+  }
+
+  ul ul {
+    list-style-type: circle;
   }
 
   ul li {
+    margin: 0.5em 0;
     white-space : pre;
-    margin-bottom : 5px;
+  }
+
+  ul ul li {
+    margin: 0.25em 0;
   }
 
   ol {
     white-space : normal;
+    list-style-type: decimal;
+    margin-left: 3em;
+  }
+
+  ol li {
+    margin: 0.5em 0;
   }
 
   pre {
