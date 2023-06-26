@@ -176,11 +176,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        /**
-         * 独自で追加
-         */
-        App\Providers\Components\Comp_FileServiceProvider::class,
-
     ],
 
     /*
@@ -232,10 +227,6 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
-        /**
-         * 独自で追加
-         */
-        'Comp_File'    => App\Facades\Components\Comp_File::class,
 
     ],
 
