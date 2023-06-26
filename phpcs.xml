@@ -15,6 +15,11 @@
     <exclude name="Squiz.Arrays.ArrayDeclaration.SpaceInEmptyArray" />
   </rule>
 
+  <rule ref="PSR1.Classes.ClassDeclaration">
+    <exclude-pattern>database/migrations/*.php</exclude-pattern>
+    <exclude-pattern>database/seeds/*.php</exclude-pattern>
+  </rule>
+
   <file>app</file>
   <file>config</file>
   <file>database</file>
