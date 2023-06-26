@@ -26,7 +26,6 @@ jobs:
       - name: composer install
         run: |
           composer clear-cache
-          composer dump-autoload
           composer install
 
       - name: PHPCS
