@@ -220,6 +220,10 @@ export default {
             opacity: 0.6;
           }
         }
+        .tree-placeholder-node{
+          background : #2C7CFF;
+          opacity: 0.6;
+        }
     }
   }
 }
