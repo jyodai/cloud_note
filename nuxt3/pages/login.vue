@@ -1,33 +1,33 @@
 <template>
-  <v-card
-    width="400px"
-    class="mx-auto mt-5"
-  >
-    <v-form class="mx-auto pa-3">
-      <v-text-field
-        v-model="email"
-        prepend-icon="mdi-account-circle"
-        autocomplete="email"
-        type="email"
-        label="email"
-      />
-      <v-text-field
-        v-model="password"
-        prepend-icon="mdi-lock"
-        sautocomplete="current-password"
-        type="password"
-        label="パスワード"
-      />
-      <v-card-actions>
-        <v-btn
-          class="info"
-          @click="execLogin()"
-        >
-          ログイン
-        </v-btn>
-      </v-card-actions>
-    </v-form>
-  </v-card>
+  <div class="login">
+    <div
+      class="login-form"
+    >
+      <v-form>
+        <v-text-field
+          v-model="email"
+          prepend-icon="mdi-account-circle"
+          autocomplete="email"
+          type="email"
+          label="email"
+        />
+        <v-text-field
+          v-model="password"
+          prepend-icon="mdi-lock"
+          sautocomplete="current-password"
+          type="password"
+          label="パスワード"
+        />
+        <div class="g-center">
+          <v-btn
+            @click="execLogin()"
+          >
+            ログイン
+          </v-btn>
+        </div>
+      </v-form>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -60,3 +60,20 @@ export default {
 };
 
 </script>
+
+<style lang="scss" scoped>
+.login {
+  width: 100%;
+  height: 100vh;
+  background-color: #333333;
+  .login-form {
+    position: relative;
+    top : 100px;
+    margin: auto;
+    padding : 20px;
+    width: 400px;
+    background-color: #222222;
+    border-radius: 10px;
+  }
+}
+</style>
