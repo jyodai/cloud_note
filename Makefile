@@ -45,7 +45,6 @@ build :
 		chmod 777 -R ./storage/; \
 		php artisan key:generate; \
 		php artisan migrate; \
-		php artisan db:seed; \
 		cd nuxt3 && npm install && cp .env.example .env; \
 	'
 
