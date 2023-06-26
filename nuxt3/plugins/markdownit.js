@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import Checkbox   from 'markdown-it-checkbox';
 
 export default defineNuxtPlugin(() => {
   const instance = new MarkdownIt({
@@ -7,6 +8,7 @@ export default defineNuxtPlugin(() => {
     linkify    : false, // URLに似たテキストをリンクに自動変換する
     typography : false, // 言語に依存しないきれいな 置換 + 引用符 を有効にします。
   });
+  instance.use(Checkbox);
   return {
     provide : {
       md : instance,
