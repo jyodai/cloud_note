@@ -44,7 +44,6 @@
         "classmap": [
             "database/seeds",
             "database/factories",
-            "app/Providers/Components",
             "app/Facades/Components",
             "app/Http/Components"
         ]
