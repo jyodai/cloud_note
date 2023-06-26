@@ -12,7 +12,7 @@ services:
         - 443:443
         - 8887:8887
         - 24678:24678
-      container_name: cloud-note-php7.3-apache
+      container_name: ${CONTAINER_NAME_PHP}
   mysql:
       build:
         context: .
@@ -27,4 +27,4 @@ services:
         - MYSQL_DATABASE=cloud_note
         - MYSQL_USER=docker
         - MYSQL_PASSWORD=docker
-      container_name: cloud-note-mysql5.7
+      container_name: ${CONTAINER_NAME_MYSQL}
