@@ -76,7 +76,7 @@ class UserController extends Controller
         }
 
         $token              = Str::random(60);
-        $user->api_token    = hash('sha256', $token);
+        $user->api_token    = $token;
         $user->attempts_num = 0;
         $user->save();
         return [
@@ -98,7 +98,7 @@ class UserController extends Controller
 
     public function deleteToken(Request $request)
     {
-        $token = hash('sha256', $request->bearerToken());
+        $token = $request->bearerToken();
         $user  = \App\Models\User::where("api_token", $token)->first();
         if ($token && $user) {
             $user->api_token = null;

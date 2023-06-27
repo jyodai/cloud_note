@@ -16,8 +16,12 @@ class AuthenticateToken
      */
     public function handle($request, Closure $next)
     {
-        $token = hash('sha256', $request->bearerToken());
-        $user  = \App\Models\User::where("api_token", $token)->first();
+        if ($request->token) {
+            $token = $request->token;
+        } else {
+            $token = $request->bearerToken();
+        }
+        $user = \App\Models\User::where("api_token", $token)->first();
         if (!$token || !$user) {
             abort(401);
         }

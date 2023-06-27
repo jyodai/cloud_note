@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\UserController;
 
 Route::get("/user",function(){
     $requestData = request();
-    $token = hash('sha256', $requestData->bearerToken());
+    $token = $requestData->bearerToken();
     $user = \App\Models\User::where("api_token",$token)->first();
     if ($token && $user) {
         return [
