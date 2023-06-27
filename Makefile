@@ -109,6 +109,12 @@ nuxtwatch :
 
 nw : nuxtwatch
 
+nuxtgenerate :
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3 && npm run generate; \
+		mv dist ../cloud-note; \
+	'
+
 test :
 	docker-compose exec php /bin/bash -c ' \
 		php artisan config:clear; \
