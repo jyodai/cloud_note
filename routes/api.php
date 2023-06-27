@@ -23,13 +23,13 @@ use App\Http\Controllers\Api\UserController;
 //     return $request->user();
 // });
 
-Route::get("/user",function(){
+Route::get("/user", function () {
     $requestData = request();
-    $token = $requestData->bearerToken();
-    $user = \App\Models\User::where("api_token",$token)->first();
+    $token       = $requestData->bearerToken();
+    $user        = \App\Models\User::where("api_token", $token)->first();
     if ($token && $user) {
         return [
-            "user" => $user
+            "user" => $user,
         ];
     }
 });
@@ -49,27 +49,27 @@ Route::middleware(['auth_api'])->group(function () {
 
 
 
-    Route::get   ('notes'      , 'Api\NoteController@getNote');
-    Route::put   ('notes/{id}' , 'Api\NoteController@updateNote');
-    Route::put   ('notes'      , 'Api\NoteController@saveNote');
-    Route::post  ('notes'      , 'Api\NoteController@addNote');
-    Route::delete('notes/{id}' , 'Api\NoteController@deleteNote');
+    Route::get('notes', 'Api\NoteController@getNote');
+    Route::put('notes/{id}', 'Api\NoteController@updateNote');
+    Route::put('notes', 'Api\NoteController@saveNote');
+    Route::post('notes', 'Api\NoteController@addNote');
+    Route::delete('notes/{id}', 'Api\NoteController@deleteNote');
 
-    Route::get   ('note_content' , 'Api\NoteContentController@getContent');
-    Route::put   ('note_content' , 'Api\NoteContentController@save');
+    Route::get('note_content', 'Api\NoteContentController@getContent');
+    Route::put('note_content', 'Api\NoteContentController@save');
 
-    Route::get   ('tree'              , 'Api\TreeController@getTree');
-    Route::get   ('tree/{id}/children', 'Api\TreeController@getTreeChildren');
-    Route::put   ('tree/{id}/move'    , 'Api\TreeController@moveTree');
+    Route::get('tree', 'Api\TreeController@getTree');
+    Route::get('tree/{id}/children', 'Api\TreeController@getTreeChildren');
+    Route::put('tree/{id}/move', 'Api\TreeController@moveTree');
 
 
-    Route::get   ('libraries/files', 'Api\Library\FileController@getFile');
-    Route::put   ('libraries/files', 'Api\Library\FileController@editFile');
-    Route::post  ('libraries/files', 'Api\Library\FileController@addFile');
+    Route::get('libraries/files', 'Api\Library\FileController@getFile');
+    Route::put('libraries/files', 'Api\Library\FileController@editFile');
+    Route::post('libraries/files', 'Api\Library\FileController@addFile');
     Route::delete('libraries/files', 'Api\Library\FileController@deleteFile');
 
-    Route::get   ('notes/files', 'Api\Note\FileController@getFile');
-    Route::put   ('notes/files', 'Api\Note\FileController@editFile');
-    Route::post  ('notes/files', 'Api\Note\FileController@addFile');
+    Route::get('notes/files', 'Api\Note\FileController@getFile');
+    Route::put('notes/files', 'Api\Note\FileController@editFile');
+    Route::post('notes/files', 'Api\Note\FileController@addFile');
     Route::delete('notes/files', 'Api\Note\FileController@deleteFile');
 });
