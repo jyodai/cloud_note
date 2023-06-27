@@ -11,6 +11,7 @@
     />
     <markdown-view
       ref="markdownView"
+      class="content-preview"
       :content="content"
     />
   </div>
