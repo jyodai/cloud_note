@@ -24,6 +24,13 @@ export default defineNuxtConfig({
     baseURL: process.env.SERVER_ALIAS,
     head : {
       titleTemplate : 'CloudNote %s',
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: process.env.SERVER_ALIAS + '/favicon.ico'
+        },
+      ],
       meta          : [
         { charset: 'utf-8', },
         { name: 'viewport', content: 'width=device-width, initial-scale=1', },
