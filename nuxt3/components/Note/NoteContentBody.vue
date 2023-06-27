@@ -10,6 +10,7 @@
       @blur="blur"
     />
     <markdown-view
+      ref="markdownView"
       class="content-preview"
       :content="content"
     />
@@ -19,6 +20,7 @@
     class="content"
   >
     <markdown-view
+      ref="markdownView"
       :content="content"
     />
   </div>
@@ -28,6 +30,7 @@
 
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
+import Html2Pdf from '~/libraries/html2Pdf.js';
 
 export default {
   components : {
@@ -74,6 +77,12 @@ export default {
         event.stopPropagation();
         this.changeEditor();
       }
+
+      if (event.ctrlKey && event.key === 'p') {
+        event.preventDefault();
+        event.stopPropagation();
+        this.outputPdf();
+      }
     },
     changeEditor () {
       if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {
@@ -87,6 +96,13 @@ export default {
     },
     saveNote (data) {
       this.$store.dispatch('NoteContent/updateSelectContent', data);
+    },
+    outputPdf () {
+      const element  = this.$refs.markdownView.$el.parentNode;
+      const fileName = this.note.title;
+      const pdf      = new Html2Pdf(element, fileName);
+      pdf.setCssClass('g-markdown-print');
+      pdf.output();
     },
   },
 };

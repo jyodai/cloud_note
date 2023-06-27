@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '~/assets/common.scss',
     '~/assets/table.scss',
     '~/assets/markdown.scss',
+    '~/assets/markdown-print.scss',
     'vue-final-modal/style.css',
   ],
   build: {
