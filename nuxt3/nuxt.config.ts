@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      sererAlias: process.env.SERVER_ALIAS,
+      severAlias: process.env.SERVER_ALIAS,
       apiUrl: process.env.API_SERVER_URl,
     },
   },
