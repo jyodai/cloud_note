@@ -98,18 +98,14 @@ export default {
       this.fileList  = response;
       this.visible   = true;
     },
-    getFileHtml (str) {
-      const copyFrom       = document.createElement('textarea');
-      copyFrom.textContent = str;
-
-      const bodyElm = document.getElementsByTagName('body')[0];
-      bodyElm.appendChild(copyFrom);
-
-      copyFrom.select();
-      document.execCommand('copy');
-
-      bodyElm.removeChild(copyFrom);
-      alert('HTMLをコピーしました');
+    getFileHtml(str) {
+      navigator.clipboard.writeText(str)
+        .then(() => {
+          alert('HTMLをコピーしました');
+        })
+        .catch((error) => {
+          console.error('クリップボードへのコピーに失敗しました:', error);
+        });
     },
     openAddImageLibrary () {
       this.$vfm.open('LibraryAdd');
