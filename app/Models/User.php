@@ -39,6 +39,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'user_type'         => 'integer',
     ];
 
     public function existsUser($email): bool
