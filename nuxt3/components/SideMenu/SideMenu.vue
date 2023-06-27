@@ -129,7 +129,7 @@ export default {
     },
     async logout () {
       await this.$store.dispatch('User/logout');
-      window.location.href = '/login';
+      window.location.href = this.$config.public.severAlias + '/login';
     },
   },
 };
