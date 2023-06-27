@@ -23,6 +23,7 @@
   <file>app</file>
   <file>config</file>
   <file>database</file>
+  <file>routes</file>
   <file>tests</file>
 
   <exclude-pattern>!*.php</exclude-pattern>

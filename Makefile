@@ -134,7 +134,7 @@ phpcs :
 
 phpcbf :
 	docker-compose exec php /bin/bash -c ' \
-		vendor/bin/phpcs; \
+		vendor/bin/phpcbf; \
 	'
 
 lint :
