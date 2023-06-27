@@ -5,6 +5,11 @@ services:
       build:
         context: .
         dockerfile: ./docker/php/Dockerfile
+        args:
+          CONTAINER_USER_ID: '${CONTAINER_USER_ID}'
+          CONTAINER_GROUP_ID: '${CONTAINER_GROUP_ID}'
+          CONTAINER_USER_NAME: '${CONTAINER_USER_NAME}'
+          CONTAINER_GROUP_NAME: '${CONTAINER_GROUP_NAME}'
       volumes:
         - ./:/var/www/html
       ports:
@@ -12,6 +17,12 @@ services:
         - 443:443
         - 8887:8887
         - 24678:24678
+      environment:
+        CONTAINER_USER_ID: '${CONTAINER_USER_ID}'
+        CONTAINER_GROUP_ID: '${CONTAINER_GROUP_ID}'
+        CONTAINER_USER_NAME: '${CONTAINER_USER_NAME}'
+        CONTAINER_GROUP_NAME: '${CONTAINER_GROUP_NAME}'
+      user: ${CONTAINER_USER_ID}:${CONTAINER_GROUP_ID}
       container_name: ${CONTAINER_NAME_PHP}
   mysql:
       build:
