@@ -5,13 +5,14 @@ export default class Html2Pdf {
   cssClass = null;
   option  = {
     margin   : 2,
-    filename : 'testfileName.pdf',
+    filename : '',
     image    : { type : 'jpeg', quality : 1 },
     jsPDF    : { format : 'a4', orientation : 'portrait' },
   };
 
-  constructor (element) {
-    this.element = element.cloneNode(true);
+  constructor (element, fileName) {
+    this.element         = element.cloneNode(true);
+    this.option.filename = fileName + '.pdf';
   }
 
   setCssClass (cssClass) {

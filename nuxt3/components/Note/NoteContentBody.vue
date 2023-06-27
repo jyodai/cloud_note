@@ -98,8 +98,9 @@ export default {
       this.$store.dispatch('NoteContent/updateSelectContent', data);
     },
     outputPdf () {
-      const element = this.$refs.markdownView.$el.parentNode;
-      const pdf     = new Html2Pdf(element);
+      const element  = this.$refs.markdownView.$el.parentNode;
+      const fileName = this.note.title;
+      const pdf      = new Html2Pdf(element, fileName);
       pdf.setCssClass('g-markdown-print');
       pdf.output();
     },
