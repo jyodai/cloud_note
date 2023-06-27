@@ -37,6 +37,9 @@ reset : stop up
 sh :
 	docker-compose exec php /bin/bash
 
+sh_root :
+	docker-compose exec -u 0 php /bin/bash
+
 shdb :
 	docker-compose exec mysql /bin/bash -c " \
 		mysql -u root -proot; \
@@ -55,12 +58,12 @@ build :
 buildxserver :
 	git pull origin master
 	composer install
-	cd nuxt && npm install
+	cd nuxt3 && npm install
 	php artisan migrate
-	cd nuxt && npm run build
+	cd nuxt3 && npm run generate
 	rm -rf ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note.back
 	mv ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note.back
-	cp -rf ${XSERVER_DOCUMENT_ROOT}/public_html/cloud_note/nuxt/dist ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note
+	cp -rf ${XSERVER_DOCUMENT_ROOT}/public_html/cloud_note/nuxt3/dist ${XSERVER_DOCUMENT_ROOT}/public_html/cloud-note
 
 initdb :
 	docker-compose exec mysql /bin/bash -c " \
@@ -105,6 +108,12 @@ nuxtwatch :
 	'
 
 nw : nuxtwatch
+
+nuxtgenerate :
+	docker-compose exec php /bin/bash -c ' \
+		cd nuxt3 && npm run generate; \
+		mv dist ../cloud-note; \
+	'
 
 test :
 	docker-compose exec php /bin/bash -c ' \
