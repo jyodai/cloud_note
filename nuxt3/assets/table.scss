@@ -1,0 +1,51 @@
+.g-table-list {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr {
+    border: 1px solid #555555;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #2E2E2E;
+  }
+
+  th,
+  td {
+    padding: 5px 10px;
+    border-right: 1px solid #555555;
+  }
+
+  thead tr {
+    background-color: #181818;
+  }
+}
+
+.g-table-edit {
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr {
+    border: 1px solid #555555;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #2E2E2E;
+  }
+
+  th,
+  td {
+    width: calc(100% - 20px);
+    padding: 10px 10px;
+    border-right: 1px solid #555555;
+  }
+
+  th {
+    background-color: #181818;
+    font-weight: normal,
+  }
+}

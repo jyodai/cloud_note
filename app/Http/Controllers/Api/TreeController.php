@@ -14,7 +14,7 @@ class TreeController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->user= auth()->user();
+            $this->user = auth()->user();
             $this->note = new Note();
             $this->note->setUser($this->user);
             return $next($request);
@@ -24,7 +24,7 @@ class TreeController extends Controller
     public function getTree(Request $request)
     {
         $restoreTree = json_decode($request['tree']);
-        $tree = $this->note->getTree($restoreTree);
+        $tree        = $this->note->getTree($restoreTree);
         return response()->json($tree);
     }
 

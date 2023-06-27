@@ -7,38 +7,55 @@
         ライブラリ一覧
       </template>
       <template #modalContent>
-        <div>
-          ファイル一覧
-        </div>
-        <div>
+        <div class="content-header">
           <v-btn class="mb-2" @click="openAddImageLibrary()">
-            ファイルの追加
+            追加
           </v-btn>
-          <ul v-for="file in fileList" :key="file.fileName" onContextmenu="return false;">
-            <li
-              @click="getFileHtml(file.fileHtml)"
-              @mouseup.right="openEdit(file.fileName)"
-            >
-              {{ file.fileName }}
-            </li>
-          </ul>
+        </div>
+
+        <div class="content-body g-table-list">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  ファイル名
+                </th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="file in fileList" :key="file.fileName">
+                <td
+                  @click="getFileHtml(file.fileHtml)"
+                >
+                  {{ file.fileName }}
+                </td>
+                <td>
+                  <span @click="openEdit(file.fileName)">編集</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </template>
       <template #modalAction>
-        <v-btn class="mb-2" @click="closeModal()">
-          閉じる
-        </v-btn>
+        <modal-footer-button
+          :visible-lists="['close']"
+          @close="closeModal()"
+        />
       </template>
     </modal>
   </div>
 </template>
 
 <script>
-import Modal from '../Modal/Modal.vue'
+import Modal from '../Modal/ModalWrapper.vue'
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
   components: {
     Modal,
+    ModalFooterButton,
   },
   data () {
     return {
@@ -90,5 +107,15 @@ export default {
 .library-list {
   height: 100%;
   width: 100%;
+
+  .content-header {
+    height: 50px;
+    text-align: right;
+  }
+
+  .content-body {
+    height: calc(100% - 50px);
+    overflow: auto;
+  }
 }
 </style>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Log;
 
 Route::get("/user",function(){
     $requestData = request();
-    $token = hash('sha256', $requestData['token']);
+    $token = hash('sha256', $requestData->bearerToken());
     $user = \App\Models\User::where("api_token",$token)->first();
     if ($token && $user) {
         return [
@@ -36,13 +37,26 @@ Route::get("/user",function(){
 Route::post("users/token", 'Api\UserController@createToken');
 
 Route::middleware(['auth_api'])->group(function () {
-    Route::delete("users/token", 'Api\UserController@deleteToken');
+    Route::prefix('users')->group(function () {
+        Route::delete("/token", 'Api\UserController@deleteToken');
+
+        Route::get('/', [UserController::class, 'index']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
+
 
     Route::get   ('notes'      , 'Api\NoteController@getNote');
     Route::put   ('notes/{id}' , 'Api\NoteController@updateNote');
     Route::put   ('notes'      , 'Api\NoteController@saveNote');
     Route::post  ('notes'      , 'Api\NoteController@addNote');
     Route::delete('notes/{id}' , 'Api\NoteController@deleteNote');
+
+    Route::get   ('note_content' , 'Api\NoteContentController@getContent');
+    Route::put   ('note_content' , 'Api\NoteContentController@save');
 
     Route::get   ('tree'              , 'Api\TreeController@getTree');
     Route::get   ('tree/{id}/children', 'Api\TreeController@getTreeChildren');

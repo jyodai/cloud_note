@@ -47,6 +47,7 @@ export default {
   */
   css     : [
     { src: '~/assets/common.scss', },
+    { src: '~/assets/table.scss', },
   ],
   /*
   ** Plugins to load before mounting the App
@@ -56,6 +57,7 @@ export default {
     '@/plugins/router-option',
     '@/plugins/prism',
     '@/plugins/VueFinalModal',
+    '@/plugins/Const',
   ],
   /*
   ** Nuxt.js dev-modules

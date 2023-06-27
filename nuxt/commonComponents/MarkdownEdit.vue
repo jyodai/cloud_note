@@ -4,7 +4,7 @@
     @keydown.ctrl.83.prevent.stop="saveNote()"
   >
     <codemirror
-      v-model="content"
+      v-model="codemirrorContent"
       class="editor"
       :options="codemirrorOptions"
       @blur="onBlur"
@@ -23,7 +23,7 @@ export default {
     codemirror,
   },
   props: {
-    note: {
+    content: {
       type    : Object,
       default : () => {},
     },
@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       contentChangeFlag : false,
-      content           : null,
+      codemirrorContent : null,
       codemirrorOptions : {
         tabSize         : 4,
         indentUnit      : 4,
@@ -59,18 +59,13 @@ export default {
       },
     }
   },
-  computed: {
-    changeNote () {
-      return this.note
-    },
-  },
   watch: {
-    changeNote (newVal, oldVal) {
-      this.content = this.note.content
+    content () {
+      this.reset()
     },
   },
   created () {
-    this.content = this.note.content
+    this.codemirrorContent = this.content.content
   },
   mounted () {
     const self = this
@@ -82,16 +77,23 @@ export default {
     }, false)
   },
   methods: {
+    reset () {
+      this.codemirrorContent = this.content.content
+      this.contentChangeFlag = false
+    },
     contentChange () {
+      if (this.content.content === this.codemirrorContent) {
+        return
+      }
       this.contentChangeFlag = true
     },
     onBlur () {
-      this.$emit('blur', { id: this.note.id, content: this.content, })
+      this.$emit('blur', { id: this.content.id, content: this.codemirrorContent, })
       this.contentChangeFlag = false
     },
     // ctrl + s で発火
     saveNote () {
-      this.$emit('saveNote', { id: this.note.id, content: this.content, })
+      this.$emit('saveNote', { id: this.content.id, content: this.codemirrorContent, })
       this.contentChangeFlag = false
     },
   },
@@ -108,7 +110,7 @@ export default {
     height: 100%;
     width: 100%;
     padding:5px;
-    font-size:12px;
+    font-size:14px;
     line-height: 18px;
     white-space : pre;
     font-weight: 500;

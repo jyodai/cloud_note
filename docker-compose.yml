@@ -5,13 +5,27 @@ services:
       build:
         context: .
         dockerfile: ./docker/php/Dockerfile
+        args:
+          CONTAINER_USER_ID: '${CONTAINER_USER_ID}'
+          CONTAINER_GROUP_ID: '${CONTAINER_GROUP_ID}'
+          CONTAINER_USER_NAME: '${CONTAINER_USER_NAME}'
+          CONTAINER_GROUP_NAME: '${CONTAINER_GROUP_NAME}'
       volumes:
         - ./:/var/www/html
       ports:
         - 80:80
         - 443:443
         - 8887:8887
-      container_name: cloud-note-php7.3-apache
+        - 24678:24678
+      environment:
+        CONTAINER_USER_ID: '${CONTAINER_USER_ID}'
+        CONTAINER_GROUP_ID: '${CONTAINER_GROUP_ID}'
+        CONTAINER_USER_NAME: '${CONTAINER_USER_NAME}'
+        CONTAINER_GROUP_NAME: '${CONTAINER_GROUP_NAME}'
+        APACHE_RUN_USER: '${CONTAINER_USER_NAME}'
+        APACHE_RUN_GROUP: '${CONTAINER_GROUP_NAME}'
+      user: ${CONTAINER_USER_ID}:${CONTAINER_GROUP_ID}
+      container_name: ${CONTAINER_NAME_PHP}
   mysql:
       build:
         context: .
@@ -26,4 +40,4 @@ services:
         - MYSQL_DATABASE=cloud_note
         - MYSQL_USER=docker
         - MYSQL_PASSWORD=docker
-      container_name: cloud-note-mysql5.7
+      container_name: ${CONTAINER_NAME_MYSQL}

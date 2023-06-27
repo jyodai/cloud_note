@@ -23,23 +23,24 @@
         </div>
       </template>
       <template #modalAction>
-        <v-btn class="mb-2" @click="addFile()">
-          保存
-        </v-btn>
-        <v-btn class="mb-2" @click="closeModal()">
-          閉じる
-        </v-btn>
+        <modal-footer-button
+          :visible-lists="['save', 'close']"
+          @save="addFile()"
+          @close="closeModal()"
+        />
       </template>
     </modal>
   </div>
 </template>
 
 <script>
-import Modal from '../Modal/Modal.vue'
+import Modal from '../Modal/ModalWrapper.vue'
+import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue'
 
 export default {
   components: {
     Modal,
+    ModalFooterButton,
   },
   data () {
     return {

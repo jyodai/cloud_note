@@ -1,52 +1,51 @@
 export const state = () => ({
-  selectNote: null,
+  selectContent: null,
 })
 
 export const mutations = {
-  setSelectNote (state, note) {
-    state.selectNote = note
+  setSelectContent (state, note) {
+    state.selectContent = note
   },
-  unsetSelectNote (state) {
-    state.selectNote = null
+  unsetSelectContent (state) {
+    state.selectContent = null
   },
 }
 
 export const getters = {
-  getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
-  getSelectNote   : state => state.selectNote,
+  getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
+  getSelectContent : state => state.selectContent,
 }
 
 export const actions = {
-  async loadSelectNote ({ rootState, commit, }, data) {
+  async loadSelectContent ({ rootState, commit, }, data) {
     const noteId = data.noteId
-    const queryStr = '?token=' + rootState.User.token + '&type=content' + '&noteId=' + noteId
-    const response = await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
-    await commit('setSelectNote', response)
+    const queryStr = '?token=' + rootState.User.token + '&noteId=' + noteId
+    const response = await this.$axios.$get(process.env.API_SERVER_URl + '/note_content' + queryStr)
+    await commit('setSelectContent', response)
   },
-  unsetSelectNote ({ commit, }) {
-    commit('unsetSelectNote')
+  unsetSelectContent ({ commit, }) {
+    commit('unsetSelectContent')
   },
-  async updateSelectNote ({ rootState, getters, commit, }, data) {
-    const selectNote = Object.assign({}, getters.getSelectNote)
-    if (data.content === selectNote.content) {
+  async updateSelectContent ({ rootState, getters, commit, }, data) {
+    const selectContent = Object.assign({}, getters.getSelectContent)
+    if (data.content === selectContent.content) {
       return
     }
 
-    selectNote.content = data.content
-    commit('setSelectNote', selectNote)
+    selectContent.content = data.content
+    commit('setSelectContent', selectContent)
 
     const params = new URLSearchParams()
     params.append('token', rootState.User.token)
     params.append('noteId', data.id)
     params.append('content', data.content)
-    params.append('type', 'content')
     const config = {
       headers: {
         'X-HTTP-Method-Override' : 'PUT',
         'Content-Type'           : 'application/x-www-form-urlencoded',
       },
     }
-    await this.$axios.$post(process.env.API_SERVER_URl + '/notes', params, config)
+    await this.$axios.$post(process.env.API_SERVER_URl + '/note_content', params, config)
       .then((res) => {
       }).catch((e) => {
         alert('メモの保存の失敗しました')

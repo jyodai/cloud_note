@@ -208,6 +208,7 @@ export const actions = {
       token        : rootState.User.token,
       noteTitle    : data.noteTitle,
       parentNoteId : data.noteId,
+      noteType     : data.noteType,
     }
     const url = process.env.API_SERVER_URl + '/notes'
     await this.$axios

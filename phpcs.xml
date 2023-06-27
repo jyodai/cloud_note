@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="PSR12">
+  <description>The PSR-12 Coding Style Guide for PHP.</description>
+
+  <rule ref="PSR12" />
+
+  <rule ref="Generic.Arrays.ArrayIndent" />
+  <rule ref="Generic.Formatting.MultipleStatementAlignment" />
+  <rule ref="Squiz.Arrays.ArrayDeclaration">
+    <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned" />
+    <exclude name="Squiz.Arrays.ArrayDeclaration.SpaceInEmptyArray" />
+  </rule>
+
+  <rule ref="PSR1.Classes.ClassDeclaration">
+    <exclude-pattern>database/migrations/*.php</exclude-pattern>
+    <exclude-pattern>database/seeds/*.php</exclude-pattern>
+  </rule>
+
+  <file>app</file>
+  <file>config</file>
+  <file>database</file>
+  <file>tests</file>
+
+  <exclude-pattern>!*.php</exclude-pattern>
+
+  <arg name="colors" />
+
+</ruleset>

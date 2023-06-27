@@ -13,7 +13,7 @@ import Mermaid from 'mermaid/dist/mermaid'
 
 export default {
   props: {
-    note: {
+    content: {
       type    : Object,
       default : () => {},
     },
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     changeNote () {
-      return this.note
+      return this.content
     },
   },
   watch: {
@@ -35,7 +35,7 @@ export default {
   },
   created () {
     this.initializeMermaid()
-    this.markdown = this.beforeMarkdown(this.note.content)
+    this.markdown = this.beforeMarkdown(this.content.content)
   },
   updated () {
     this.afterMarkdown()
@@ -158,7 +158,7 @@ export default {
   font-family: 'Noto Sans JP', sans-serif;
   padding: 5px;
   height: 100%;
-  font-size:12px;
+  font-size:14px;
   font-weight: 500;
   letter-spacing: 0.5px;
   line-height: 18px;
@@ -182,14 +182,14 @@ export default {
   }
 
   h3 {
-    font-size:15px;
+    font-size:18px;
     margin:0px;
     border-left: 4px solid #ccc;
     padding: .25em 0 .25em .75em;
   }
 
   h4 {
-    font-size:12px;
+    font-size:14px;
     margin:0px;
     border-left: 2px solid #ccc;
     padding: .25em 0 .25em .75em;
@@ -240,7 +240,7 @@ export default {
     font-family: 'Lucida Console', monospace;
     margin:10px;
     padding: 8px;
-    font-size:12px;
+    font-size:14px;
     background-color: #121212;
     border-radius:10px;
     overflow: auto;

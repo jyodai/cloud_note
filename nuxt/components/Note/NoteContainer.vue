@@ -6,7 +6,15 @@
         <note-content-head />
       </div>
       <div class="note-content-body">
-        <note-content-body />
+        <note-content-body
+          v-if="note && note.note_type === $NOTE_TYPE_NORMAL"
+          :note="note"
+        />
+        <div
+          v-if="note && note.note_type === $NOTE_TYPE_TASK"
+        >
+          Sample Task
+        </div>
       </div>
     </div>
   </div>
@@ -23,7 +31,21 @@ export default {
     NoteContentHead,
     NoteContentBody,
   },
-  data () { return {} },
+  data () {
+    return {
+      note: null,
+    }
+  },
+  computed: {
+    changeSelectNote () {
+      return this.$store.getters['NoteTab/getSelectNote']
+    },
+  },
+  watch: {
+    changeSelectNote (newVal, oldVal) {
+      this.note = newVal
+    },
+  },
   mounted () {},
   methods: {},
 }

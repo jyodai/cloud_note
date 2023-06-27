@@ -1,0 +1,210 @@
+.g-markdown-area {
+  font-family: 'Noto Sans JP', sans-serif;
+  padding: 5px;
+  height: 100%;
+  font-size:14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 18px;
+  text-align: left;
+  color:#ffffff;
+  overflow: auto;
+  white-space : pre;
+  h1 {
+    width: 100%;
+    font-size:25px;
+    margin:0px;
+    padding:3px;
+  }
+
+  h2 {
+    font-size:20px;
+    margin:0px;
+    border-left: 6px solid #ccc;
+    padding: .25em 0 .25em .75em;
+    background-color: #2E2E2E;
+  }
+
+  h3 {
+    font-size:18px;
+    margin:0px;
+    border-left: 4px solid #ccc;
+    padding: .25em 0 .25em .75em;
+    border-bottom: 2px solid #2E2E2E;
+  }
+
+  h4 {
+    font-size:14px;
+    margin:0px;
+    border-left: 2px solid #ccc;
+    padding: .25em 0 .25em .75em;
+  }
+
+  a {
+    color: #428bca;
+    text-decoration: none;
+
+    &:hover {
+      color: #2a6496;
+      text-decoration: underline;
+    }
+  }
+
+  table {
+  padding: 5px;
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  }
+
+  table th {
+  padding: 5px;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: #2C7CFF;
+  }
+
+  table td {
+  padding: 5px;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  }
+
+  p {
+    margin-bottom:0px;
+  }
+
+  ul {
+    white-space : normal;
+    list-style-type: disc;
+    margin-left: 1.5em;
+  }
+
+  ul ul {
+    list-style-type: circle;
+  }
+
+  ul li {
+    margin: 0.5em 0;
+    white-space : pre;
+  }
+
+  ul ul li {
+    margin: 0.25em 0;
+  }
+
+  ol {
+    white-space : normal;
+    list-style-type: decimal;
+    margin-left: 2em;
+  }
+
+  ol li {
+    margin: 0.5em 0;
+  }
+
+  .md-checkbox {
+    margin: 0;
+    white-space : normal;
+    list-style-type: none;
+    li {
+      margin : 0;
+    }
+   
+    /* リセット */
+    input[type="checkbox"]  {
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    /* チェックボックスデザイン */
+    input[type="checkbox"] {
+      cursor: pointer;
+      padding-left: 20px;/*label手前にチェックボックス用の余白を開ける*/
+      vertical-align: middle;
+      position: relative;
+    }
+    input[type="checkbox"]::before,
+    input[type="checkbox"]::after {
+      content: "";
+      display: block; 
+      position: absolute;
+    }
+    input[type="checkbox"]::before {
+      background-color: #FFFFFF;
+      border-radius: 0%;
+      border: 1px solid #2E2E2E;
+      width: 14px;/*チェックボックスの横幅*/
+      height: 14px;/*チェックボックスの縦幅*/
+      transform: translateY(-50%);
+      top: 50%;
+      left: 5px;
+    }
+    input[type="checkbox"]::after {
+      border-bottom: 3px solid #2C7CFF;/*チェックの太さ*/
+      border-left: 3px solid #2C7CFF;/*チェックの太さ*/
+      opacity: 0;/*チェック前は非表示*/
+      height: 6px;/*チェックの高さ*/
+      width: 11px;/*チェックの横幅*/
+      transform: rotate(-45deg);
+      top: -4px;/*チェック時の位置調整*/
+      left: 7px;/*チェック時の位置調整*/
+    }
+    input[type="checkbox"]:checked::after {
+      opacity: 1;/*チェック後表示*/
+    }
+
+  }
+
+  pre {
+    font-family: 'Lucida Console', monospace;
+    margin:10px;
+    padding: 8px;
+    font-size:14px;
+    background-color: #121212;
+    border-radius:10px;
+    overflow: auto;
+  }
+
+  .toc {
+    border-top: solid 1px #888888;
+    border-bottom: solid 1px #888888;
+    ul {
+      color: #777777;
+      list-style: none;
+      padding : 10px;
+      .head_content_1 {
+        margin-left: 0px;
+      }
+      .head_content_2 {
+        margin-left: 15px;
+      }
+      .head_content_3 {
+        margin-left: 30px;
+      }
+      .head_content_4 {
+        margin-left: 45px;
+      }
+      .head_content_5 {
+        margin-left: 60px;
+      }
+      .head_content_6 {
+        margin-left: 75px;
+      }
+      li:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

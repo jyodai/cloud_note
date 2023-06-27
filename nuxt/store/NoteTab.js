@@ -1,8 +1,15 @@
 export const state = () => ({
   noteTab: [], // ノートObjectを格納
+  selectNote: null,
 })
 
 export const mutations = {
+  setSelectNote (state, note) {
+    state.selectNote = note
+  },
+  unsetSelectNote (state) {
+    state.selectNote = null
+  },
   setNoteTab (state, note) {
     state.noteTab.push(note)
   },
@@ -22,6 +29,7 @@ export const mutations = {
 
 export const getters = {
   getNoteTab      : state => state.noteTab,
+  getSelectNote   : state => state.selectNote,
   getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
   findNote        : state => (id) => {
     const noteTab = state.noteTab
@@ -34,6 +42,12 @@ export const getters = {
 }
 
 export const actions = {
+  setSelectNote ({commit}, note) {
+    commit('setSelectNote', note)
+  },
+  unsetSelectNote ({ commit, }) {
+    commit('unsetSelectNote')
+  },
   initNoteTab ({ commit, }) {
     commit('unsetNoteTab')
   },

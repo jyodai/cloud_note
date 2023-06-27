@@ -1,5 +1,14 @@
 FROM php:7.3-apache
 
+ARG CONTAINER_USER_ID
+ARG CONTAINER_GROUP_ID
+ARG CONTAINER_USER_NAME
+ARG CONTAINER_GROUP_NAME
+
+# create user and group
+RUN addgroup --gid $CONTAINER_GROUP_ID $CONTAINER_GROUP_NAME \
+    && adduser --disabled-password --gecos '' --uid $CONTAINER_USER_ID --gid $CONTAINER_GROUP_ID $CONTAINER_USER_NAME
+
 # ドキュメントルートをデフォルトから修正
 # ENV APACHE_DOCUMENT_ROOT /var/www/html/app/public
 # RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -28,3 +37,11 @@ RUN n 16.14.0
 
 # Vim
 RUN apt-get install -y vim
+
+# wget
+RUN apt-get install -y wget
+
+# mkcert
+RUN wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64
+RUN mv mkcert-v1.4.3-linux-amd64 /usr/local/bin/mkcert
+RUN chmod 755 /usr/local/bin/mkcert

@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+
+      - name: npm ci
+        run: npm ci
+        working-directory: ./nuxt3
+
+      - name: ESLint
+        run: npm run lint
+        working-directory: ./nuxt3
+
+      - name: composer install
+        run: composer install
+
+      - name: PHPCS
+        run: ./vendor/bin/phpcs

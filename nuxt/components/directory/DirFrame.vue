@@ -95,7 +95,7 @@ export default {
       if (existsNoteTab === -1) {
         this.$store.dispatch('NoteTab/setNoteTab', Object.assign({}, note))
       }
-      this.$store.dispatch('NoteContent/loadSelectNote', { noteId: note.id, })
+      this.$store.dispatch('NoteTab/setSelectNote', note)
     },
     selectNoteTree (note) {
       this.$store.dispatch('NoteTree/setSelectTree', note)

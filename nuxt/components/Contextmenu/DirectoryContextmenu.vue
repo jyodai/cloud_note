@@ -11,6 +11,11 @@
         <contextmenu-item @click="addNote($store.getters['NoteTree/getSelectNoteId'])">
           ノート
         </contextmenu-item>
+        <contextmenu-item
+          @click="addNote($store.getters['NoteTree/getSelectNoteId'], $NOTE_TYPE_TASK)"
+        >
+          タスク
+        </contextmenu-item>
       </contextmenu-submenu>
       <contextmenu-item @click="editNote($store.getters['NoteTree/getSelectNoteId'])">
         編集
@@ -60,10 +65,10 @@ export default {
   methods: {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId']
-      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=note' + '&noteId=' + noteId
+      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
       return await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
     },
-    async addNote (noteId = null) {
+    async addNote (noteId = null, noteType = this.$NOTE_TYPE_NORMAL) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。')
       if (!noteTitle) {
         alert('ノートのタイトルが空です')
@@ -72,6 +77,7 @@ export default {
 
       const data = {
         noteId,
+        noteType,
         noteTitle,
       }
       await this.$store.dispatch('NoteTree/addNode', { data, })
@@ -109,9 +115,9 @@ export default {
       )
     },
     deleteNoteContent (deleteInfo) {
-      const selectNoteId = this.$store.getters['NoteContent/getSelectNoteId']
+      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId']
       if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
-        this.$store.dispatch('NoteContent/unsetSelectNote')
+        this.$store.dispatch('NoteTab/unsetSelectNote')
       }
     },
     async property () {

@@ -15,18 +15,23 @@ export default {
       notePath: 'ファイル未選択',
     }
   },
-  mounted () {
-    this.$store.watch(() => this.$store.getters['NoteContent/getSelectNoteId'],
-      noteId => this.getnotePath(noteId)
-    )
+  computed: {
+    changeSelectNote () {
+      return this.$store.getters['NoteTab/getSelectNote']
+    },
+  },
+  watch: {
+    changeSelectNote (newVal, oldVal) {
+      this.getNotePath(newVal.id)
+    },
   },
   methods: {
-    async getnotePath (noteId) {
+    async getNotePath (noteId) {
       if (!noteId) {
         this.notePath = 'ファイル未選択'
         return
       }
-      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&type=note' + '&noteId=' + noteId
+      const queryStr = '?token=' + this.$store.getters['User/getToken'] + '&noteId=' + noteId
       const response = await this.$axios.$get(process.env.API_SERVER_URl + '/notes' + queryStr)
       this.notePath = response.path
     },

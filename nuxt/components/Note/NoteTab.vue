@@ -4,9 +4,9 @@
       <div
         :key="note.id"
         class="note-title g-up-down-center"
-        :class="{select : note.id === $store.getters['NoteContent/getSelectNoteId']}"
+        :class="{select : note.id === $store.getters['NoteTab/getSelectNoteId']}"
       >
-        <span class="title" @click="setNote(note.id)">{{ note.title }}</span>
+        <span class="title" @click="setNote(note)">{{ note.title }}</span>
         <v-icon class="close-icon" size="14" @click="removeNoteTab(note.id)">
           mdi-close-thick
         </v-icon>
@@ -46,19 +46,19 @@ export default {
       if (noteTab.length === 0) {
         return
       }
-      this.$store.dispatch('NoteContent/loadSelectNote', { noteId: noteTab[0].id, })
+      this.$store.dispatch('NoteTab/setSelectNote', noteTab[0])
     },
-    setNote (id) {
-      this.$store.dispatch('NoteContent/loadSelectNote', { noteId: id, })
+    setNote (note) {
+      this.$store.dispatch('NoteTab/setSelectNote', note)
     },
     removeNoteTab (id) {
       const nextNote = this.getNextNote(id)
       this.$store.dispatch('NoteTab/removeNoteTab', id)
 
-      if (id === this.$store.getters['NoteContent/getSelectNoteId']) {
-        this.$store.dispatch('NoteContent/unsetSelectNote')
+      if (id === this.$store.getters['NoteTab/getSelectNoteId']) {
+        this.$store.dispatch('NoteTab/unsetSelectNote')
         if (nextNote !== null) {
-          this.$store.dispatch('NoteContent/loadSelectNote', { noteId: nextNote.id, })
+          this.$store.dispatch('NoteTab/setSelectNote', nextNote)
         }
       }
     },
