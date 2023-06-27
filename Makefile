@@ -37,6 +37,9 @@ reset : stop up
 sh :
 	docker-compose exec php /bin/bash
 
+sh_root :
+	docker-compose exec -u 0 php /bin/bash
+
 shdb :
 	docker-compose exec mysql /bin/bash -c " \
 		mysql -u root -proot; \
