@@ -111,7 +111,10 @@ const actions = {
 
     dispatch('saveLocalStorage');
   },
-  removeNoteTab ({ commit, dispatch, }, id) {
+  removeNoteTab ({ getters, commit, dispatch, }, id) {
+    if (getters.getSelectNoteId === id) {
+      dispatch('setNextNote');
+    }
     commit('removeNoteTab', id);
 
     dispatch('saveLocalStorage');

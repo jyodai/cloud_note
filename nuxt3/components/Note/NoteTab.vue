@@ -79,24 +79,7 @@ export default {
       this.$store.dispatch('NoteTab/setSelectNote', note);
     },
     removeNoteTab (id) {
-      const nextNote = this.getNextNote(id);
       this.$store.dispatch('NoteTab/removeNoteTab', id);
-
-      if (id === this.$store.getters['NoteTab/getSelectNoteId']) {
-        this.$store.dispatch('NoteTab/unsetSelectNote');
-        if (nextNote !== null) {
-          this.$store.dispatch('NoteTab/setSelectNote', nextNote);
-        }
-      }
-    },
-    getNextNote (id) {
-      const noteTab = this.$store.getters['NoteTab/getNoteTab'];
-      const index   = noteTab.findIndex(note => note.id === id);
-      let nextNote  = noteTab[index - 1] ? noteTab[index - 1] : null;
-      if (nextNote === null && noteTab.length > 1) {
-        nextNote = noteTab[1];
-      }
-      return nextNote;
     },
   },
 };
