@@ -14,6 +14,7 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-apacheconf';
 import 'prismjs/components/prism-nginx';
 import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-csharp';
 
 export default defineNuxtPlugin(() => {
   return {
