@@ -49,8 +49,25 @@ export default {
   },
   mounted () {
     this.initSelectNote();
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
   },
   methods : {
+    handleKeyDown(event) {
+      if (event.ctrlKey && event.key === 'j') {
+        event.preventDefault();
+        event.stopPropagation();
+        this.$store.dispatch('NoteTab/setPrevNote');
+      }
+
+      if (event.ctrlKey && event.key === 'k') {
+        event.preventDefault();
+        event.stopPropagation();
+        this.$store.dispatch('NoteTab/setNextNote');
+      }
+    },
     initSelectNote () {
       const noteTab = this.$store.getters['NoteTab/getNoteTab'];
       if (noteTab.length === 0) {
