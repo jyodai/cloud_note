@@ -36,7 +36,7 @@ const getters = {
     if (state.noteTab[index + 1]) {
       return state.noteTab[index + 1];
     } else if (state.noteTab.length > 1) {
-      return state.noteTab[1];
+      return state.noteTab[0];
     } else {
       return null;
     }
