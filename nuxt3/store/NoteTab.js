@@ -31,7 +31,27 @@ const getters = {
   getNoteTab      : state => state.noteTab,
   getSelectNote   : state => state.selectNote,
   getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
-  findNote        : state => (id) => {
+  getNextNote     : state => {
+    const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
+    if (state.noteTab[index + 1]) {
+      return state.noteTab[index + 1];
+    } else if (state.noteTab.length > 1) {
+      return state.noteTab[0];
+    } else {
+      return null;
+    }
+  },
+  getPrevNote : state => {
+    const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
+    if (state.noteTab[index - 1]) {
+      return state.noteTab[index - 1];
+    } else if (state.noteTab.length > 1) {
+      return state.noteTab[state.noteTab.length - 1];
+    } else {
+      return null;
+    }
+  },
+  findNote : state => (id) => {
     const noteTab = state.noteTab;
     const index   = noteTab.findIndex(value => value.id === id);
     if (index === -1) {
@@ -44,6 +64,18 @@ const getters = {
 const actions = {
   setSelectNote ({commit}, note) {
     commit('setSelectNote', note);
+  },
+  setNextNote ({getters, commit}) {
+    const note = getters.getNextNote;
+    if (note !== null) {
+      commit('setSelectNote', note);
+    }
+  },
+  setPrevNote ({getters, commit}) {
+    const note = getters.getPrevNote;
+    if (note !== null) {
+      commit('setSelectNote', note);
+    }
   },
   unsetSelectNote ({ commit, }) {
     commit('unsetSelectNote');
@@ -79,8 +111,16 @@ const actions = {
 
     dispatch('saveLocalStorage');
   },
-  removeNoteTab ({ commit, dispatch, }, id) {
+  removeNoteTab ({ getters, commit, dispatch, }, id) {
+    if (getters.getSelectNoteId === id) {
+      dispatch('setNextNote');
+    }
     commit('removeNoteTab', id);
+
+    const noteTab = getters.getNoteTab;
+    if (noteTab.length === 0) {
+      dispatch('unsetSelectNote');
+    }
 
     dispatch('saveLocalStorage');
   },

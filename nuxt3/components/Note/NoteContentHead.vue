@@ -22,16 +22,16 @@ export default {
   },
   watch : {
     changeSelectNote (newVal) {
-      this.getNotePath(newVal.id);
+      this.getNotePath(newVal);
     },
   },
   methods : {
-    async getNotePath (noteId) {
-      if (!noteId) {
+    async getNotePath (note) {
+      if (!note) {
         this.notePath = 'ファイル未選択';
         return;
       }
-      const url      = this.$config.public.apiUrl + '/notes?noteId=' + noteId;
+      const url      = this.$config.public.apiUrl + '/notes?noteId=' + note.id;
       const response = await this.$axios.get(url);
       this.notePath  = response.path;
     },
