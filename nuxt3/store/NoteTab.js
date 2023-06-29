@@ -117,6 +117,11 @@ const actions = {
     }
     commit('removeNoteTab', id);
 
+    const noteTab = getters.getNoteTab;
+    if (noteTab.length === 0) {
+      dispatch('unsetSelectNote');
+    }
+
     dispatch('saveLocalStorage');
   },
   moveNoteTab ({ commit, dispatch, }, noteTabArray) {
