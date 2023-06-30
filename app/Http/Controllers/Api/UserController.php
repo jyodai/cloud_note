@@ -30,6 +30,16 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    public function showLoginUser(Request $request): UserResource
+    {
+        $token = $request->bearerToken();
+        $user  = \App\Models\User::where("api_token", $token)->first();
+        if (!$user) {
+            abort(401);
+        }
+        return new UserResource($user);
+    }
+
     public function store(Request $request): UserResource
     {
         $user = User::create([
@@ -58,7 +68,7 @@ class UserController extends Controller
         return response()->noContent();
     }
 
-    public function createToken(Request $request)
+    public function createToken(Request $request): array
     {
         $email = $request->email;
         $user  = \App\Models\User::where("email", $email)->first();
@@ -80,12 +90,12 @@ class UserController extends Controller
         $user->attempts_num = 0;
         $user->save();
         return [
-            'user'  => $user,
+            'user'  => new UserResource($user),
             'token' => $token,
         ];
     }
 
-    protected function overAttempts($user)
+    protected function overAttempts($user): bool
     {
         $ret                = false;
         $user->attempts_num = $user->attempts_num + 1;
@@ -96,14 +106,14 @@ class UserController extends Controller
         return $ret;
     }
 
-    public function deleteToken(Request $request)
+    public function deleteToken(Request $request): Response
     {
         $token = $request->bearerToken();
         $user  = \App\Models\User::where("api_token", $token)->first();
         if ($token && $user) {
             $user->api_token = null;
             $user->save();
-            return [];
+            return response()->noContent();
         } else {
             abort(401);
         }
