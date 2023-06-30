@@ -113,7 +113,7 @@ class UserController extends Controller
         if ($token && $user) {
             $user->api_token = null;
             $user->save();
-            return [];
+            return response()->noContent();
         } else {
             abort(401);
         }
