@@ -30,6 +30,16 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    public function showLoginUser(Request $request): UserResource
+    {
+        $token = $request->bearerToken();
+        $user  = \App\Models\User::where("api_token", $token)->first();
+        if (!$user) {
+            abort(401);
+        }
+        return new UserResource($user);
+    }
+
     public function store(Request $request): UserResource
     {
         $user = User::create([

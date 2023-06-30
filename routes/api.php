@@ -23,22 +23,13 @@ use App\Http\Controllers\Api\UserController;
 //     return $request->user();
 // });
 
-Route::get("/user", function () {
-    $requestData = request();
-    $token       = $requestData->bearerToken();
-    $user        = \App\Models\User::where("api_token", $token)->first();
-    if ($token && $user) {
-        return [
-            "user" => $user,
-        ];
-    }
-});
-
 Route::post("users/token", 'Api\UserController@createToken');
 
 Route::middleware(['auth_api'])->group(function () {
     Route::prefix('users')->group(function () {
         Route::delete("/token", 'Api\UserController@deleteToken');
+
+        Route::get('/me', [UserController::class, 'showLoginUser']);
 
         Route::get('/', [UserController::class, 'index']);
         Route::post('/', [UserController::class, 'store']);

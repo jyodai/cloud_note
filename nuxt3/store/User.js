@@ -42,10 +42,13 @@ const actions = {
     commit('setUser', null);
   },
   async setUser ({ commit, }) {
-    const response = await this.$axios.get(this.$config.public.apiUrl + '/user');
-    commit('setUser', response.user);
-    commit('setToken', response.user.api_token);
-    commit('setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN);
+    await this.$axios.get(this.$config.public.apiUrl + '/users/me')
+      .then((response) => {
+        commit('setUser', response.data);
+        commit('setToken', this.$util.sessionStorage.get('token'));
+        commit('setIsAdminUser', response.data.user_type === this.$const.USER_TYPE_ADMIN);
+      })
+    ;
   },
 };
 
