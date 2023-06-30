@@ -90,7 +90,7 @@ class UserController extends Controller
         $user->attempts_num = 0;
         $user->save();
         return [
-            'user'  => $user,
+            'user'  => new UserResource($user),
             'token' => $token,
         ];
     }
