@@ -72,8 +72,7 @@ export default {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
       },
-      noteLoadFlag : false,
-      dragNoteId   : null,
+      dragNoteId : null,
     };
   },
   computed : {
@@ -89,14 +88,6 @@ export default {
     },
   },
   watch : {
-    noteLoadFlag (newVal) {
-      if (newVal) {
-        const targetElementId = 'dir-frame';
-        this.$util.load.createLoadScreen(targetElementId);
-      } else {
-        this.$util.load.deleteLoadScreen();
-      }
-    },
     storeTreeNodes : {
       handler () {
         const tree     = this.$store.getters['NoteTree/getDisplayTree'];
@@ -106,9 +97,7 @@ export default {
     },
   },
   async created () {
-    this.noteLoadFlag = true;
-    await this.$store.dispatch('NoteTree/loadTree')
-      .finally(() => { this.noteLoadFlag = false; });
+    await this.$store.dispatch('NoteTree/loadTree');
   },
   methods : {
     setNote (note) {
@@ -127,11 +116,7 @@ export default {
       const id       = event.dragNode.data.id;
       const position = this.getPosition(event.dragNode, event.targetPath);
 
-      this.noteLoadFlag = true;
-      await this.$store.dispatch('NoteTree/moveNode', { id, position, })
-        .finally(() => {
-          this.noteLoadFlag = false;
-        });
+      await this.$store.dispatch('NoteTree/moveNode', { id, position, });
     },
     getPosition(node, path) {
       const tree       = this.$refs.tree;
@@ -164,16 +149,12 @@ export default {
       }
     },
     async openToggle (node) {
-      const id          = node.data.id;
-      this.noteLoadFlag = true;
-      await this.$store.dispatch('NoteTree/openNode', id)
-        .finally(() => { this.noteLoadFlag = false; });
+      const id = node.data.id;
+      await this.$store.dispatch('NoteTree/openNode', id);
     },
     async closeToggle (node) {
-      const id          = node.data.id;
-      this.noteLoadFlag = true;
-      await this.$store.dispatch('NoteTree/closeNode', id)
-        .finally(() => { this.noteLoadFlag = false; });
+      const id = node.data.id;
+      await this.$store.dispatch('NoteTree/closeNode', id);
     },
   },
 };
