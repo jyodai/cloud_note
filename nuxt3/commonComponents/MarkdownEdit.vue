@@ -70,6 +70,8 @@ export default {
     this.mergeCodemirrorOption();
   },
   mounted () {
+    document.addEventListener('keydown', this.handleKeyDown);
+
     window.addEventListener('beforeunload', (e) => {
       if (this.contentChangeFlag) {
         // 空文字をセットすることでconfirmが出力される
@@ -77,7 +79,15 @@ export default {
       }
     }, false);
   },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  },
   methods : {
+    handleKeyDown(event) {
+      if (this.isChangeTabEvent(event) && this.contentChangeFlag) {
+        this.saveNote();
+      }
+    },
     mergeCodemirrorOption () {
       const user             = this.$store.getters['User/getUser'];
       const editorOption     = JSON.parse(user.note_setting.editor_option);
@@ -102,6 +112,9 @@ export default {
       this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, });
       this.contentChangeFlag = false;
     },
+    isChangeTabEvent(event) {
+      return event.ctrlKey && (event.key === 'j' || event.key === 'k');
+    }
   },
 };
 </script>
