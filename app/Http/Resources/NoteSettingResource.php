@@ -19,6 +19,7 @@ class NoteSettingResource extends JsonResource
             'id'            => $this->id,
             'user_id'       => $this->user_id,
             'editor_option' => $this->editor_option,
+            'editor_css'    => $this->editor_css,
         ];
     }
 }

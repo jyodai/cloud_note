@@ -11,6 +11,7 @@ class NoteSetting extends Model
     protected $fillable = [
         'user_id',
         'editor_option',
+        'editor_css',
     ];
 
     protected $casts = [
