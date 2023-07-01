@@ -70,6 +70,10 @@ export default {
       this.visible   = true;
     },
     async save() {
+      if (!this.$util.json.isJSON(this.setting.editor_option)) {
+        alert('エディタオプションがJSONになっていません。');
+        return;
+      }
       const url    = this.$config.public.apiUrl + '/notes_settings/' + this.setting.id;
       const params = this.setting;
       await this.$axios.put(url, params);
