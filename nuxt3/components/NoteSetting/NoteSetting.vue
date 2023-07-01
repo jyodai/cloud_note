@@ -19,9 +19,9 @@
                   エディタオプション
                 </th>
                 <td>
-                  <textarea
-                    v-model="setting.editor_option"
-                    rows="3"
+                  <code-mirror
+                    :content="setting.editor_option"
+                    @changes="changeEditorOption"
                   />
                 </td>
               </tr>
@@ -43,11 +43,13 @@
 <script>
 import Modal from '../Modal/ModalWrapper.vue';
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
+import CodeMirror from '~/commonComponents/CodeMirror.vue';
 
 export default {
   components : {
     Modal,
     ModalFooterButton,
+    CodeMirror,
   },
   data () {
     return {
@@ -82,6 +84,9 @@ export default {
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('NoteSetting', closeType);
     },
+    changeEditorOption (content) {
+      this.setting.editor_option = content;
+    }
   },
 };
 </script>
@@ -93,10 +98,6 @@ export default {
   table {
     th {
       width : 200px;
-    }
-    textarea {
-      width: 100%;
-      color: #fff;
     }
   }
 }
