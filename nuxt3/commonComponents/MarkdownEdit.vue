@@ -143,6 +143,7 @@ export default {
       bottom: 5px;
       left : 5px;
       width :95%;
+      background : #222;
     }
   }
 }
