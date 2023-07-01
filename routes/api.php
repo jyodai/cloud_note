@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NoteSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,11 @@ Route::middleware(['auth_api'])->group(function () {
         Route::get('/{id}', [UserController::class, 'show']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
+    Route::prefix('notes_settings')->group(function () {
+        Route::get('/', [NoteSettingController::class, 'show']);
+        Route::put('/{id}', [NoteSettingController::class, 'update']);
     });
 
 

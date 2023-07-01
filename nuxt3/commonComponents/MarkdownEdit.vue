@@ -17,6 +17,7 @@
 import codemirror from 'codemirror-editor-vue3';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
+import 'codemirror/keymap/vim.js';
 
 export default {
   components : {
@@ -66,6 +67,7 @@ export default {
   },
   created () {
     this.codemirrorContent = this.content.content;
+    this.mergeCodemirrorOption();
   },
   mounted () {
     window.addEventListener('beforeunload', (e) => {
@@ -76,6 +78,11 @@ export default {
     }, false);
   },
   methods : {
+    mergeCodemirrorOption () {
+      const user             = this.$store.getters['User/getUser'];
+      const editorOption     = JSON.parse(user.note_setting.editor_option);
+      this.codemirrorOptions = Object.assign(this.codemirrorOptions, editorOption);
+    },
     reset () {
       this.codemirrorContent = this.content.content;
       this.contentChangeFlag = false;
@@ -118,6 +125,12 @@ export default {
   .CodeMirror {
     height: 100%;
     width: 100%;
+    .CodeMirror-dialog-bottom {
+      position: absolute;
+      bottom: 5px;
+      left : 5px;
+      width :95%;
+    }
   }
 }
 </style>

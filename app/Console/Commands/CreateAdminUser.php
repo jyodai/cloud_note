@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Consts\User as C_User;
 use App\Models\User;
+use App\Models\NoteSetting;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -57,6 +58,11 @@ class CreateAdminUser extends Command
         }
 
         $user = $userModel->create($data);
+
+        NoteSetting::create([
+            'user_id'       => $user->id,
+            'editor_option' => '{}',
+        ]);
 
         $this->info('User name: ' . $user->name);
         $this->info('User password: ' . $password);
