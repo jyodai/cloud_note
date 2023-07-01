@@ -38,6 +38,11 @@ Route::middleware(['auth_api'])->group(function () {
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
 
+    Route::prefix('notes_settings')->group(function () {
+        Route::get('/', [NoteSettingController::class, 'show']);
+        Route::put('/{id}', [NoteSettingController::class, 'update']);
+    });
+
 
 
     Route::get('notes', 'Api\NoteController@getNote');
