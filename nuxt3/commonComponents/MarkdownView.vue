@@ -34,6 +34,7 @@ export default {
     },
   },
   created () {
+    this.loadInlineCSS();
     this.initializeMermaid();
     this.markdown = this.beforeMarkdown(this.content.content);
   },
@@ -44,6 +45,13 @@ export default {
     this.afterMarkdown();
   },
   methods : {
+    loadInlineCSS() {
+      const user        = this.$store.getters['User/getUser'];
+      const style       = document.createElement('style');
+      const content     = user.note_setting.editor_css;
+      style.textContent = content;
+      document.head.appendChild(style);
+    },
     initializeMermaid () {
       Mermaid.initialize({
         theme          : 'dark',

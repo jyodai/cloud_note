@@ -25,6 +25,17 @@
                   />
                 </td>
               </tr>
+              <tr>
+                <th>
+                  CSS
+                </th>
+                <td>
+                  <code-mirror
+                    :content="setting.editor_css"
+                    @changes="changeEditorCss"
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -56,6 +67,7 @@ export default {
       modalName   : 'NoteSetting',
       modalOption : {
         beforeOpen : this.beforeOpen,
+        width      : '90%',
       },
       visible : false,
       setting : null,
@@ -86,6 +98,9 @@ export default {
     },
     changeEditorOption (content) {
       this.setting.editor_option = content;
+    },
+    changeEditorCss (content) {
+      this.setting.editor_css = content;
     }
   },
 };

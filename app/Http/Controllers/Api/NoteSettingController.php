@@ -25,6 +25,7 @@ class NoteSettingController extends Controller
     {
          NoteSetting::find($id)->update([
              'editor_option' => $request->editor_option,
+             'editor_css'    => $request->editor_css,
          ]);
         $noteSetting = NoteSetting::find($id);
         return new NoteSettingResource($noteSetting);

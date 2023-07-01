@@ -52,6 +52,7 @@ class UserController extends Controller
         NoteSetting::create([
             'user_id'       => $user->id,
             'editor_option' => '{}',
+            'editor_css'    => '',
         ]);
         return new UserResource($user);
     }
