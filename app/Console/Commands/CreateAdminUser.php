@@ -62,6 +62,7 @@ class CreateAdminUser extends Command
         NoteSetting::create([
             'user_id'       => $user->id,
             'editor_option' => '{}',
+            'editor_css'    => '',
         ]);
 
         $this->info('User name: ' . $user->name);
