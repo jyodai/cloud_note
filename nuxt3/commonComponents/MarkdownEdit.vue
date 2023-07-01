@@ -125,6 +125,12 @@ export default {
   .CodeMirror {
     height: 100%;
     width: 100%;
+    .CodeMirror-dialog-bottom {
+      position: absolute;
+      bottom: 5px;
+      left : 5px;
+      width :95%;
+    }
   }
 }
 </style>
