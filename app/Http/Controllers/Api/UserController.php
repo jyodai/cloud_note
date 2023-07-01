@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\NoteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -48,6 +49,10 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
             'api_token' => Str::random(60),
         ]);
+        NoteSetting::create([
+            'user_id'       => $user->id,
+            'editor_option' => '{}',
+        ]);
         return new UserResource($user);
     }
 
@@ -65,6 +70,7 @@ class UserController extends Controller
     public function destroy(int $id): Response
     {
         User::destroy($id);
+        NoteSetting::where('user_id', $id)->delete();
         return response()->noContent();
     }
 
