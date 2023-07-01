@@ -53,6 +53,16 @@
           <div
             v-if="isAdminUser"
             class="g-pointer"
+            @click="openModal('NoteSetting')"
+          >
+            <v-icon size="14">
+              mdi-checkbox-blank-circle
+            </v-icon>
+            ノート
+          </div>
+          <div
+            v-if="isAdminUser"
+            class="g-pointer"
             @click="openModal('UserList')"
           >
             <v-icon size="14">
