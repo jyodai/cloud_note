@@ -47,4 +47,9 @@ class User extends Authenticatable
         $exists = $this->where('email', $email)->first();
         return $exists ? true : false;
     }
+
+    public function noteSetting()
+    {
+        return $this->hasOne(NoteSetting::class);
+    }
 }
