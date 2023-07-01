@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NoteSettingController;
 
 /*
 |--------------------------------------------------------------------------
