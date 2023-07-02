@@ -32,6 +32,7 @@ services:
         dockerfile: ./docker/mysql/Dockerfile
       volumes:
         - ./docker/mysql/etc/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./docker/mysql/db:/var/lib/mysql
       ports:
         - 3306:3306
       command: --innodb-use-native-aio=0
