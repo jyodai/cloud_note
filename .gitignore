@@ -9,6 +9,7 @@
 /storage/noteFile/
 /vendor
 /nuxt3/ssl/*.pem
+/docker/mysql/db/*
 .env
 .env.backup
 .phpunit.result.cache
@@ -20,3 +21,4 @@ dist/
 cloud-note/
 .env.testing
 *.swp
+!.gitkeep
