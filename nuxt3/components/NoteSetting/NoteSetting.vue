@@ -90,8 +90,12 @@ export default {
       }
       const url    = this.$config.public.apiUrl + '/notes_settings/' + this.setting.id;
       const params = this.setting;
-      await this.$axios.put(url, params);
-      this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.put(url, params)
+        .then(() => {
+          this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     },
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('NoteSetting', closeType);
