@@ -85,15 +85,13 @@ export default {
   },
   methods : {
     beforeOpen () {
-      const num = 0;
-      this.getFileList(num);
+      this.getFileList();
     },
     closeModal () {
       this.$vfm.close('LibraryList', this.$const.MODAL_CLOSE_TYPE_CLOSE);
     },
-    async getFileList (num) {
-      const queryStr = '?type=list' + '&num=' + num;
-      const url      = this.$config.public.apiUrl + '/libraries/files' + queryStr;
+    async getFileList () {
+      const url      = this.$config.public.apiUrl + '/libraries';
       const response = await this.$axios.get(url);
       this.fileList  = response;
       this.visible   = true;
@@ -116,7 +114,7 @@ export default {
       this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen(); });
     },
     async deleteFile (fileName) {
-      const url      = this.$config.public.apiUrl + '/libraries/files';
+      const url      = this.$config.public.apiUrl + '/libraries';
       const params   = {
         originFileName : fileName,
       };
@@ -129,7 +127,7 @@ export default {
       const response = await this.$axios.post(url, params, config);
       alert(response.message);
 
-      this.closeModal();
+      this.beforeOpen();
     },
   },
 };
