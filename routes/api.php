@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NoteSettingController;
-use App\Http\Controllers\Api\Library\FileController;
+use App\Http\Controllers\Api\LibraryFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,10 +46,10 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('libraries')->group(function () {
-        Route::get('/files', [FileController::class, 'getFile']);
-        Route::put('/files', [FileController::class, 'editFile']);
-        Route::post('/files', [FileController::class, 'addFile']);
-        Route::delete('/files', [FileController::class, 'deleteFile']);
+        Route::get('/files', [LibraryFileController::class, 'getFile']);
+        Route::put('/files', [LibraryFileController::class, 'editFile']);
+        Route::post('/files', [LibraryFileController::class, 'addFile']);
+        Route::delete('/files', [LibraryFileController::class, 'deleteFile']);
     });
 
 

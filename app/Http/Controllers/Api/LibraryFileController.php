@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Library;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use File;
 use Storage;
 use URL;
 
-class FileController extends Controller
+class LibraryFileController extends Controller
 {
     public $user = null;
 
