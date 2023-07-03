@@ -93,7 +93,7 @@ export default {
     },
     async getFileList (num) {
       const queryStr = '?type=list' + '&num=' + num;
-      const url      = this.$config.public.apiUrl + '/libraries/files' + queryStr;
+      const url      = this.$config.public.apiUrl + '/libraries' + queryStr;
       const response = await this.$axios.get(url);
       this.fileList  = response;
       this.visible   = true;
@@ -116,7 +116,7 @@ export default {
       this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen(); });
     },
     async deleteFile (fileName) {
-      const url      = this.$config.public.apiUrl + '/libraries/files';
+      const url      = this.$config.public.apiUrl + '/libraries';
       const params   = {
         originFileName : fileName,
       };

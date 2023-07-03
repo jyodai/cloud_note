@@ -46,10 +46,10 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('libraries')->group(function () {
-        Route::get('/files', [LibraryFileController::class, 'getFile']);
-        Route::put('/files', [LibraryFileController::class, 'editFile']);
-        Route::post('/files', [LibraryFileController::class, 'addFile']);
-        Route::delete('/files', [LibraryFileController::class, 'deleteFile']);
+        Route::get('/', [LibraryFileController::class, 'getFile']);
+        Route::put('/', [LibraryFileController::class, 'editFile']);
+        Route::post('/', [LibraryFileController::class, 'addFile']);
+        Route::delete('/', [LibraryFileController::class, 'deleteFile']);
     });
 
 
