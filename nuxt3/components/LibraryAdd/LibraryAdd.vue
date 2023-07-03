@@ -56,7 +56,7 @@ export default {
       this.$vfm.close('LibraryAdd', closeType);
     },
     async addFile () {
-      const url    = this.$config.public.apiUrl + '/libraries/files';
+      const url    = this.$config.public.apiUrl + '/libraries';
       const params = new FormData();
       for (let i = 0; i < this.uploadFiles.length; i++) {
         params.append('file[]', this.uploadFiles[i]);

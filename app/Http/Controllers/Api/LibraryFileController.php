@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Library;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use File;
 use Storage;
 use URL;
 
-class FileController extends Controller
+class LibraryFileController extends Controller
 {
     public $user = null;
 
@@ -26,42 +26,37 @@ class FileController extends Controller
         $this->checkDir();
     }
 
-    public function getFile(Request $request)
+    public function index()
     {
-        $ret  = null;
-        $type = $request->type;
-        switch ($type) {
-            case 'list':
-                $path     = storage_path('userLibrary/' . $this->user->id . '/' . '*');
-                $fileList = glob($path);
-                $ret      = [];
-                $i        = 0;
-                foreach ($fileList as $file) {
-                    $fileName            = explode('/', $file);
-                    $fileName            = end($fileName);
-                    $baseUrl             = URL::current();
-                    $fileUrl             = $baseUrl . '?path=' . $fileName . '&type=show' . '&token=%cn_api_token%';
-                    $ret[$i]['fileName'] = $fileName;
-                    $ret[$i]['fileUrl']  = $fileUrl;
-                    $ret[$i]['fileHtml'] = "<img style=\"max-width:500px\" src=\"$fileUrl\">";
-                    $i++;
-                }
-                $ret = response()->json($ret);
-                break;
-            case 'show':
-                $pathToFile = storage_path('userLibrary/' . $this->user->id . '/' . $request->path);
-                $info       = new FInfo(FILEINFO_MIME_TYPE);
-                $mine_type  = $info->file($pathToFile);
-                $contents   = File::get($pathToFile);
-                $ret        = Response::make($contents, 200);
-                $ret->header('Content-Type', $mine_type);
-                return $ret;
-                break;
+        $path     = storage_path('userLibrary/' . $this->user->id . '/' . '*');
+        $fileList = glob($path);
+        $ret      = [];
+        $i        = 0;
+        foreach ($fileList as $file) {
+            $fileName            = explode('/', $file);
+            $fileName            = end($fileName);
+            $baseUrl             = URL::current();
+            $fileUrl             = $baseUrl . '?path=' . $fileName . '&type=show' . '&token=%cn_api_token%';
+            $ret[$i]['fileName'] = $fileName;
+            $ret[$i]['fileUrl']  = $fileUrl;
+            $ret[$i]['fileHtml'] = "<img style=\"max-width:500px\" src=\"$fileUrl\">";
+            $i++;
         }
+        return response()->json($ret);
+    }
+
+    public function image(Request $request)
+    {
+        $pathToFile = storage_path('userLibrary/' . $this->user->id . '/' . $request->path);
+        $info       = new FInfo(FILEINFO_MIME_TYPE);
+        $mine_type  = $info->file($pathToFile);
+        $contents   = File::get($pathToFile);
+        $ret        = Response::make($contents, 200);
+        $ret->header('Content-Type', $mine_type);
         return $ret;
     }
 
-    public function addFile()
+    public function store()
     {
         $ret            = [];
         $ret['message'] = '';
@@ -92,7 +87,7 @@ class FileController extends Controller
         return response()->json($ret);
     }
 
-    public function editFile(Request $request)
+    public function update(Request $request)
     {
         $ret            = [];
         $newFileName    = $request->newFileName;
@@ -110,7 +105,7 @@ class FileController extends Controller
         return response()->json($ret);
     }
 
-    public function deleteFile(Request $request)
+    public function destroy(Request $request)
     {
         $ret            = [];
         $originFileName = $request->originFileName;

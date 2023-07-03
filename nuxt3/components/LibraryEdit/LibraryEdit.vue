@@ -70,7 +70,7 @@ export default {
       this.$vfm.close('LibraryEdit', closeType);
     },
     async editFile () {
-      const url      = this.$config.public.apiUrl + '/libraries/files';
+      const url      = this.$config.public.apiUrl + '/libraries';
       const params   = {
         originFileName : this.originFileName,
         newFileName    : this.newFileName,
