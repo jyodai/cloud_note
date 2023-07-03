@@ -127,7 +127,7 @@ export default {
       const response = await this.$axios.post(url, params, config);
       alert(response.message);
 
-      this.closeModal();
+      this.beforeOpen();
     },
   },
 };
