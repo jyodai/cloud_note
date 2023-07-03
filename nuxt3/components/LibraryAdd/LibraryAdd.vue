@@ -68,8 +68,7 @@ export default {
       }
 
       await this.$axios.post(url, params)
-        .then((response) => {
-          alert(response.message);
+        .then(() => {
           this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
         })
         .catch(() => { return; })

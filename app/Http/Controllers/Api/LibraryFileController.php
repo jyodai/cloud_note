@@ -62,31 +62,20 @@ class LibraryFileController extends Controller
     {
         $ret            = [];
         $ret['message'] = '';
-        $path           = storage_path('userLibrary/' . $this->user->id . '/');
+        $userId         = $this->user->id;
+        $path           = storage_path('userLibrary/' . $userId . '/');
         if (!file_exists($path)) {
             mkdir($path, 0777);
             chmod($path, 0777);
         }
 
-        for ($i = 0; $i < count($_FILES['file']['tmp_name']); $i++) {
-            $fileName = $_FILES['file']['name'][$i];
-            if (is_uploaded_file($_FILES['file']['tmp_name'][$i])) {
-                if (file_exists($path . $_FILES['file']['name'][$i])) {
-                    $ret['message'] .= $fileName . "：アップロード失敗。同名のファイルが存在します\n";
-                } elseif (preg_match('#[\\\:?<>|]|\.{1,2}/#', $_FILES['file']['tmp_name'][$i])) {
-                    $ret['message'] .= $fileName . "：ファイルに使用できな文字が含まれています。「\,:,?,<,>,|」、「./」、「../」\n";
-                    unlink($_FILES['file']['tmp_name'][$i]);
-                } elseif (move_uploaded_file($_FILES['file']['tmp_name'][$i], $path . $_FILES['file']['name'][$i])) {
-                    $ret['message'] .= $fileName . "：ファイルのアップロードに成功しました\n";
-                    chmod($path . $_FILES['file']['name'][$i], 0777);
-                } else {
-                    $ret['message'] .= $fileName . "：ファイルのアップロードに失敗しました\n";
-                }
-            } else {
-                $ret['message'] .= $fileName . "：ファイルのアップロードに失敗しました。管理者にご連絡してください。\n";
-            }
+        $files = $request->file;
+        foreach ($files as $file) {
+            $fileName = $file->getClientOriginalName();
+            $path     = Storage::disk('userLibrary')->putFileAs($userId, $file, $fileName);
         }
-        return response()->json($ret);
+
+        return response()->noContent();
     }
 
     public function update(UpdateRequest $request)

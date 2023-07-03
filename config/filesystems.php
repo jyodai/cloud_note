@@ -55,6 +55,11 @@ return [
             'visibility' => 'public',
         ],
 
+        'userLibrary' => [
+            'driver' => 'local',
+            'root'   => storage_path('userLibrary'),
+        ],
+
         's3'     => [
             'driver'   => 's3',
             'key'      => env('AWS_ACCESS_KEY_ID'),
