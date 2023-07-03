@@ -58,7 +58,6 @@ Route::middleware(['auth_api'])->group(function () {
 
     Route::get('notes', 'Api\NoteController@getNote');
     Route::put('notes/{id}', 'Api\NoteController@updateNote');
-    Route::put('notes', 'Api\NoteController@saveNote');
     Route::post('notes', 'Api\NoteController@addNote');
     Route::delete('notes/{id}', 'Api\NoteController@deleteNote');
 

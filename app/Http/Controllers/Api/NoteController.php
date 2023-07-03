@@ -39,21 +39,6 @@ class NoteController extends Controller
         return response()->json($ret);
     }
 
-    public function saveNote(Request $request)
-    {
-        $noteId = (int) $request->noteId;
-
-        if (empty($noteId)) {
-            exit;
-        }
-
-        $noteTitle = $request->noteTitle;
-
-        $entity        = Note::where('id', $noteId)->first();
-        $entity->title = $noteTitle ? $noteTitle : $entity->title;
-        $entity->save();
-    }
-
     public function addNote(Request $request)
     {
         $parentNoteId = (int) $request->parentNoteId;
