@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NoteSetting\UpdateRequest;
+use App\Http\Resources\NoteSettingResource;
 use App\Models\NoteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\NoteSettingResource;
 
 class NoteSettingController extends Controller
 {
@@ -21,7 +22,7 @@ class NoteSettingController extends Controller
         return new NoteSettingResource($noteSetting);
     }
 
-    public function update(int $id, Request $request): NoteSettingResource
+    public function update(int $id, UpdateRequest $request): NoteSettingResource
     {
          NoteSetting::find($id)->update([
              'editor_option' => $request->editor_option,

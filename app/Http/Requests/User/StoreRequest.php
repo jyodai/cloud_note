@@ -4,14 +4,13 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     public function rules()
     {
-        $userId = $this->input('id');
         return [
             'name'     => 'required|string|max:255',
-            'email'    => "required|string|email|unique:users,email,$userId|max:191",
+            'email'    => "required|string|email|unique:users|max:191",
             'password' => 'required|string|min:4|max:255',
         ];
     }
