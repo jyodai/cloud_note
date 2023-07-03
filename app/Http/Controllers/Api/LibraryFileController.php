@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
-use Response;
+use App\Http\Requests\LibraryFile\UpdateRequest;
 use FInfo;
 use File;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Response;
 use Storage;
 use URL;
 
@@ -36,7 +37,7 @@ class LibraryFileController extends Controller
             $fileName            = explode('/', $file);
             $fileName            = end($fileName);
             $baseUrl             = URL::current();
-            $fileUrl             = $baseUrl . '?path=' . $fileName . '&type=show' . '&token=%cn_api_token%';
+            $fileUrl             = $baseUrl . '/image?path=' . $fileName . '&type=show' . '&token=%cn_api_token%';
             $ret[$i]['fileName'] = $fileName;
             $ret[$i]['fileUrl']  = $fileUrl;
             $ret[$i]['fileHtml'] = "<img style=\"max-width:500px\" src=\"$fileUrl\">";
@@ -87,22 +88,14 @@ class LibraryFileController extends Controller
         return response()->json($ret);
     }
 
-    public function update(Request $request)
+    public function update(UpdateRequest $request)
     {
         $ret            = [];
         $newFileName    = $request->newFileName;
         $originFileName = $request->originFileName;
         $path           = storage_path('userLibrary/' . $this->user->id . '/');
-        if (file_exists($path . $newFileName)) {
-            $ret['message'] = '編集失敗。同名のファイルが存在します';
-        } elseif (preg_match('#[\\\:?<>|]|\.{1,2}/#', $newFileName)) {
-            $ret['message'] = 'ファイルに使用できな文字が含まれています。「\,:,?,<,>,|」、「./」、「../」';
-        } elseif (rename($path . $originFileName, $path . $newFileName)) {
-            $ret['message'] = "ファイル名を {$originFileName} から {$newFileName} に変更しました";
-        } else {
-            $ret['message'] = 'ファイルの編集に失敗しました。管理者にご連絡してください。';
-        }
-        return response()->json($ret);
+        rename($path . $originFileName, $path . $newFileName);
+        return response()->noContent();
     }
 
     public function destroy(Request $request)

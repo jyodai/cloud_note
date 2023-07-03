@@ -70,15 +70,17 @@ export default {
       this.$vfm.close('LibraryEdit', closeType);
     },
     async editFile () {
-      const url      = this.$config.public.apiUrl + '/libraries';
-      const params   = {
+      const url    = this.$config.public.apiUrl + '/libraries';
+      const params = {
         originFileName : this.originFileName,
         newFileName    : this.newFileName,
       };
-      const response = await this.$axios.put(url, params);
-      alert(response.message);
-
-      this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.put(url, params)
+        .then(() => {
+          this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     },
   },
 };
