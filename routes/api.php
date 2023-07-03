@@ -46,7 +46,9 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('libraries')->group(function () {
-        Route::get('/', [LibraryFileController::class, 'getFile']);
+        Route::get('/image', [LibraryFileController::class, 'image']);
+
+        Route::get('/', [LibraryFileController::class, 'index']);
         Route::put('/', [LibraryFileController::class, 'editFile']);
         Route::post('/', [LibraryFileController::class, 'addFile']);
         Route::delete('/', [LibraryFileController::class, 'deleteFile']);
