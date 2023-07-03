@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LibraryFile\UpdateRequest;
+use App\Http\Requests\LibraryFile\StoreRequest;
 use FInfo;
 use File;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class LibraryFileController extends Controller
         return $ret;
     }
 
-    public function store()
+    public function store(StoreRequest $request)
     {
         $ret            = [];
         $ret['message'] = '';

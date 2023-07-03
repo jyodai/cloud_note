@@ -56,16 +56,24 @@ export default {
       this.$vfm.close('LibraryAdd', closeType);
     },
     async addFile () {
+      if (!this.uploadFiles) {
+        alert('ファイルを選択してください。');
+        return;
+      }
+
       const url    = this.$config.public.apiUrl + '/libraries';
       const params = new FormData();
       for (let i = 0; i < this.uploadFiles.length; i++) {
         params.append('file[]', this.uploadFiles[i]);
       }
 
-      const response = await this.$axios.post(url, params);
-      alert(response.message);
-
-      this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.post(url, params)
+        .then((response) => {
+          alert(response.message);
+          this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     },
     selectedFile (event) {
       this.uploadFiles = event.target.files;
