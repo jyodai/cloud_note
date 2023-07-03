@@ -23,9 +23,6 @@ class LibraryFileController extends Controller
             $this->user = auth()->user();
             return $next($request);
         });
-
-        // Todo : ユーザー作成時に作っておくべき
-        $this->checkDir();
     }
 
     public function index()
@@ -63,11 +60,6 @@ class LibraryFileController extends Controller
         $ret            = [];
         $ret['message'] = '';
         $userId         = $this->user->id;
-        $path           = storage_path('userLibrary/' . $userId . '/');
-        if (!file_exists($path)) {
-            mkdir($path, 0777);
-            chmod($path, 0777);
-        }
 
         $files = $request->file;
         foreach ($files as $file) {
@@ -100,14 +92,5 @@ class LibraryFileController extends Controller
             $ret['message'] = "{$originFileName}は存在しません";
         }
         return response()->json($ret);
-    }
-
-    protected function checkDir()
-    {
-        $path = storage_path('userLibrary');
-        if (!file_exists($path)) {
-            mkdir($path, 0777);
-            chmod($path, 0777);
-        }
     }
 }

@@ -5,7 +5,7 @@
 /storage/*.key
 /storage/userImageLibrary/
 /storage/fileToFile/
-/storage/userLibrary/
+/storage/userLibrary/*
 /storage/noteFile/
 /vendor
 /nuxt3/ssl/*.pem
