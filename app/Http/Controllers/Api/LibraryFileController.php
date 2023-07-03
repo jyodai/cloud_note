@@ -56,7 +56,7 @@ class LibraryFileController extends Controller
         return $ret;
     }
 
-    public function addFile()
+    public function store()
     {
         $ret            = [];
         $ret['message'] = '';
@@ -87,7 +87,7 @@ class LibraryFileController extends Controller
         return response()->json($ret);
     }
 
-    public function editFile(Request $request)
+    public function update(Request $request)
     {
         $ret            = [];
         $newFileName    = $request->newFileName;
@@ -105,7 +105,7 @@ class LibraryFileController extends Controller
         return response()->json($ret);
     }
 
-    public function deleteFile(Request $request)
+    public function destroy(Request $request)
     {
         $ret            = [];
         $originFileName = $request->originFileName;
