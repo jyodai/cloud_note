@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NoteSettingController;
+use App\Http\Controllers\Api\Library\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,13 @@ Route::middleware(['auth_api'])->group(function () {
         Route::put('/{id}', [NoteSettingController::class, 'update']);
     });
 
+    Route::prefix('libraries')->group(function () {
+        Route::get('/files', [FileController::class, 'getFile']);
+        Route::put('/files', [FileController::class, 'editFile']);
+        Route::post('/files', [FileController::class, 'addFile']);
+        Route::delete('/files', [FileController::class, 'deleteFile']);
+    });
+
 
 
     Route::get('notes', 'Api\NoteController@getNote');
@@ -58,12 +66,6 @@ Route::middleware(['auth_api'])->group(function () {
     Route::get('tree', 'Api\TreeController@getTree');
     Route::get('tree/{id}/children', 'Api\TreeController@getTreeChildren');
     Route::put('tree/{id}/move', 'Api\TreeController@moveTree');
-
-
-    Route::get('libraries/files', 'Api\Library\FileController@getFile');
-    Route::put('libraries/files', 'Api\Library\FileController@editFile');
-    Route::post('libraries/files', 'Api\Library\FileController@addFile');
-    Route::delete('libraries/files', 'Api\Library\FileController@deleteFile');
 
     Route::get('notes/files', 'Api\Note\FileController@getFile');
     Route::put('notes/files', 'Api\Note\FileController@editFile');
