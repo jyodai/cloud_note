@@ -21,8 +21,23 @@ instance.interceptors.response.use(
   },
   (error) => {
     loadingScreen.hide();
+    if (error.response.status === 422) {
+      showValidateMessage(error);
+    }
     return Promise.reject(error.response.data);
   },
 );
+
+function showValidateMessage(error) {
+  let messages       = [];
+  const responseData = error.response.data;
+  for (const property in responseData.errors) {
+    if (!Array.isArray(responseData.errors[property])) {
+      continue;
+    }
+    messages = messages.concat(responseData.errors[property]);
+  }
+  alert(messages.join("\n"));
+}
 
 export default instance;
