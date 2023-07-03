@@ -84,8 +84,12 @@ export default {
     async save () {
       const url    = this.$config.public.apiUrl + '/users';
       const params = this.user;
-      await this.$axios.post(url, params);
-      this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.post(url, params)
+        .then(() => {
+          this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     }
   },
 };

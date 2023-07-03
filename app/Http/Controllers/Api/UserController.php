@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\StoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\NoteSetting;
 use App\Models\User;
@@ -42,7 +43,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function store(Request $request): UserResource
+    public function store(StoreRequest $request): UserResource
     {
         $user = User::create([
             'name'      => $request->name,
