@@ -65,6 +65,9 @@ class CreateAdminUser extends Command
             'editor_css'    => '',
         ]);
 
+        $path = storage_path('userLibrary/' . $user->id . '/');
+        mkdir($path);
+
         $this->info('User name: ' . $user->name);
         $this->info('User password: ' . $password);
     }

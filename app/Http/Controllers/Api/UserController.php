@@ -51,11 +51,15 @@ class UserController extends Controller
             'password'  => Hash::make($request->password),
             'api_token' => Str::random(60),
         ]);
+
         NoteSetting::create([
             'user_id'       => $user->id,
             'editor_option' => '{}',
             'editor_css'    => '',
         ]);
+
+        $this->createLibraryDir($user->id);
+
         return new UserResource($user);
     }
 
@@ -126,5 +130,11 @@ class UserController extends Controller
         } else {
             abort(401);
         }
+    }
+
+    private function createLibraryDir(int $userId): void
+    {
+        $path = storage_path('userLibrary/' . $userId . '/');
+        mkdir($path);
     }
 }

@@ -63,11 +63,6 @@ class LibraryFileController extends Controller
         $ret            = [];
         $ret['message'] = '';
         $userId         = $this->user->id;
-        $path           = storage_path('userLibrary/' . $userId . '/');
-        if (!file_exists($path)) {
-            mkdir($path, 0777);
-            chmod($path, 0777);
-        }
 
         $files = $request->file;
         foreach ($files as $file) {
