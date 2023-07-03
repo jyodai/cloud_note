@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\Models\NoteSetting;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -57,7 +58,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(int $id, Request $request): UserResource
+    public function update(int $id, UpdateRequest $request): UserResource
     {
         User::find($id)->update([
             'name'     => $request->name,
