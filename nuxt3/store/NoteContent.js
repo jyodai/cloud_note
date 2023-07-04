@@ -35,9 +35,8 @@ const actions = {
     selectContent.content = data.content;
     commit('setSelectContent', selectContent);
 
-    const url    = this.$config.public.apiUrl + '/note_content';
+    const url    = this.$config.public.apiUrl + `/note_content/${data.id}`;
     const params = {
-      noteId  : data.id,
       content : data.content,
     };
     await this.$axios.put(url, params)
