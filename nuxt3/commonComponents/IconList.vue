@@ -24,8 +24,9 @@ export default {
     },
   },
   emits : [
-    "edit",
     "copy",
+    "edit",
+    "lock",
     "trash",
   ],
   data () {
@@ -42,6 +43,11 @@ export default {
           event : () => { this.edit(); },
         },
         {
+          key   : 'lock',
+          icon  : 'mdi-lock-outline',
+          event : () => { this.lock(); },
+        },
+        {
           key   : 'trash',
           icon  : 'mdi-trash-can-outline',
           event : () => { this.trash(); },
@@ -55,6 +61,9 @@ export default {
     },
     edit () {
       this.$emit('edit');
+    },
+    lock () {
+      this.$emit('lock');
     },
     trash () {
       this.$emit('trash');
