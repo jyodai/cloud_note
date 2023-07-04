@@ -17,11 +17,11 @@
         <contextmenu-item @click="addNote($store.getters['NoteTree/getSelectNoteId'])">
           ノート
         </contextmenu-item>
-        <contextmenu-item
-          @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)"
-        >
-          タスク
-        </contextmenu-item>
+        <!-- <contextmenu-item -->
+        <!--   @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)" -->
+        <!-- > -->
+        <!--   タスク -->
+        <!-- </contextmenu-item> -->
       </contextmenu-submenu>
       <contextmenu-item @click="editNote($store.getters['NoteTree/getSelectNoteId'])">
         編集
