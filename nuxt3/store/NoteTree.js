@@ -198,7 +198,7 @@ const actions = {
   },
   async addNode ({ getters, commit, }, { data, }) {
     const params = {
-      note_title     : data.noteTitle,
+      title          : data.noteTitle,
       parent_note_id : data.noteId,
       note_type      : data.noteType,
     };

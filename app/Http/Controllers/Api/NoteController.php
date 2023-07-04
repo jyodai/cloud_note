@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\NoteContent;
+use App\Http\Requests\Note\StoreRequest;
 
 class NoteController extends Controller
 {
@@ -32,12 +33,12 @@ class NoteController extends Controller
         return response()->json($ret);
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $data           = [
             'parent_note_id' => $request->parent_note_id,
             'note_type'      => $request->note_type,
-            'title'          => $request->note_title,
+            'title'          => $request->title,
             'user_id'        => $this->user->id,
         ];
         $noteEntity     = new Note();

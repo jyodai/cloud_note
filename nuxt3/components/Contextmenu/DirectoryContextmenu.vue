@@ -77,10 +77,6 @@ export default {
       }
 
       const noteTitle = window.prompt('ノートのタイトルを入力してください。');
-      if (!noteTitle) {
-        alert('ノートのタイトルが空です');
-        return;
-      }
 
       const data = {
         noteId,
