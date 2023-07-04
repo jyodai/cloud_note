@@ -47,6 +47,7 @@ export default {
         mode            : 'text',
         lineWrapping    : false,
         theme           : 'base16-dark',
+        autofocus       : true,
         extraKeys       : {
           Tab : (cm) => {
             if (cm.somethingSelected()) {
