@@ -25,11 +25,17 @@ export default {
   },
   emits : [
     "edit",
+    "copy",
     "trash",
   ],
   data () {
     return {
       icons : [
+        {
+          key   : 'copy',
+          icon  : 'mdi-content-copy',
+          event : () => { this.copy(); },
+        },
         {
           key   : 'edit',
           icon  : 'mdi-pencil-outline',
@@ -44,6 +50,9 @@ export default {
     };
   },
   methods : {
+    copy () {
+      this.$emit('copy');
+    },
     edit () {
       this.$emit('edit');
     },

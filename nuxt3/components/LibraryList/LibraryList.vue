@@ -35,14 +35,13 @@
                 v-for="file in fileList"
                 :key="file.fileName"
               >
-                <td
-                  @click="getFileHtml(file.fileHtml)"
-                >
+                <td>
                   {{ file.fileName }}
                 </td>
                 <td>
                   <icon-list
-                    :show-icons="['edit', 'trash']"
+                    :show-icons="['copy', 'edit', 'trash']"
+                    @copy="getFileHtml(file.fileHtml)"
                     @edit="openEdit(file.fileName)"
                     @trash="deleteFile(file.fileName)"
                   />
@@ -152,7 +151,7 @@ export default {
     overflow: auto;
     .table-header-icon {
       text-align: center;
-      width : 80px;
+      width : 100px;
     }
   }
 }
