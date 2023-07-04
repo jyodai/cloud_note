@@ -67,9 +67,8 @@ class UserController extends Controller
     public function update(int $id, UpdateRequest $request): UserResource
     {
         User::find($id)->update([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'name'  => $request->name,
+            'email' => $request->email,
         ]);
         $user = User::find($id);
         return new UserResource($user);
