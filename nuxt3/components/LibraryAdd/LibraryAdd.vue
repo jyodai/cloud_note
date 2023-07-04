@@ -2,7 +2,7 @@
   <div class="library-add">
     <modal
       :modal-name="modalName"
-      :modal-option="{ width : '550px', height : '400px'}"
+      :modal-option="modalOption"
     >
       <template #modalTitle>
         ライブラリ追加
@@ -48,10 +48,21 @@ export default {
   data () {
     return {
       modalName   : 'LibraryAdd',
+      modalOption : {
+        beforeOpen : this.beforeOpen,
+        width      : '550px',
+        height     : '400px',
+      },
       uploadFiles : null,
     };
   },
   methods : {
+    beforeOpen () {
+      this.load();
+    },
+    load () {
+      this.uploadFiles = null;
+    },
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryAdd', closeType);
     },
