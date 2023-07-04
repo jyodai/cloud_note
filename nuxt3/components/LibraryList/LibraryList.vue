@@ -114,6 +114,10 @@ export default {
       this.$vfm.setClosedCallback('LibraryEdit', () => { this.beforeOpen(); });
     },
     async deleteFile (fileName) {
+      if (!confirm(fileName + 'を削除します')) {
+        return;
+      }
+
       const url      = this.$config.public.apiUrl + '/libraries';
       const params   = {
         originFileName : fileName,
