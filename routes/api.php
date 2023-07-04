@@ -54,12 +54,12 @@ Route::middleware(['auth_api'])->group(function () {
         Route::delete('/', [LibraryFileController::class, 'destroy']);
     });
 
-
-
-    Route::get('notes', 'Api\NoteController@getNote');
-    Route::put('notes/{id}', 'Api\NoteController@updateNote');
-    Route::post('notes', 'Api\NoteController@addNote');
-    Route::delete('notes/{id}', 'Api\NoteController@deleteNote');
+    Route::prefix('notes')->group(function () {
+        Route::get('/', 'Api\NoteController@getNote');
+        Route::post('/', 'Api\NoteController@addNote');
+        Route::put('/{id}', 'Api\NoteController@updateNote');
+        Route::delete('/{id}', 'Api\NoteController@deleteNote');
+    });
 
     Route::get('note_content', 'Api\NoteContentController@getContent');
     Route::put('note_content', 'Api\NoteContentController@save');
