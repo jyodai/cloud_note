@@ -21,7 +21,7 @@ class TreeController extends Controller
         });
     }
 
-    public function getTree(Request $request)
+    public function index(Request $request)
     {
         $restoreTree = json_decode($request['tree']);
         $tree        = $this->note->getTree($restoreTree);
