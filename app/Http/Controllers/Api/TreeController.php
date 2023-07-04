@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
+use App\Http\Requests\Tree\MoveRequest;
 
 class TreeController extends Controller
 {
@@ -34,7 +35,7 @@ class TreeController extends Controller
         return response()->json($tree);
     }
 
-    public function move(int $id, Request $request)
+    public function move(int $id, MoveRequest $request)
     {
         $targetNoteId = $request['target_note_id'];
         $type         = $request['type'];
