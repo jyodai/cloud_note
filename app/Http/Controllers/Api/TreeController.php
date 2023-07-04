@@ -34,7 +34,7 @@ class TreeController extends Controller
         return response()->json($tree);
     }
 
-    public function moveTree(int $id, Request $request)
+    public function move(int $id, Request $request)
     {
         $targetNoteId = $request['target_note_id'];
         $type         = $request['type'];

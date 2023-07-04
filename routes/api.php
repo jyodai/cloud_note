@@ -68,7 +68,7 @@ Route::middleware(['auth_api'])->group(function () {
     Route::prefix('tree')->group(function () {
         Route::get('/', 'Api\TreeController@index');
         Route::get('/{id}/children', 'Api\TreeController@getTreeChildren');
-        Route::put('/{id}/move', 'Api\TreeController@moveTree');
+        Route::put('/{id}/move', 'Api\TreeController@move');
     });
 
     Route::get('notes/files', 'Api\Note\FileController@getFile');
