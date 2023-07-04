@@ -215,7 +215,7 @@ const actions = {
   async updateNode ({ getters, commit, }, { data, }) {
     const noteId = data.noteId;
     const params = {
-      noteTitle : data.noteTitle,
+      title : data.noteTitle,
     };
     const url    = this.$config.public.apiUrl + '/notes' + '/' + noteId;
     await this.$axios

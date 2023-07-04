@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\NoteContent;
 use App\Http\Requests\Note\StoreRequest;
+use App\Http\Requests\Note\UpdateRequest;
 
 class NoteController extends Controller
 {
@@ -47,9 +48,9 @@ class NoteController extends Controller
         return response()->json($note);
     }
 
-    public function update(int $noteId, Request $request)
+    public function update(int $noteId, UpdateRequest $request)
     {
-        $noteTitle = $request['noteTitle'];
+        $noteTitle = $request['title'];
 
         $entity        = Note::find($noteId);
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
