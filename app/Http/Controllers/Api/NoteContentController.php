@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
 use App\Models\NoteContent;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Requests\NoteContent\UpdateRequest;
 
 class NoteContentController extends Controller
 {
@@ -24,25 +25,11 @@ class NoteContentController extends Controller
         });
     }
 
-    public function getContent(Request $request)
+    public function update(int $id, UpdateRequest $request): Response
     {
-        $noteId = $request->noteId ? (int) $request->noteId : null;
-        $ret    = Note::find($noteId)->content;
-        return response()->json($ret);
-    }
-
-    public function save(Request $request)
-    {
-        $noteId = (int) $request->noteId;
-
-        if (empty($noteId)) {
-            exit;
-        }
-
-        $content = is_null($request->content) ? '' : $request->content;
-
-        $entity          = NoteContent::where('id', $noteId)->first();
-        $entity->content = $content;
+        $entity          = NoteContent::find($id);
+        $entity->content = $request->content;
         $entity->save();
+        return response()->noContent();
     }
 }
