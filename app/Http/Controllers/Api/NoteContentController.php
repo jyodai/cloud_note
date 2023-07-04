@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\NoteContent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\NoteContent\UpdateRequest;
 
 class NoteContentController extends Controller
 {
@@ -24,7 +25,7 @@ class NoteContentController extends Controller
         });
     }
 
-    public function update(int $id, Request $request): Response
+    public function update(int $id, UpdateRequest $request): Response
     {
         $entity          = NoteContent::find($id);
         $entity->content = $request->content;
