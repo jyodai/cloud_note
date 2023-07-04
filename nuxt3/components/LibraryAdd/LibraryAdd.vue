@@ -14,6 +14,8 @@
               accept="image/png,image/jpeg"
               label="画像ファイルの選択"
               multiple
+              :clearable="false"
+              variant="underlined"
               @change="selectedFile"
             />
           </div>
