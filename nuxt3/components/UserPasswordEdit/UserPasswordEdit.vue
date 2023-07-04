@@ -60,9 +60,9 @@ export default {
       this.load();
     },
     async load () {
-      this.user = {
-        password : '',
-      };
+      const params       = this.$vfm.getParams('UserPasswordEdit');
+      this.user          = params.user;
+      this.user.password = '';
     },
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('UserPasswordEdit', closeType);

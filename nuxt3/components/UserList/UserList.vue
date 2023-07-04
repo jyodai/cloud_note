@@ -54,7 +54,7 @@
                   <icon-list
                     :show-icons="getShowIcons(user)"
                     @edit="openEdit(user)"
-                    @lock="openPasswordEdit"
+                    @lock="openPasswordEdit(user)"
                     @trash="deleteUser(user)"
                   />
                 </td>

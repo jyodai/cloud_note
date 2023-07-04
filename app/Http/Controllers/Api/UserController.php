@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\NoteSetting;
@@ -72,6 +73,14 @@ class UserController extends Controller
         ]);
         $user = User::find($id);
         return new UserResource($user);
+    }
+
+    public function updatePassword(int $id, UpdatePasswordRequest $request): Response
+    {
+        User::find($id)->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return response()->noContent();
     }
 
     public function destroy(int $id): Response
