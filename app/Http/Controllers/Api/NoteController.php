@@ -77,4 +77,10 @@ class NoteController extends Controller
             'deleteNoteId' => $deleteNoteId,
         ]);
     }
+
+    public function showContent(int $noteId)
+    {
+        $ret = Note::find($noteId)->content;
+        return response()->json($ret);
+    }
 }
