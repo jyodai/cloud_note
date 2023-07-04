@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\NoteContent;
+use App\Http\Requests\Note\StoreRequest;
+use App\Http\Requests\Note\UpdateRequest;
 
 class NoteController extends Controller
 {
@@ -24,47 +26,21 @@ class NoteController extends Controller
         });
     }
 
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function getNote(Request $request)
+    public function show(int $noteId)
     {
-        $noteId = $request->noteId ? (int) $request->noteId : null;
-        $ret    = Note::where('user_id', $this->user->id)
+        $ret = Note::where('user_id', $this->user->id)
         ->where('id', $noteId)
         ->first();
         return response()->json($ret);
     }
 
-    public function saveNote(Request $request)
+    public function store(StoreRequest $request)
     {
-        $noteId = (int) $request->noteId;
-
-        if (empty($noteId)) {
-            exit;
-        }
-
-        $noteTitle = $request->noteTitle;
-
-        $entity        = Note::where('id', $noteId)->first();
-        $entity->title = $noteTitle ? $noteTitle : $entity->title;
-        $entity->save();
-    }
-
-    public function addNote(Request $request)
-    {
-        $parentNoteId = (int) $request->parentNoteId;
-        $noteTitle    = $request->noteTitle;
-        $noteType     = $request->noteType;
-
         $data           = [
-            'parentNoteId' => $parentNoteId,
-            'note_type'    => $noteType,
-            'title'        => $noteTitle,
-            'user_id'      => $this->user->id,
+            'parent_note_id' => $request->parent_note_id,
+            'note_type'      => $request->note_type,
+            'title'          => $request->title,
+            'user_id'        => $this->user->id,
         ];
         $noteEntity     = new Note();
         $note           = $noteEntity->create($data);
@@ -72,13 +48,9 @@ class NoteController extends Controller
         return response()->json($note);
     }
 
-    public function updateNote(int $noteId, Request $request)
+    public function update(int $noteId, UpdateRequest $request)
     {
-        if (empty($noteId)) {
-            exit;
-        }
-
-        $noteTitle = $request['noteTitle'];
+        $noteTitle = $request['title'];
 
         $entity        = Note::find($noteId);
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
@@ -87,7 +59,7 @@ class NoteController extends Controller
         return response()->json($entity);
     }
 
-    public function deleteNote(int $noteId)
+    public function destroy(int $noteId)
     {
         $deleteNoteId = [];
         $model        = new Note();
