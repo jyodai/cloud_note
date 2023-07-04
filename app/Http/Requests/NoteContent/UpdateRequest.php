@@ -9,7 +9,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'content'          => "string|max:65535",
+            'content' => "string|max:65535",
         ];
     }
 
