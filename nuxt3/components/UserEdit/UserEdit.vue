@@ -35,17 +35,6 @@
                   >
                 </td>
               </tr>
-              <tr>
-                <th>
-                  パスワード
-                </th>
-                <td>
-                  <input
-                    v-model="user.password"
-                    type="text"
-                  >
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
