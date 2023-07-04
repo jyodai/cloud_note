@@ -5,7 +5,7 @@
       :modal-option="modalOption"
     >
       <template #modalTitle>
-        ユーザー編集
+        パスワード編集
       </template>
       <template #modalContent>
         <div class="g-table-edit">
@@ -13,25 +13,12 @@
             <tbody>
               <tr>
                 <th>
-                  ユーザー名
+                  パスワード
                 </th>
                 <td>
                   <input
-                    v-model="user.name"
+                    v-model="user.password"
                     type="text"
-                    :disabled="isAdminUser(user)"
-                  >
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  メールアドレス
-                </th>
-                <td>
-                  <input
-                    v-model="user.email"
-                    type="text"
-                    :disabled="isAdminUser(user)"
                   >
                 </td>
               </tr>
@@ -61,7 +48,7 @@ export default {
   },
   data () {
     return {
-      modalName   : 'UserEdit',
+      modalName   : 'UserPasswordEdit',
       modalOption : {
         beforeOpen : this.beforeOpen,
       },
@@ -70,21 +57,18 @@ export default {
   },
   methods : {
     beforeOpen () {
-      this.loadParams();
+      this.load();
     },
-    async loadParams () {
-      const params = this.$vfm.getParams('UserEdit');
-      const id     = params.user.id;
-
-      const url      = this.$config.public.apiUrl + '/users/' + id;
-      const response = await this.$axios.get(url);
-      this.user      = response.data;
+    async load () {
+      const params       = this.$vfm.getParams('UserPasswordEdit');
+      this.user          = params.user;
+      this.user.password = '';
     },
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
-      this.$vfm.close('UserEdit', closeType);
+      this.$vfm.close('UserPasswordEdit', closeType);
     },
     async save () {
-      const url    = this.$config.public.apiUrl + '/users/' + this.user.id;
+      const url    = this.$config.public.apiUrl + `/users/${this.user.id}/password`;
       const params = this.user;
       await this.$axios.put(url, params)
         .then(() => {
@@ -92,9 +76,6 @@ export default {
         })
         .catch(() => { return; })
       ;
-    },
-    isAdminUser (user) {
-      return user.user_type === this.$const.USER_TYPE_ADMIN;
     },
   },
 };
