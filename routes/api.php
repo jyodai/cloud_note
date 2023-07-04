@@ -55,10 +55,10 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('notes')->group(function () {
-        Route::get('/', 'Api\NoteController@getNote');
-        Route::post('/', 'Api\NoteController@addNote');
-        Route::put('/{id}', 'Api\NoteController@updateNote');
-        Route::delete('/{id}', 'Api\NoteController@deleteNote');
+        Route::get('/{id}', 'Api\NoteController@show');
+        Route::post('/', 'Api\NoteController@store');
+        Route::put('/{id}', 'Api\NoteController@update');
+        Route::delete('/{id}', 'Api\NoteController@destroy');
     });
 
     Route::get('note_content', 'Api\NoteContentController@getContent');

@@ -31,7 +31,7 @@ export default {
         this.notePath = 'ファイル未選択';
         return;
       }
-      const url      = this.$config.public.apiUrl + '/notes?noteId=' + note.id;
+      const url      = this.$config.public.apiUrl + '/notes/' + note.id;
       const response = await this.$axios.get(url);
       this.notePath  = response.path;
     },

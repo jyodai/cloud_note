@@ -24,22 +24,15 @@ class NoteController extends Controller
         });
     }
 
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function getNote(Request $request)
+    public function show(int $noteId)
     {
-        $noteId = $request->noteId ? (int) $request->noteId : null;
-        $ret    = Note::where('user_id', $this->user->id)
+        $ret = Note::where('user_id', $this->user->id)
         ->where('id', $noteId)
         ->first();
         return response()->json($ret);
     }
 
-    public function addNote(Request $request)
+    public function store(Request $request)
     {
         $parentNoteId = (int) $request->parentNoteId;
         $noteTitle    = $request->noteTitle;
@@ -57,12 +50,8 @@ class NoteController extends Controller
         return response()->json($note);
     }
 
-    public function updateNote(int $noteId, Request $request)
+    public function update(int $noteId, Request $request)
     {
-        if (empty($noteId)) {
-            exit;
-        }
-
         $noteTitle = $request['noteTitle'];
 
         $entity        = Note::find($noteId);
@@ -72,7 +61,7 @@ class NoteController extends Controller
         return response()->json($entity);
     }
 
-    public function deleteNote(int $noteId)
+    public function destroy(int $noteId)
     {
         $deleteNoteId = [];
         $model        = new Note();
