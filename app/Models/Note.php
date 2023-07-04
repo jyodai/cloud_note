@@ -45,12 +45,12 @@ class Note extends Model
 
      public function create($data)
      {
-          $this->parent_note_id    = $data['parentNoteId'];
+          $this->parent_note_id    = $data['parent_note_id'];
           $this->user_id           = $data['user_id'];
           $this->note_type         = $data['note_type'];
           $this->title             = $data['title'];
-          $this->display_num       = $this->nextDisplayNum($data['parentNoteId']);
-          $this->hierarchy         = $this->belongHierarchy($data['parentNoteId']);
+          $this->display_num       = $this->nextDisplayNum($data['parent_note_id']);
+          $this->hierarchy         = $this->belongHierarchy($data['parent_note_id']);
           $this->invalidation_flag = 0;
           $this->save();
 

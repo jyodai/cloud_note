@@ -34,15 +34,11 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
-        $parentNoteId = (int) $request->parentNoteId;
-        $noteTitle    = $request->noteTitle;
-        $noteType     = $request->noteType;
-
         $data           = [
-            'parentNoteId' => $parentNoteId,
-            'note_type'    => $noteType,
-            'title'        => $noteTitle,
-            'user_id'      => $this->user->id,
+            'parent_note_id' => $request->parent_note_id,
+            'note_type'      => $request->note_type,
+            'title'          => $request->note_title,
+            'user_id'        => $this->user->id,
         ];
         $noteEntity     = new Note();
         $note           = $noteEntity->create($data);
