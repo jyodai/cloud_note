@@ -19,7 +19,7 @@ const getters = {
 const actions = {
   async loadSelectContent ({commit, }, data) {
     const noteId   = data.noteId;
-    const url      = this.$config.public.apiUrl + '/note_content?noteId=' + noteId;
+    const url      = this.$config.public.apiUrl + `/notes/${noteId}/content`;
     const response = await this.$axios.get(url);
     await commit('setSelectContent', response);
   },
@@ -35,9 +35,8 @@ const actions = {
     selectContent.content = data.content;
     commit('setSelectContent', selectContent);
 
-    const url    = this.$config.public.apiUrl + '/note_content';
+    const url    = this.$config.public.apiUrl + `/note_content/${data.id}`;
     const params = {
-      noteId  : data.id,
       content : data.content,
     };
     await this.$axios.put(url, params)

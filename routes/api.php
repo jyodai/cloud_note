@@ -59,10 +59,11 @@ Route::middleware(['auth_api'])->group(function () {
         Route::post('/', 'Api\NoteController@store');
         Route::put('/{id}', 'Api\NoteController@update');
         Route::delete('/{id}', 'Api\NoteController@destroy');
+
+        Route::get('/{id}/content', 'Api\NoteController@showContent');
     });
 
-    Route::get('note_content', 'Api\NoteContentController@getContent');
-    Route::put('note_content', 'Api\NoteContentController@save');
+    Route::put('note_content/{id}', 'Api\NoteContentController@update');
 
     Route::get('tree', 'Api\TreeController@getTree');
     Route::get('tree/{id}/children', 'Api\TreeController@getTreeChildren');
