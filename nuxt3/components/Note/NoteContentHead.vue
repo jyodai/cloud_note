@@ -1,6 +1,6 @@
 <template>
   <div class="title-area thin-scroll-bar">
-    <span @click="openNoteFile()"><v-icon size="12">mdi-folder</v-icon></span>
+    <span><v-icon size="14">mdi-folder</v-icon></span>
     <span>{{ notePath }}</span>
   </div>
 </template>
@@ -35,15 +35,6 @@ export default {
       const response = await this.$axios.get(url);
       this.notePath  = response.path;
     },
-    openNoteFile () {
-      let noteId = null;
-      noteId     = this.$store.getters['NoteContent/getSelectNoteId'];
-      if (!noteId) {
-        return alert('ファイルが開いていません');
-      }
-      const url = process.env.SERVER_ALIAS + '/noteFile?noteId=' + noteId;
-      window.open(url, 'sub', 'top=100,left=300,width=600,height=500');
-    },
   },
 };
 </script>
@@ -53,7 +44,7 @@ export default {
   width: 100%;
   text-align: left;
   color: #888888;
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
   overflow: auto;
 }
