@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class DuplicateFile implements Rule
+class FileDuplicate implements Rule
 {
     private $path    = '';
     private $message = '';

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\LibraryFile;
 
-use App\Rules\DuplicateFile;
+use App\Rules\FileDuplicate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Storage;
@@ -19,7 +19,7 @@ class StoreRequest extends FormRequest
                 'file',
                 'mimes:jpg,jpeg,png',
                 'max:2048',
-                new DuplicateFile($path),
+                new FileDuplicate($path),
                 function ($attribute, $value, $fail) {
                     $fileName = $value->getClientOriginalName();
                     if (preg_match('#[\\\:?<>|]|\.{1,2}/#', $fileName)) {
