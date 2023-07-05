@@ -17,6 +17,7 @@
 import codemirror from 'codemirror-editor-vue3';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
+import 'codemirror/keymap/vim.js';
 
 export default {
   components : {
@@ -46,6 +47,7 @@ export default {
         mode            : 'text',
         lineWrapping    : false,
         theme           : 'base16-dark',
+        autofocus       : true,
         extraKeys       : {
           Tab : (cm) => {
             if (cm.somethingSelected()) {
@@ -66,8 +68,11 @@ export default {
   },
   created () {
     this.codemirrorContent = this.content.content;
+    this.mergeCodemirrorOption();
   },
   mounted () {
+    document.addEventListener('keydown', this.handleKeyDown);
+
     window.addEventListener('beforeunload', (e) => {
       if (this.contentChangeFlag) {
         // 空文字をセットすることでconfirmが出力される
@@ -75,7 +80,20 @@ export default {
       }
     }, false);
   },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  },
   methods : {
+    handleKeyDown(event) {
+      if (this.isChangeTabEvent(event) && this.contentChangeFlag) {
+        this.saveNote();
+      }
+    },
+    mergeCodemirrorOption () {
+      const user             = this.$store.getters['User/getUser'];
+      const editorOption     = JSON.parse(user.note_setting.editor_option);
+      this.codemirrorOptions = Object.assign(this.codemirrorOptions, editorOption);
+    },
     reset () {
       this.codemirrorContent = this.content.content;
       this.contentChangeFlag = false;
@@ -95,6 +113,9 @@ export default {
       this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, });
       this.contentChangeFlag = false;
     },
+    isChangeTabEvent(event) {
+      return event.ctrlKey && (event.key === 'j' || event.key === 'k');
+    }
   },
 };
 </script>
@@ -118,6 +139,13 @@ export default {
   .CodeMirror {
     height: 100%;
     width: 100%;
+    .CodeMirror-dialog-bottom {
+      position: absolute;
+      bottom: 5px;
+      left : 5px;
+      width :95%;
+      background : #222;
+    }
   }
 }
 </style>

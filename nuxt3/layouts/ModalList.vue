@@ -6,6 +6,8 @@
     <user-list />
     <user-add />
     <user-edit />
+    <user-password-edit />
+    <note-setting />
   </div>
 </template>
 
@@ -16,6 +18,8 @@ import LibraryEdit from '~/components/LibraryEdit/LibraryEdit.vue';
 import UserList from '~/components/UserList/UserList.vue';
 import UserAdd from '~/components/UserAdd/UserAdd.vue';
 import UserEdit from '~/components/UserEdit/UserEdit.vue';
+import UserPasswordEdit from '~/components/UserPasswordEdit/UserPasswordEdit.vue';
+import NoteSetting from '~/components/NoteSetting/NoteSetting.vue';
 
 export default {
   components : {
@@ -25,6 +29,8 @@ export default {
     UserList,
     UserAdd,
     UserEdit,
+    UserPasswordEdit,
+    NoteSetting,
   },
 };
 </script>

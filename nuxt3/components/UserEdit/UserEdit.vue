@@ -35,17 +35,6 @@
                   >
                 </td>
               </tr>
-              <tr>
-                <th>
-                  パスワード
-                </th>
-                <td>
-                  <input
-                    v-model="user.password"
-                    type="text"
-                  >
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -97,8 +86,12 @@ export default {
     async save () {
       const url    = this.$config.public.apiUrl + '/users/' + this.user.id;
       const params = this.user;
-      await this.$axios.put(url, params);
-      this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.put(url, params)
+        .then(() => {
+          this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     },
     isAdminUser (user) {
       return user.user_type === this.$const.USER_TYPE_ADMIN;

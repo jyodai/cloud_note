@@ -2,7 +2,7 @@
   <div class="library-add">
     <modal
       :modal-name="modalName"
-      :modal-option="{ width : '550px', height : '400px'}"
+      :modal-option="modalOption"
     >
       <template #modalTitle>
         ライブラリ追加
@@ -14,6 +14,8 @@
               accept="image/png,image/jpeg"
               label="画像ファイルの選択"
               multiple
+              :clearable="false"
+              variant="underlined"
               @change="selectedFile"
             />
           </div>
@@ -48,24 +50,42 @@ export default {
   data () {
     return {
       modalName   : 'LibraryAdd',
+      modalOption : {
+        beforeOpen : this.beforeOpen,
+        width      : '550px',
+        height     : '400px',
+      },
       uploadFiles : null,
     };
   },
   methods : {
+    beforeOpen () {
+      this.load();
+    },
+    load () {
+      this.uploadFiles = null;
+    },
     closeModal (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('LibraryAdd', closeType);
     },
     async addFile () {
-      const url    = this.$config.public.apiUrl + '/libraries/files';
+      if (!this.uploadFiles) {
+        alert('ファイルを選択してください。');
+        return;
+      }
+
+      const url    = this.$config.public.apiUrl + '/libraries';
       const params = new FormData();
       for (let i = 0; i < this.uploadFiles.length; i++) {
         params.append('file[]', this.uploadFiles[i]);
       }
 
-      const response = await this.$axios.post(url, params);
-      alert(response.message);
-
-      this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.post(url, params)
+        .then(() => {
+          this.closeModal(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     },
     selectedFile (event) {
       this.uploadFiles = event.target.files;

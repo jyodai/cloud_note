@@ -24,16 +24,28 @@ export default {
     },
   },
   emits : [
+    "copy",
     "edit",
+    "lock",
     "trash",
   ],
   data () {
     return {
       icons : [
         {
+          key   : 'copy',
+          icon  : 'mdi-content-copy',
+          event : () => { this.copy(); },
+        },
+        {
           key   : 'edit',
           icon  : 'mdi-pencil-outline',
           event : () => { this.edit(); },
+        },
+        {
+          key   : 'lock',
+          icon  : 'mdi-lock-outline',
+          event : () => { this.lock(); },
         },
         {
           key   : 'trash',
@@ -44,8 +56,14 @@ export default {
     };
   },
   methods : {
+    copy () {
+      this.$emit('copy');
+    },
     edit () {
       this.$emit('edit');
+    },
+    lock () {
+      this.$emit('lock');
     },
     trash () {
       this.$emit('trash');

@@ -2,6 +2,7 @@
   <div class="user-add">
     <modal
       :modal-name="modalName"
+      :modal-option="modalOption"
     >
       <template #modalTitle>
         ユーザー追加
@@ -69,23 +70,36 @@ export default {
   },
   data () {
     return {
-      modalName : 'UserAdd',
-      user      : {
-        name     : '',
-        email    : '',
-        password : '',
+      modalName   : 'UserAdd',
+      modalOption : {
+        beforeOpen : this.beforeOpen,
       },
+      user : {},
     };
   },
   methods : {
+    beforeOpen () {
+      this.load();
+    },
+    load() {
+      this.user = {
+        name     : '',
+        email    : '',
+        password : '',
+      };
+    },
     close (closeType = this.$const.MODAL_CLOSE_TYPE_CLOSE) {
       this.$vfm.close('UserAdd', closeType);
     },
     async save () {
       const url    = this.$config.public.apiUrl + '/users';
       const params = this.user;
-      await this.$axios.post(url, params);
-      this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+      await this.$axios.post(url, params)
+        .then(() => {
+          this.close(this.$const.MODAL_CLOSE_TYPE_SAVE);
+        })
+        .catch(() => { return; })
+      ;
     }
   },
 };

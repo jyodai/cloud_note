@@ -3,13 +3,17 @@
 namespace App\Console\Commands;
 
 use App\Consts\User as C_User;
+use App\Models\NoteSetting;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class CreateAdminUser extends Command
 {
+    private $userService;
+
     /**
      * The name and signature of the console command.
      *
@@ -29,8 +33,9 @@ class CreateAdminUser extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
         parent::__construct();
     }
 
@@ -43,20 +48,19 @@ class CreateAdminUser extends Command
     {
         $userModel = new User();
         $password  = Str::random(8);
-        $data      = [
+        $attrs     = [
             'name'      => 'admin',
             'user_type' => C_User::USER_TYPE_ADMIN,
             'email'     => 'admin@example.com',
-            'password'  => Hash::make($password),
-            'api_token' => Str::random(60),
+            'password'  => $password,
         ];
 
-        if ($userModel->existsUser($data['email'])) {
+        if ($userModel->existsUser($attrs['email'])) {
             $this->error('User with the same email already exists.');
             return;
         }
 
-        $user = $userModel->create($data);
+        $user = $this->userService->create($attrs);
 
         $this->info('User name: ' . $user->name);
         $this->info('User password: ' . $password);

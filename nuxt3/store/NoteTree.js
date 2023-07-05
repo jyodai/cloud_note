@@ -198,9 +198,9 @@ const actions = {
   },
   async addNode ({ getters, commit, }, { data, }) {
     const params = {
-      noteTitle    : data.noteTitle,
-      parentNoteId : data.noteId,
-      noteType     : data.noteType,
+      title          : data.noteTitle,
+      parent_note_id : data.noteId,
+      note_type      : data.noteType,
     };
     const url    = this.$config.public.apiUrl + '/notes';
     await this.$axios
@@ -215,7 +215,7 @@ const actions = {
   async updateNode ({ getters, commit, }, { data, }) {
     const noteId = data.noteId;
     const params = {
-      noteTitle : data.noteTitle,
+      title : data.noteTitle,
     };
     const url    = this.$config.public.apiUrl + '/notes' + '/' + noteId;
     await this.$axios

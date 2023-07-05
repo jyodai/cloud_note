@@ -17,11 +17,11 @@
         <contextmenu-item @click="addNote($store.getters['NoteTree/getSelectNoteId'])">
           ノート
         </contextmenu-item>
-        <contextmenu-item
-          @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)"
-        >
-          タスク
-        </contextmenu-item>
+        <!-- <contextmenu-item -->
+        <!--   @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)" -->
+        <!-- > -->
+        <!--   タスク -->
+        <!-- </contextmenu-item> -->
       </contextmenu-submenu>
       <contextmenu-item @click="editNote($store.getters['NoteTree/getSelectNoteId'])">
         編集
@@ -67,7 +67,7 @@ export default {
   methods : {
     async getNote () {
       const noteId = this.$store.getters['NoteTree/getSelectNoteId'];
-      const url    = this.$config.public.apiUrl + '/notes' + '?noteId=' + noteId;
+      const url    = this.$config.public.apiUrl + `/notes/${noteId}`;
       return await this.$axios.get(url);
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
@@ -77,10 +77,6 @@ export default {
       }
 
       const noteTitle = window.prompt('ノートのタイトルを入力してください。');
-      if (!noteTitle) {
-        alert('ノートのタイトルが空です');
-        return;
-      }
 
       const data = {
         noteId,
@@ -91,10 +87,6 @@ export default {
     },
     async editNote (noteId = null) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。');
-      if (!noteTitle) {
-        alert('ノートのタイトルが空です');
-        return;
-      }
 
       const data = {
         noteId,

@@ -20,6 +20,12 @@ export default class VueFinalModal {
     }
   }
 
+  isOpened (id) {
+    const openedModals = this.vfm.openedModals;
+    const modal        = openedModals.find(modal => modal._value.modalId === id);
+    return modal !== undefined;
+  }
+
   close (id, closeType) {
     this.vfm.close(id);
     this.#unsetParams(id);

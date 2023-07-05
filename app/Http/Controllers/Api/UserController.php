@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdatePasswordRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\NoteSetting;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -14,8 +19,11 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $userService;
+
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
     }
 
     public function index(): AnonymousResourceCollection
@@ -30,35 +38,49 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function store(Request $request): UserResource
+    public function showLoginUser(Request $request): UserResource
     {
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'api_token' => Str::random(60),
-        ]);
+        $token = $request->bearerToken();
+        $user  = \App\Models\User::where("api_token", $token)->first();
+        if (!$user) {
+            abort(401);
+        }
         return new UserResource($user);
     }
 
-    public function update(int $id, Request $request): UserResource
+    public function store(StoreRequest $request): UserResource
+    {
+        $attrs = $request->validated();
+        $user  = $this->userService->create($attrs);
+        return new UserResource($user);
+    }
+
+    public function update(int $id, UpdateRequest $request): UserResource
     {
         User::find($id)->update([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'name'  => $request->name,
+            'email' => $request->email,
         ]);
         $user = User::find($id);
         return new UserResource($user);
     }
 
-    public function destroy(int $id): Response
+    public function updatePassword(int $id, UpdatePasswordRequest $request): Response
     {
-        User::destroy($id);
+        User::find($id)->update([
+            'password' => Hash::make($request->password),
+        ]);
         return response()->noContent();
     }
 
-    public function createToken(Request $request)
+    public function destroy(int $id): Response
+    {
+        User::destroy($id);
+        NoteSetting::where('user_id', $id)->delete();
+        return response()->noContent();
+    }
+
+    public function createToken(Request $request): array
     {
         $email = $request->email;
         $user  = \App\Models\User::where("email", $email)->first();
@@ -80,12 +102,12 @@ class UserController extends Controller
         $user->attempts_num = 0;
         $user->save();
         return [
-            'user'  => $user,
+            'user'  => new UserResource($user),
             'token' => $token,
         ];
     }
 
-    protected function overAttempts($user)
+    protected function overAttempts($user): bool
     {
         $ret                = false;
         $user->attempts_num = $user->attempts_num + 1;
@@ -96,14 +118,14 @@ class UserController extends Controller
         return $ret;
     }
 
-    public function deleteToken(Request $request)
+    public function deleteToken(Request $request): Response
     {
         $token = $request->bearerToken();
         $user  = \App\Models\User::where("api_token", $token)->first();
         if ($token && $user) {
             $user->api_token = null;
             $user->save();
-            return [];
+            return response()->noContent();
         } else {
             abort(401);
         }

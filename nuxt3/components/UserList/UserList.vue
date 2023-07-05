@@ -54,6 +54,7 @@
                   <icon-list
                     :show-icons="getShowIcons(user)"
                     @edit="openEdit(user)"
+                    @lock="openPasswordEdit(user)"
                     @trash="deleteUser(user)"
                   />
                 </td>
@@ -114,6 +115,9 @@ export default {
       this.$vfm.open('UserEdit', {user, });
       this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen(); });
     },
+    openPasswordEdit (user) {
+      this.$vfm.open('UserPasswordEdit', {user, });
+    },
     async deleteUser (user) {
       if (!confirm(user.name + 'を削除します')) {
         return;
@@ -125,7 +129,7 @@ export default {
       this.load();
     },
     getShowIcons (user) {
-      const icons = ['edit'];
+      const icons = ['edit', 'lock'];
       if (!this.isAdminUser(user)) {
         icons.push('trash');
       }
@@ -153,7 +157,7 @@ export default {
     overflow: auto;
     .table-header-icon {
       text-align: center;
-      width : 80px;
+      width : 100px;
     }
   }
 }
