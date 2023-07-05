@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LibraryFile;
 
+use App\Rules\FileCharAllowed;
 use App\Rules\FileDuplicate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ class StoreRequest extends FormRequest
     {
         $user = Auth::user();
         $path = storage_path('userLibrary/' . $user->id . '/');
+
         return [
             'file'   => 'required',
             'file.*' => [
@@ -20,13 +22,7 @@ class StoreRequest extends FormRequest
                 'mimes:jpg,jpeg,png',
                 'max:2048',
                 new FileDuplicate($path),
-                function ($attribute, $value, $fail) {
-                    $fileName = $value->getClientOriginalName();
-                    if (preg_match('#[\\\:?<>|]|\.{1,2}/#', $fileName)) {
-                        $message = $fileName . 'に使用できな文字が含まれています。「\,:,?,<,>,|」、「./」、「../」';
-                        $fail($message);
-                    }
-                },
+                new FileCharAllowed(),
             ],
         ];
     }

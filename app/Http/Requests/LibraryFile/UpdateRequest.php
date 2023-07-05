@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LibraryFile;
 
+use App\Rules\FileCharAllowed;
 use App\Rules\FileDuplicate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -13,18 +14,14 @@ class UpdateRequest extends FormRequest
     {
         $user = Auth::user();
         $path = storage_path('userLibrary/' . $user->id . '/');
+
         return [
             'newFileName'    => [
                 'required',
                 'string',
                 'max:255',
                 new FileDuplicate($path),
-                function ($attribute, $value, $fail) {
-                    if (preg_match('#[\\\:?<>|]|\.{1,2}/#', $value)) {
-                        $message = 'ファイルに使用できな文字が含まれています。「\,:,?,<,>,|」、「./」、「../」';
-                        $fail($message);
-                    }
-                },
+                new FileCharAllowed(),
             ],
             'originFileName' => 'required|string|max:255',
         ];
