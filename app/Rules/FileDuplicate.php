@@ -16,7 +16,11 @@ class FileDuplicate implements Rule
 
     public function passes($attribute, $value): bool
     {
-        $fileName = $value->getClientOriginalName();
+        if (gettype($value) !== 'string') {
+            $fileName = $value->getClientOriginalName();
+        } else {
+            $fileName = $value;
+        }
         if (file_exists($this->path . $fileName)) {
             $this->message = "$fileName は既に使用されています";
             return false;
