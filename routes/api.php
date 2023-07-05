@@ -72,9 +72,4 @@ Route::middleware(['auth_api'])->group(function () {
         Route::get('/{id}/children', 'Api\TreeController@getTreeChildren');
         Route::put('/{id}/move', 'Api\TreeController@move');
     });
-
-    Route::get('notes/files', 'Api\Note\FileController@getFile');
-    Route::put('notes/files', 'Api\Note\FileController@editFile');
-    Route::post('notes/files', 'Api\Note\FileController@addFile');
-    Route::delete('notes/files', 'Api\Note\FileController@deleteFile');
 });
