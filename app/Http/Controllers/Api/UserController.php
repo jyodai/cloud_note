@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UpdateRequest;
-use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdatePasswordRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\NoteSetting;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -18,8 +19,11 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $userService;
+
+    public function __construct(UserService $userService)
     {
+        $this->userService = $userService;
     }
 
     public function index(): AnonymousResourceCollection
@@ -46,21 +50,8 @@ class UserController extends Controller
 
     public function store(StoreRequest $request): UserResource
     {
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'api_token' => Str::random(60),
-        ]);
-
-        NoteSetting::create([
-            'user_id'       => $user->id,
-            'editor_option' => '{}',
-            'editor_css'    => '',
-        ]);
-
-        $this->createLibraryDir($user->id);
-
+        $attrs = $request->validated();
+        $user  = $this->userService->create($attrs);
         return new UserResource($user);
     }
 
@@ -138,11 +129,5 @@ class UserController extends Controller
         } else {
             abort(401);
         }
-    }
-
-    private function createLibraryDir(int $userId): void
-    {
-        $path = storage_path('userLibrary/' . $userId . '/');
-        mkdir($path);
     }
 }
