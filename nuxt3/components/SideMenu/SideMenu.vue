@@ -51,7 +51,6 @@
         </template>
         <template v-if="menu.setting.show">
           <div
-            v-if="isAdminUser"
             class="g-pointer"
             @click="openModal('NoteSetting')"
           >
