@@ -17,6 +17,7 @@ module.exports = {
     process                   : false,
     defineNuxtPlugin          : false,
     defineNuxtRouteMiddleware : false,
+    definePageMeta            : false,
     useRuntimeConfig          : false,
     setPageLayout             : false,
     navigateTo                : false,

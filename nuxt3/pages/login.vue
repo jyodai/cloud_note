@@ -31,7 +31,9 @@
 </template>
 
 <script setup>
-setPageLayout(false);
+definePageMeta({
+  layout : null,
+});
 </script>
 
 <script>
