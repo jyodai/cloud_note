@@ -10,7 +10,9 @@
 </template>
 
 <script setup>
-setPageLayout("dashboard");
+definePageMeta({
+  layout : 'dashboard',
+});
 </script>
 
 <script>
