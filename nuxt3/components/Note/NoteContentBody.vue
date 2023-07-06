@@ -1,29 +1,31 @@
 <template>
-  <div
-    v-if="content !== null && showMarkdown === false"
-    class="content"
-  >
-    <markdown-edit
-      class="content-edit"
-      :content="content"
-      @save-note="saveNote"
-      @blur="blur"
-    />
-    <markdown-view
-      ref="markdownView"
-      class="content-preview"
-      :content="content"
-    />
-  </div>
-  <div
-    v-else-if="content !== null && showMarkdown === true"
-    class="content"
-  >
-    <markdown-view
-      ref="markdownView"
-      :content="content"
-    />
-  </div>
+  <template v-if="visible">
+    <div
+      v-if="content !== null && !showMarkdown"
+      class="content"
+    >
+      <markdown-edit
+        class="content-edit"
+        :content="content"
+        @save-note="saveNote"
+        @blur="blur"
+      />
+      <markdown-view
+        ref="markdownView"
+        class="content-preview"
+        :content="content"
+      />
+    </div>
+    <div
+      v-else-if="content !== null && showMarkdown"
+      class="content"
+    >
+      <markdown-view
+        ref="markdownView"
+        :content="content"
+      />
+    </div>
+  </template>
 </template>
 
 <script>
@@ -45,6 +47,7 @@ export default {
   },
   data () {
     return {
+      visible      : false,
       showMarkdown : true,
     };
   },
@@ -69,7 +72,9 @@ export default {
   },
   methods : {
     async load (note) {
+      this.visible = false;
       await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, });
+      this.visible = true;
     },
     handleKeyDown(event) {
       if (event.ctrlKey && event.key === 'e') {
