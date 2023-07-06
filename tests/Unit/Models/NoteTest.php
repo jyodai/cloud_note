@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Models;
 
-use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
+use App\Consts\Note as C_Note;
 use App\Models\Note;
+use Illuminate\Support\Facades\Artisan;
+use Tests\TestCase;
 
 class NoteTest extends TestCase
 {
@@ -62,9 +63,10 @@ class NoteTest extends TestCase
     {
         for ($i = 0; $i < 3; $i++) {
             $data              = [
-                'parentNoteId' => $parentNoteId,
-                'user_id'      => 1,
-                'title'        => 'hoge',
+                'parent_note_id' => $parentNoteId,
+                'user_id'        => 1,
+                'title'          => 'hoge',
+                'note_type'      => C_Note::NOTE_TYPE_NORMAL,
             ];
             $note              = new Note();
             $createNote        = $note->create($data);
