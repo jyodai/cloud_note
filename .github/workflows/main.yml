@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: setUp .env
+        run: cp .env.ci.example .env
+
       - name: setUp Docker
         run: make up
 
