@@ -122,7 +122,7 @@ test :
 	'
 
 cert :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		cd nuxt3/ssl && mkcert localhost; \
 		chown -R 1000:1000 ./; \
 	'
