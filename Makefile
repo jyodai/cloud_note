@@ -96,7 +96,7 @@ createUser :
 cu : createUser
 
 create_admin_user : 
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		php artisan user:create-admin; \
 	'
 
@@ -128,7 +128,7 @@ cert :
 	'
 
 phpcs :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		vendor/bin/phpcs; \
 	'
 
@@ -138,7 +138,7 @@ phpcbf :
 	'
 
 lint :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		cd nuxt3 && npm run lint; \
 	'
 
