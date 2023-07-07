@@ -10,21 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.3'
+      - name: setUp Docker
+        run: make up
 
-      - name: npm ci
-        run: npm ci
-        working-directory: ./nuxt3
+      - name: SetUp App
+        run: make build && make create_admin_user
 
       - name: ESLint
-        run: npm run lint
-        working-directory: ./nuxt3
-
-      - name: composer install
-        run: composer install
+        run: make lint
 
       - name: PHPCS
-        run: ./vendor/bin/phpcs
+        run: make phpcs
