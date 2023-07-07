@@ -52,7 +52,7 @@ build :
 		php artisan key:generate; \
 		php artisan migrate; \
 		cd nuxt3 && npm install -y && cp .env.example .env; \
-	' 2>&1
+	'
 	make cert
 
 buildxserver :
