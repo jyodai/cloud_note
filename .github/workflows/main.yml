@@ -17,9 +17,10 @@ jobs:
         run: make up
 
       - name: SetUp App
-        run: |
-          make build
-          make create_admin_user
+        run: make build
+
+      - name: Create admin user
+        run: make create_admin_user
 
       - name: ESLint
         run: make lint
