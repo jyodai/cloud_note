@@ -47,11 +47,11 @@ shdb :
 
 build :
 	docker-compose exec php /bin/bash -c ' \
-		composer install; \
+		composer install --no-interaction; \
 		chmod 777 -R ./storage/; \
 		php artisan key:generate; \
 		php artisan migrate; \
-		cd nuxt3 && npm install && cp .env.example .env; \
+		cd nuxt3 && npm install -y && cp .env.example .env; \
 	'
 	make cert
 
