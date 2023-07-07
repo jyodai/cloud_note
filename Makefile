@@ -46,7 +46,7 @@ shdb :
 	"
 
 build :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		composer install --no-interaction; \
 		chmod 777 -R ./storage/; \
 		php artisan key:generate; \
