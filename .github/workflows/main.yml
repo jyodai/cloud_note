@@ -13,16 +13,14 @@ jobs:
       - uses: docker/setup-buildx-action@v2
       - uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./docker/php
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          file: docker/php/Dockerfile
       - uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./docker/mysql
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          file: docker/mysql/Dockerfile
 
       - name: setUp .env
         run: cp .env.ci.example .env
