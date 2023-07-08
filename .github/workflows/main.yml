@@ -28,7 +28,7 @@ jobs:
         run: cp .env.ci.example .env
 
       - name: setUp Docker
-        run: make up
+        run: docker compose up -d --wait
 
       - name: container info
         run: docker-compose ps
