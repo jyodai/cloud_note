@@ -41,3 +41,6 @@ jobs:
 
       - name: PHPCS
         run: make phpcs
+
+      - name: Backend test
+        run: make test
