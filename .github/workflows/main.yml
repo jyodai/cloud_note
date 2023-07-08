@@ -16,6 +16,7 @@ jobs:
           context: .
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          file: docker/php/Dockerfile
 
       - name: setUp .env
         run: cp .env.ci.example .env
