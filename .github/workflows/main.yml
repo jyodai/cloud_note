@@ -17,6 +17,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: docker/php/Dockerfile
+      - uses: docker/build-push-action@v4
+        with:
+          context: .
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          file: docker/mysql/Dockerfile
 
       - name: setUp .env
         run: cp .env.ci.example .env
