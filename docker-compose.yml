@@ -22,8 +22,8 @@ services:
         CONTAINER_GROUP_ID: '${CONTAINER_GROUP_ID}'
         CONTAINER_USER_NAME: '${CONTAINER_USER_NAME}'
         CONTAINER_GROUP_NAME: '${CONTAINER_GROUP_NAME}'
-        APACHE_RUN_USER: '${CONTAINER_USER_NAME}'
-        APACHE_RUN_GROUP: '${CONTAINER_GROUP_NAME}'
+        APACHE_RUN_USER: '${APPACHE_USER_NAME}'
+        APACHE_RUN_GROUP: '${APPACHE_GROUP_NAME}'
       user: ${CONTAINER_USER_ID}:${CONTAINER_GROUP_ID}
       container_name: ${CONTAINER_NAME_PHP}
   mysql:
@@ -38,7 +38,12 @@ services:
       command: --innodb-use-native-aio=0
       environment:
         - MYSQL_ROOT_PASSWORD=root
-        - MYSQL_DATABASE=cloud_note
+        - MYSQL_DATABASE=${DB_DATABASE}
         - MYSQL_USER=docker
         - MYSQL_PASSWORD=docker
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
       container_name: ${CONTAINER_NAME_MYSQL}
