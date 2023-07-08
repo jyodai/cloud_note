@@ -116,7 +116,7 @@ nuxtgenerate :
 	'
 
 test :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		php artisan config:clear; \
 		php artisan test; \
 	'
