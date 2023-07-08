@@ -38,7 +38,7 @@ services:
       command: --innodb-use-native-aio=0
       environment:
         - MYSQL_ROOT_PASSWORD=root
-        - MYSQL_DATABASE=cloud_note
+        - MYSQL_DATABASE=${DB_DATABASE}
         - MYSQL_USER=docker
         - MYSQL_PASSWORD=docker
       container_name: ${CONTAINER_NAME_MYSQL}
