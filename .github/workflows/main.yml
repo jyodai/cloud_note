@@ -30,6 +30,9 @@ jobs:
       - name: setUp Docker
         run: make up
 
+      - name: container info
+        run: docker-compose ps
+
       - name: SetUp App
         run: make build
 
