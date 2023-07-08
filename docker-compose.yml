@@ -41,4 +41,9 @@ services:
         - MYSQL_DATABASE=${DB_DATABASE}
         - MYSQL_USER=docker
         - MYSQL_PASSWORD=docker
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
       container_name: ${CONTAINER_NAME_MYSQL}
