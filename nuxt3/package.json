@@ -8,7 +8,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext .js,.vue ./",
-    "lintfix": "eslint --fix --ext .js,.vue ./"
+    "lintfix": "eslint --fix --ext .js,.vue ./",
+    "tsc": "tsc",
+    "vue-tsc": "vue-tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",

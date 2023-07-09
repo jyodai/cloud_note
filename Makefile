@@ -146,3 +146,8 @@ lintfix :
 	docker-compose exec php /bin/bash -c ' \
 		cd nuxt3 && npm run lintfix; \
 	'
+
+tsc :
+	docker-compose exec -T php /bin/bash -c ' \
+		cd nuxt3 && npm run tsc && npm run vue-tsc; \
+	'
