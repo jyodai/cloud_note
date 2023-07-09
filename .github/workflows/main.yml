@@ -25,6 +25,12 @@ jobs:
       - name: ESLint
         run: make lint
 
+      - name: Check TypeScript
+        run: make tsc
+
+      - name: Check Vue-TypeScript
+        run: make vue-tsc
+
       - name: PHPCS
         run: make phpcs
 
