@@ -32,7 +32,7 @@
 
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
-import Html2Pdf from '~/libraries/html2Pdf.js';
+import Html2Pdf from '~/libraries/html2Pdf';
 
 export default {
   components : {
