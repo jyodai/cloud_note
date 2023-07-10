@@ -22,17 +22,18 @@ jobs:
       - name: Create admin user
         run: make create_admin_user
 
-      - name: ESLint
-        run: make lint
+      steps:
+        - name: ESLint
+          run: make lint
 
-      - name: Check TypeScript
-        run: make tsc
+        - name: Check TypeScript
+          run: make tsc
 
-      - name: Check Vue-TypeScript
-        run: make vuetsc
+        - name: Check Vue-TypeScript
+          run: make vuetsc
 
-      - name: PHPCS
-        run: make phpcs
+        - name: PHPCS
+          run: make phpcs
 
-      - name: Backend test
-        run: make test
+        - name: Backend test
+          run: make test
