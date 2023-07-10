@@ -14,6 +14,7 @@ module.exports = {
   globals : {
     Prism                     : false,
     PropType                  : false,
+    defineNuxtConfig          : false,
     defineNuxtPlugin          : false,
     defineNuxtRouteMiddleware : false,
     definePageMeta            : false,
