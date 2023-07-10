@@ -1,5 +1,5 @@
 export default {
-  isJSON(str) {
+  isJSON(str: string): boolean {
     try {
       JSON.parse(str);
       return true;

@@ -23,10 +23,10 @@
   </splitpanes>
 </template>
 
-<script>
+<script lang="ts">
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
-import ModalList from './ModalList';
+import ModalList from './ModalList.vue';
 import SideMenu from '~/components/SideMenu/SideMenu.vue';
 
 export default {

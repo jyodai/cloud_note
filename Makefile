@@ -25,6 +25,8 @@ help :
 	# phpcbf            phpcbfを実行
 	# lint              ESLintでコードチェック
 	# lintfix           ESLintでコード整形
+	# tsc               TypeScriptでコードチェック
+	# vue-tsc           TypeScriptでコードチェック
 
 up :
 	docker-compose up -d
@@ -145,4 +147,14 @@ lint :
 lintfix :
 	docker-compose exec php /bin/bash -c ' \
 		cd nuxt3 && npm run lintfix; \
+	'
+
+tsc :
+	docker-compose exec -T php /bin/bash -c ' \
+		cd nuxt3 && npm run tsc ; \
+	'
+
+vuetsc :
+	docker-compose exec -T php /bin/bash -c ' \
+		cd nuxt3 && npm run vue-tsc ; \
 	'
