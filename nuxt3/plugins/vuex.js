@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import axios from '~/libraries/axiosCore.js';
+import axios from '~/libraries/axiosCore';
 import User from '~/store/User.js';
 import NoteTab from '~/store/NoteTab.js';
 import NoteTree from '~/store/NoteTree.js';
