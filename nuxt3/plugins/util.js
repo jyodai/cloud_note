@@ -1,5 +1,5 @@
 import object from '~/utils/object.js';
-import json from '~/utils/json.js';
+import json from '~/utils/json';
 import sessionStorage from '~/utils/sessionStorage.js';
 import localStorage from '~/utils/localStorage.js';
 
