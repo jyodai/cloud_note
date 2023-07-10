@@ -1,7 +1,7 @@
 import object from '~/utils/object';
 import json from '~/utils/json';
 import sessionStorage from '~/utils/sessionStorage';
-import localStorage from '~/utils/localStorage.js';
+import localStorage from '~/utils/localStorage';
 
 const util = {
   object,
