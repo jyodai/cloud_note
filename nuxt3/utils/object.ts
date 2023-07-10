@@ -1,5 +1,5 @@
 export default {
-  clone (object) {
+  clone (object: object): object {
     return JSON.parse(JSON.stringify(object));
   },
 };

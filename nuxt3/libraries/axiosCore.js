@@ -1,5 +1,5 @@
 import axios from "axios";
-import sessionStorage from '~/utils/sessionStorage.js';
+import sessionStorage from '~/utils/sessionStorage';
 import LoadingScreen from '~/libraries/loadingScreen.js';
 
 const loadingScreen = new LoadingScreen();
