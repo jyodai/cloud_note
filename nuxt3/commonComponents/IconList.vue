@@ -14,62 +14,38 @@
   </template>
 </template>
 
-<script>
+<script setup lang="ts">
+defineProps({
+  showIcons : {
+    type     : Array as PropType<Array<string>>,
+    required : true,
+  },
+});
 
-export default {
-  props : {
-    showIcons : {
-      type    : Array,
-      default : () => [],
-    },
+const emits = defineEmits(['copy', 'edit', 'lock', 'trash']);
+
+const icons = [
+  {
+    key   : 'copy',
+    icon  : 'mdi-content-copy',
+    event : () => emits("copy"),
   },
-  emits : [
-    "copy",
-    "edit",
-    "lock",
-    "trash",
-  ],
-  data () {
-    return {
-      icons : [
-        {
-          key   : 'copy',
-          icon  : 'mdi-content-copy',
-          event : () => { this.copy(); },
-        },
-        {
-          key   : 'edit',
-          icon  : 'mdi-pencil-outline',
-          event : () => { this.edit(); },
-        },
-        {
-          key   : 'lock',
-          icon  : 'mdi-lock-outline',
-          event : () => { this.lock(); },
-        },
-        {
-          key   : 'trash',
-          icon  : 'mdi-trash-can-outline',
-          event : () => { this.trash(); },
-        },
-      ],
-    };
+  {
+    key   : 'edit',
+    icon  : 'mdi-pencil-outline',
+    event : () => emits("edit"),
   },
-  methods : {
-    copy () {
-      this.$emit('copy');
-    },
-    edit () {
-      this.$emit('edit');
-    },
-    lock () {
-      this.$emit('lock');
-    },
-    trash () {
-      this.$emit('trash');
-    },
+  {
+    key   : 'lock',
+    icon  : 'mdi-lock-outline',
+    event : () => emits("lock"),
   },
-};
+  {
+    key   : 'trash',
+    icon  : 'mdi-trash-can-outline',
+    event : () => emits("trash"),
+  },
+];
 </script>
 
 <style lang="scss" scoped>
