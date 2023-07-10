@@ -5,7 +5,6 @@
 #### gitの設定
 
 ```
-$ git config core.filemode false
 $ git config --local core.hooksPath .githooks
 ```
 
