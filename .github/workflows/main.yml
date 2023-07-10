@@ -28,9 +28,6 @@ jobs:
       - name: Check TypeScript
         run: make tsc
 
-      - name: Check Vue-TypeScript
-        run: make vuetsc
-
       - name: PHPCS
         run: make phpcs
 

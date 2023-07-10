@@ -9,8 +9,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext .js,.vue,.ts ./",
     "lintfix": "eslint --fix --ext .js,.vue,.ts ./",
-    "tsc": "tsc",
-    "vue-tsc": "vue-tsc"
+    "tsc": "vue-tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
