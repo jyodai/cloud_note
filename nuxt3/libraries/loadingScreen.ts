@@ -1,24 +1,24 @@
 export default class LoadingScreen {
-  screen = null;
-  count  = 0;
+  private screen: HTMLDivElement | null = null;
+  private count = 0;
 
-  constructor () {
-    this.#setLoadScreen();
+  constructor() {
+    this.setLoadScreen();
   }
 
-  #setLoadScreen () {
+  private setLoadScreen(): void {
     const screen                 = document.createElement('div');
     screen.id                    = 'load-screen';
     screen.style.backgroundColor = 'rgb(33, 33, 33)';
-    screen.style.opacity         = 0.46;
+    screen.style.opacity         = '0.46';
     screen.style.width           = '100%';
     screen.style.height          = '100%';
     screen.style.position        = 'absolute';
-    screen.style.top             = 0;
-    screen.style.bottom          = 0;
-    screen.style.right           = 0;
-    screen.style.left            = 0;
-    screen.style.zIndex          = 9999;
+    screen.style.top             = '0';
+    screen.style.bottom          = '0';
+    screen.style.right           = '0';
+    screen.style.left            = '0';
+    screen.style.zIndex          = '9999';
     screen.style.display         = 'none';
 
     const loader          = document.createElement('div');
@@ -31,21 +31,24 @@ export default class LoadingScreen {
 
     this.screen = screen;
 
-    document.body.insertBefore(
-      this.screen, document.body.firstChild
-    );
-  }
-
-  show () {
-    this.count               += 1;
-    this.screen.style.display = 'block';
-  }
-
-  hide () {
-    this.count -= 1;
-    if (this.count === 0) {
-      this.screen.style.display = 'none';
+    const body = document.body;
+    if (body) {
+      body.insertBefore(this.screen, body.firstChild);
     }
   }
 
+  public show(): void {
+    this.count += 1;
+    if (this.screen) {
+      this.screen.style.display = 'block';
+    }
+  }
+
+  public hide(): void {
+    this.count -= 1;
+    if (this.count === 0 && this.screen) {
+      this.screen.style.display = 'none';
+    }
+  }
 }
+

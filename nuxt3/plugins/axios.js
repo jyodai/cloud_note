@@ -1,4 +1,4 @@
-import axios from '~/libraries/axiosCore.js';
+import axios from '~/libraries/axiosCore';
 
 export default defineNuxtPlugin(() => {
   return {
