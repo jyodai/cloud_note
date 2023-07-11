@@ -14,7 +14,7 @@ function checkcommitpermission()
 # ブランチ名が命名規則に違反していないか確認
 function checkbranchname()
 {
-    branch=`git symbolic-ref head --short`
+    branch=`git symbolic-ref --short HEAD`
     if [[ ! ${branch} =~ master|develop|feature/issue-.* ]]; then
         echo ${branch}' ブランチ名が命名規則に違反している可能性があります。'
         continueprocessing
