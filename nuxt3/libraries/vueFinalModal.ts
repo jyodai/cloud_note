@@ -16,8 +16,12 @@ export default class VueFinalModal {
     this.vfm = vfm;
   }
 
-  public get(id: string): ExtendedModal | undefined {
-    return this.vfm.get(id) as ExtendedModal | undefined;
+  public get(id: string): ExtendedModal {
+    const modal = this.vfm.get(id) as ExtendedModal | undefined;
+    if (!modal) {
+      throw new Error(`Modal ID '${id}' not found.`);
+    }
+    return modal;
   }
 
   public open(id: string, params: object | null = null): void {
@@ -36,10 +40,8 @@ export default class VueFinalModal {
   }
 
   public setClosedCallback(id: string, callback: () => void): void {
-    const modal = this.get(id);
-    if (modal) {
-      modal.closedCallback = callback;
-    }
+    const modal          = this.get(id);
+    modal.closedCallback = callback;
   }
 
   public getClosedInfo(): object {
@@ -55,28 +57,24 @@ export default class VueFinalModal {
 
   private unsetClosedCallback(id: string): void {
     const modal = this.get(id);
-    if (modal) {
-      delete modal.closedCallback;
-    }
+    delete modal.closedCallback;
   }
 
   private execClosedCallback(id: string): void {
     const modal = this.get(id);
-    if (modal && modal.closedCallback) {
+    if (modal.closedCallback) {
       modal.closedCallback();
     }
   }
 
   public setParams(id: string, params: object): void {
-    const modal = this.get(id);
-    if (modal) {
-      modal.params = params;
-    }
+    const modal  = this.get(id);
+    modal.params = params;
   }
 
   public getParams(id: string): object {
     const modal = this.get(id);
-    if (modal && modal.params) {
+    if (modal.params) {
       return modal.params;
     }
     return {};
@@ -84,7 +82,7 @@ export default class VueFinalModal {
 
   private unsetParams(id: string): void {
     const modal = this.get(id);
-    if (modal && modal.params) {
+    if ('params' in modal) {
       delete modal.params;
     }
   }
