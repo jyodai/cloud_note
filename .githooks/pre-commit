@@ -4,7 +4,7 @@
 # コミットが許可されているブランチかを確認
 function checkcommitpermission()
 {
-    branch=`git symbolic-ref head --short`
+    branch=`git symbolic-ref --short HEAD`
     if [ ${branch} = master -o ${branch} = develop ]; then
         echo ${branch}' ブランチにcommitしようとしています。'
         continueprocessing
