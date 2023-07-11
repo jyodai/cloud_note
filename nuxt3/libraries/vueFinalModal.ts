@@ -5,9 +5,14 @@ interface ExtendedModal extends Modal {
   closedCallback?: () => void;
 }
 
+interface ClosedInfo {
+  id: string | null;
+  closeType: number | null;
+}
+
 export default class VueFinalModal {
   private vfm: Vfm;
-  private closedInfo: { id: string | null; closeType: number | null } = {
+  private closedInfo: ClosedInfo = {
     id        : null,
     closeType : null,
   };
