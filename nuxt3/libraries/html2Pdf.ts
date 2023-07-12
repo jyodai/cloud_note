@@ -1,9 +1,21 @@
 import html2pdf from "html2pdf.js";
 
-export default class Html2Pdf {
+interface IHtml2Pdf {
+  setCssClass(cssClass: string): void;
+  output(): void;
+}
+
+interface Html2PdfOptions {
+  margin: number;
+  filename: string;
+  image: { type: string; quality: number };
+  jsPDF: { format: string; orientation: string };
+}
+
+export default class Html2Pdf implements IHtml2Pdf {
   private element: HTMLElement | null = null;
   private cssClass: string | null = null;
-  private option = {
+  private options: Html2PdfOptions = {
     margin   : 2,
     filename : '',
     image    : { type : 'jpeg', quality : 1 },
@@ -11,8 +23,8 @@ export default class Html2Pdf {
   };
 
   constructor(element: HTMLElement, fileName: string) {
-    this.element         = element.cloneNode(true) as HTMLElement;
-    this.option.filename = fileName + '.pdf';
+    this.element          = element.cloneNode(true) as HTMLElement;
+    this.options.filename = fileName + '.pdf';
   }
 
   public setCssClass(cssClass: string): void {
@@ -25,7 +37,7 @@ export default class Html2Pdf {
     }
     html2pdf()
       .from(this.element)
-      .set(this.option)
+      .set(this.options)
       .save()
       .then(() => {
         if (this.cssClass !== null) {
