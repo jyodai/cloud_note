@@ -28,11 +28,14 @@
   </template>
 </template>
 
-<script>
+<script lang="ts">
 
+import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 import Html2Pdf from '~/libraries/html2Pdf';
+import Note from '~/types/models/note';
+import NoteContent from '~/types/models/noteContent';
 
 export default {
   components : {
@@ -41,8 +44,8 @@ export default {
   },
   props : {
     note : {
-      type    : Object,
-      default : () => { return {}; },
+      type     : Object as () => Note,
+      required : true,
     },
   },
   data () {
@@ -71,12 +74,12 @@ export default {
     document.removeEventListener('keydown', this.handleKeyDown);
   },
   methods : {
-    async load (note) {
+    async load (note: Note) {
       this.visible = false;
       await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, });
       this.visible = true;
     },
-    handleKeyDown(event) {
+    handleKeyDown(event: KeyboardEvent) {
       if (event.ctrlKey && event.key === 'e') {
         event.preventDefault();
         event.stopPropagation();
@@ -96,16 +99,17 @@ export default {
       }
       this.showMarkdown = !this.showMarkdown;
     },
-    blur (data) {
+    blur (data: NoteContent) {
       this.saveNote(data);
     },
-    saveNote (data) {
+    saveNote (data: NoteContent) {
       this.$store.dispatch('NoteContent/updateSelectContent', data);
     },
     outputPdf () {
-      const element  = this.$refs.markdownView.$el.parentNode;
-      const fileName = this.note.title;
-      const pdf      = new Html2Pdf(element, fileName);
+      const markdonwView         = this.$refs.markdownView as CreateComponentPublicInstance;
+      const element: HTMLElement = markdonwView.$el.parentNode as HTMLElement;
+      const fileName             = this.note.title;
+      const pdf                  = new Html2Pdf(element, fileName);
       pdf.setCssClass('g-markdown-print');
       pdf.output();
     },
