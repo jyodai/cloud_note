@@ -45,7 +45,9 @@ module.exports = {
     'no-var'      : 2, //varを禁止
     'no-debugger' : 'warn',
     semi          : ['error', 'always'],
-    
+
+    "no-unused-vars"                    : "off",
+    "@typescript-eslint/no-unused-vars" : ["error"],
 
     // 以降プラグインから追加
 
