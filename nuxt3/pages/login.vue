@@ -37,14 +37,16 @@ definePageMeta({
 </script>
 
 <script>
+import { useUserStore } from '~/store/User';
 
 export default {
   components : {
   },
   data () {
     return {
-      email    : '',
-      password : '',
+      userStore : useUserStore(),
+      email     : '',
+      password  : '',
     };
   },
   methods : {
@@ -53,8 +55,8 @@ export default {
         'email'    : this.email,
         'password' : this.password,
       };
-      await this.$store.dispatch('User/login', params);
-      if (this.$store.getters['User/getUser']) {
+      await this.userStore.login(params);
+      if (this.userStore.getUser) {
         this.$router.push('/');
       }
     },

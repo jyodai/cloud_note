@@ -60,7 +60,7 @@
             ノート
           </div>
           <div
-            v-if="isAdminUser"
+            v-if="userStore.getIsAdminUser"
             class="g-pointer"
             @click="openModal('UserList')"
           >
@@ -87,14 +87,15 @@
 </template>
 
 <script>
+import { useUserStore } from '~/store/User';
 
 export default {
   components : {
   },
   data () {
     return {
-      isAdminUser : this.$store.getters['User/isAdminUser'],
-      menu        : {
+      userStore : useUserStore(),
+      menu      : {
         edit : {
           show : false,
         },
@@ -137,7 +138,7 @@ export default {
       this.$vfm.open(key);
     },
     async logout () {
-      await this.$store.dispatch('User/logout');
+      await this.userStore.logout();
       window.location.href = this.$config.public.severAlias + '/login';
     },
   },
