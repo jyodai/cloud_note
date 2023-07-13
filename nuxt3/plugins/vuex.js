@@ -3,7 +3,6 @@ import axios from '~/libraries/axiosCore';
 import User from '~/store/User.js';
 import NoteTab from '~/store/NoteTab.js';
 import NoteTree from '~/store/NoteTree.js';
-import NoteContent from '~/store/NoteContent.js';
 
 
 
@@ -30,7 +29,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       User,
       NoteTab,
       NoteTree,
-      NoteContent,
     },
     plugins : [
       registerAxios,

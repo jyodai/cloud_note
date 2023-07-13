@@ -36,6 +36,7 @@ import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 import Html2Pdf from '~/libraries/html2Pdf';
 import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
+import { useNoteContentStore } from '~/store/NoteContent';
 
 export default {
   components : {
@@ -50,13 +51,14 @@ export default {
   },
   data () {
     return {
-      visible      : false,
-      showMarkdown : true,
+      noteContentStore : useNoteContentStore(),
+      visible          : false,
+      showMarkdown     : true,
     };
   },
   computed : {
     content () {
-      return this.$store.getters['NoteContent/getSelectContent'];
+      return this.noteContentStore.getSelectContent;
     },
   },
   watch : {
@@ -76,7 +78,7 @@ export default {
   methods : {
     async load (note: Note) {
       this.visible = false;
-      await this.$store.dispatch('NoteContent/loadSelectContent', { noteId : note.id, });
+      await this.noteContentStore.loadSelectContent({ noteId : note.id });
       this.visible = true;
     },
     handleKeyDown(event: KeyboardEvent) {
@@ -93,7 +95,7 @@ export default {
       }
     },
     changeEditor () {
-      if (this.$store.getters['NoteContent/getSelectNoteId'] === null) {
+      if (this.noteContentStore.getSelectNoteId === null) {
         alert('ファイルが選択されていません');
         return;
       }
@@ -103,7 +105,7 @@ export default {
       this.saveNote(data);
     },
     saveNote (data: NoteContent) {
-      this.$store.dispatch('NoteContent/updateSelectContent', data);
+      this.noteContentStore.updateSelectContent(data);
     },
     outputPdf () {
       const markdonwView         = this.$refs.markdownView as CreateComponentPublicInstance;
