@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
+    "@pinia/nuxt": "^0.4.11",
     "@types/splitpanes": "^2.2.1",
     "axios": "^1.4.0",
     "codemirror": "^5.65.13",
@@ -40,6 +41,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-task-checkbox": "^1.0.6",
     "mermaid": "^10.2.3",
+    "pinia": "^2.1.4",
     "prismjs": "^1.29.0",
     "splitpanes": "^3.1.5",
     "v-contextmenu": "^3.0.0",
@@ -47,5 +49,8 @@
     "vuedraggable": "^4.1.0",
     "vuetify": "^3.3.3",
     "vuex": "^4.0.2"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
