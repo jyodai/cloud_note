@@ -55,6 +55,7 @@
 <script>
 import DirectoryContextmenu from '../Contextmenu/DirectoryContextmenu.vue';
 import { useNoteTabStore } from '~/store/NoteTab';
+import { useNoteTreeStore } from '~/store/NoteTree';
 
 import { Tree, Fold, Draggable, } from 'he-tree-vue';
 import 'he-tree-vue/dist/he-tree-vue.css';
@@ -66,10 +67,11 @@ export default {
   },
   data () {
     return {
-      noteTabStore : useNoteTabStore(),
-      treeNodes : [],
-      notes     : '',
-      config    : {
+      noteTabStore  : useNoteTabStore(),
+      noteTreeStore : useNoteTreeStore(),
+      treeNodes     : [],
+      notes         : '',
+      config        : {
         headers : {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
@@ -80,45 +82,45 @@ export default {
   computed : {
     storeTreeNodes : {
       get () {
-        return this.$store.getters['NoteTree/getTree'];
+        return this.noteTreeStore.getTree;
       },
     },
     selectTreeNoteId : {
       get () {
-        return this.$store.getters['NoteTree/getSelectNoteId'];
+        return this.noteTreeStore.getSelectNoteId;
       },
     },
   },
   watch : {
     storeTreeNodes : {
       handler () {
-        const tree     = this.$store.getters['NoteTree/getDisplayTree'];
+        const tree     = this.noteTreeStore.getDisplayTree;
         this.treeNodes = this.$util.object.clone(tree);
       },
       deep : true,
     },
   },
   async created () {
-    await this.$store.dispatch('NoteTree/loadTree');
+    await this.noteTreeStore.loadTree();
   },
   methods : {
     setNote (note) {
       const noteTab       = this.noteTabStore.getNoteTab;
       const existsNoteTab = noteTab.findIndex(value => value.id === note.id);
       if (existsNoteTab === -1) {
-        this.noteTabStore.setNoteTab(Object.assign({}, note))
+        this.noteTabStore.setNoteTab(Object.assign({}, note));
       }
       this.noteTabStore.setSelectNote(note);
       this.selectNoteTree(note);
     },
     selectNoteTree (note) {
-      this.$store.dispatch('NoteTree/setSelectTree', note);
+      this.noteTreeStore.setSelectTree(note);
     },
     async drop (event) {
       const id       = event.dragNode.data.id;
       const position = this.getPosition(event.dragNode, event.targetPath);
 
-      await this.$store.dispatch('NoteTree/moveNode', { id, position, });
+      await this.noteTreeStore.moveNode({ id, position });
     },
     getPosition(node, path) {
       const tree       = this.$refs.tree;
@@ -152,11 +154,11 @@ export default {
     },
     async openToggle (node) {
       const id = node.data.id;
-      await this.$store.dispatch('NoteTree/openNode', id);
+      await this.noteTreeStore.openNode(id);
     },
     async closeToggle (node) {
       const id = node.data.id;
-      await this.$store.dispatch('NoteTree/closeNode', id);
+      await this.noteTreeStore.closeNode(id);
     },
   },
 };
