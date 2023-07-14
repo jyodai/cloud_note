@@ -1,10 +1,16 @@
 import { defineStore } from 'pinia';
+import Note from '~/types/models/note';
+import NoteContent from '~/types/models/noteContent';
+
+interface State {
+  selectContent: NoteContent | null,
+}
 
 const nuxtApp = useNuxtApp();
 
 export const useNoteContentStore = defineStore({
   id    : 'noteContent',
-  state : () => ({
+  state : (): State => ({
     selectContent : null,
   }),
   getters : {
@@ -12,16 +18,16 @@ export const useNoteContentStore = defineStore({
     getSelectContent : state => state.selectContent,
   },
   actions : {
-    async loadSelectContent (data) {
-      const noteId       = data.noteId;
+    async loadSelectContent (note: Note): Promise<void> {
+      const noteId       = note.id;
       const url          = nuxtApp.$config.public.apiUrl + `/notes/${noteId}/content`;
-      const response     = await nuxtApp.$axios.get(url);
+      const response     = await nuxtApp.$axios.get(url) as NoteContent;
       this.selectContent = response;
     },
     unsetSelectContent () {
       this.selectContent = null;
     },
-    async updateSelectContent (data) {
+    async updateSelectContent (data: NoteContent): Promise<void> {
       const selectContent = Object.assign({}, this.getSelectContent);
       if (data.content === selectContent.content) {
         return;
