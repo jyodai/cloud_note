@@ -8,7 +8,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/login');
   }
 
-  await app.$store.dispatch('User/setUser');
+  const user = await app.$axios.get(app.$config.public.apiUrl + '/users/me')
+    .catch(() => { return; });
+  if (!user) {
+    return navigateTo('/login');
+  }
 
   return;
 });

@@ -1,61 +1,46 @@
-const state = () => ({
-  user        : null,
-  token       : null,
-  isAdminUser : false,
+import { defineStore } from 'pinia';
+
+const nuxtApp = useNuxtApp();
+
+export const useUserStore = defineStore({
+  id    : 'user',
+  state : () => ({
+    user        : null,
+    token       : null,
+    isAdminUser : false,
+  }),
+  getters : {
+    getUser        : state => state.user,
+    getToken       : state => state.token,
+    getIsAdminUser : state => state.isAdminUser,
+  },
+  actions : {
+    async login (params) {
+      const url = nuxtApp.$config.public.apiUrl + '/users/token';
+      await nuxtApp.$axios.post(url, params)
+        .then((response) => {
+          this.user        = response.user;
+          this.isAdminUser = response.user.user_type === nuxtApp.$const.USER_TYPE_ADMIN;
+          this.token       = response.token;
+          nuxtApp.$util.sessionStorage.set('token', response.token);
+        })
+        .catch((e) => {
+          alert(e.message);
+        });
+    },
+    async logout () {
+      await nuxtApp.$axios.delete(nuxtApp.$config.public.apiUrl + '/users/token');
+      nuxtApp.$util.sessionStorage.remove('token');
+      this.user = null;
+    },
+    async setUser () {
+      await nuxtApp.$axios.get(nuxtApp.$config.public.apiUrl + '/users/me')
+        .then((response) => {
+          this.user        = response.data;
+          this.token       = nuxtApp.$util.sessionStorage.get('token');
+          this.isAdminUser = response.data.user_type === nuxtApp.$const.USER_TYPE_ADMIN;
+        })
+      ;
+    },
+  }
 });
-
-const mutations = {
-  setUser (state, user) {
-    state.user = user;
-  },
-  setToken (state, token) {
-    state.token = token;
-  },
-  setIsAdminUser (state, flag) {
-    state.isAdminUser = flag;
-  },
-};
-
-const getters = {
-  getUser     : state => state.user,
-  getToken    : state => state.token,
-  isAdminUser : state => state.isAdminUser,
-};
-
-const actions = {
-  async login ({ commit, }, params) {
-    const url = this.$config.public.apiUrl + '/users/token';
-    await this.$axios.post(url, params)
-      .then((response) => {
-        commit('setUser', response.user);
-        commit('setIsAdminUser', response.user.user_type === this.$const.USER_TYPE_ADMIN);
-        commit('setToken', response.token);
-        this.$util.sessionStorage.set('token', response.token);
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
-  },
-  async logout ({ commit, }) {
-    await this.$axios.delete(this.$config.public.apiUrl + '/users/token');
-    this.$util.sessionStorage.remove('token');
-    commit('setUser', null);
-  },
-  async setUser ({ commit, }) {
-    await this.$axios.get(this.$config.public.apiUrl + '/users/me')
-      .then((response) => {
-        commit('setUser', response.data);
-        commit('setToken', this.$util.sessionStorage.get('token'));
-        commit('setIsAdminUser', response.data.user_type === this.$const.USER_TYPE_ADMIN);
-      })
-    ;
-  },
-};
-
-export default {
-  namespaced : true,
-  state,
-  mutations,
-  getters,
-  actions,
-};

@@ -1,55 +1,43 @@
-const state = () => ({
-  selectContent : null,
+import { defineStore } from 'pinia';
+
+const nuxtApp = useNuxtApp();
+
+export const useNoteContentStore = defineStore({
+  id    : 'noteContent',
+  state : () => ({
+    selectContent : null,
+  }),
+  getters : {
+    getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
+    getSelectContent : state => state.selectContent,
+  },
+  actions : {
+    async loadSelectContent (data) {
+      const noteId       = data.noteId;
+      const url          = nuxtApp.$config.public.apiUrl + `/notes/${noteId}/content`;
+      const response     = await nuxtApp.$axios.get(url);
+      this.selectContent = response;
+    },
+    unsetSelectContent () {
+      this.selectContent = null;
+    },
+    async updateSelectContent (data) {
+      const selectContent = Object.assign({}, this.getSelectContent);
+      if (data.content === selectContent.content) {
+        return;
+      }
+
+      selectContent.content = data.content;
+      this.selectContent    = selectContent;
+
+      const url    = nuxtApp.$config.public.apiUrl + `/note_content/${data.id}`;
+      const params = {
+        content : data.content,
+      };
+      await nuxtApp.$axios.put(url, params)
+        .catch(() => {
+          alert('メモの保存の失敗しました');
+        });
+    },
+  }
 });
-
-const mutations = {
-  setSelectContent (state, note) {
-    state.selectContent = note;
-  },
-  unsetSelectContent (state) {
-    state.selectContent = null;
-  },
-};
-
-const getters = {
-  getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
-  getSelectContent : state => state.selectContent,
-};
-
-const actions = {
-  async loadSelectContent ({commit, }, data) {
-    const noteId   = data.noteId;
-    const url      = this.$config.public.apiUrl + `/notes/${noteId}/content`;
-    const response = await this.$axios.get(url);
-    await commit('setSelectContent', response);
-  },
-  unsetSelectContent ({ commit, }) {
-    commit('unsetSelectContent');
-  },
-  async updateSelectContent ({ getters, commit, }, data) {
-    const selectContent = Object.assign({}, getters.getSelectContent);
-    if (data.content === selectContent.content) {
-      return;
-    }
-
-    selectContent.content = data.content;
-    commit('setSelectContent', selectContent);
-
-    const url    = this.$config.public.apiUrl + `/note_content/${data.id}`;
-    const params = {
-      content : data.content,
-    };
-    await this.$axios.put(url, params)
-      .catch(() => {
-        alert('メモの保存の失敗しました');
-      });
-  },
-};
-
-export default {
-  namespaced : true,
-  state,
-  mutations,
-  getters,
-  actions,
-};

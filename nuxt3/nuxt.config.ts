@@ -17,6 +17,9 @@ export default defineNuxtConfig({
     '~/assets/markdown-print.scss',
     'vue-final-modal/style.css',
   ],
+  modules : [
+    '@pinia/nuxt',
+  ],
   build : {
     transpile : ['vuetify'],
   },

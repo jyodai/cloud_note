@@ -10,9 +10,14 @@
 </template>
 
 <script setup>
+import { useUserStore } from '~/store/User';
+
 definePageMeta({
   layout : 'dashboard',
 });
+
+const userStore = useUserStore();
+await userStore.setUser();
 </script>
 
 <script>

@@ -10,6 +10,7 @@
 
 <script>
 import Mermaid from 'mermaid/dist/mermaid';
+import { useUserStore } from '~/store/User';
 
 export default {
   props : {
@@ -20,7 +21,8 @@ export default {
   },
   data () {
     return {
-      markdown : '',
+      userStore : useUserStore(),
+      markdown  : '',
     };
   },
   computed : {
@@ -46,7 +48,7 @@ export default {
   },
   methods : {
     loadInlineCSS() {
-      const user        = this.$store.getters['User/getUser'];
+      const user        = this.userStore.getUser;
       const style       = document.createElement('style');
       const content     = user.note_setting.editor_css;
       style.textContent = content;
@@ -99,7 +101,7 @@ export default {
         .replace(/\(```\/\)/g, '</p>');
     },
     convertImageToken (content) {
-      const token = this.$store.getters['User/getToken'];
+      const token = this.userStore.getToken;
       return content.replace(/%cn_api_token%/g, token);
     },
     afterMarkdown () {
