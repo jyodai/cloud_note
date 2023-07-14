@@ -27,12 +27,17 @@
 
 <script>
 import Draggable from 'vuedraggable';
+import { useUserStore } from '~/store/User';
 
 export default {
   components : {
     Draggable,
   },
-  data () { return {}; },
+  data () {
+    return {
+      userStore : useUserStore(),
+    };
+  },
   computed : {
     noteTab : {
       get () {
@@ -45,7 +50,7 @@ export default {
   },
   created () {
     this.$store.dispatch('NoteTab/initNoteTab');
-    this.$store.dispatch('NoteTab/loadNoteTab');
+    this.$store.dispatch('NoteTab/loadNoteTab', this.userStore.user);
   },
   mounted () {
     this.initSelectNote();

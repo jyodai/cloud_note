@@ -83,7 +83,7 @@ const actions = {
   initNoteTab ({ commit, }) {
     commit('unsetNoteTab');
   },
-  loadNoteTab ({ rootState, state, commit, dispatch, }) {
+  loadNoteTab ({ state, commit, dispatch, }, user) {
     if (state.noteTab.length !== 0) {
       return;
     }
@@ -91,7 +91,7 @@ const actions = {
     const noteTabArray = this.$util.localStorage.get('noteTab');
     if (noteTabArray) {
       noteTabArray.forEach((note) => {
-        if (rootState.User.user.id === note.user_id) {
+        if (user.id === note.user_id) {
           commit('setNoteTab', note);
         }
       });
