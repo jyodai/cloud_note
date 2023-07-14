@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import axios from '~/libraries/axiosCore';
-import NoteTab from '~/store/NoteTab.js';
 import NoteTree from '~/store/NoteTree.js';
 
 
@@ -25,7 +24,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const store = createStore({
     modules : {
-      NoteTab,
       NoteTree,
     },
     plugins : [

@@ -1,147 +1,124 @@
-const state = () => ({
-  noteTab    : [], // ノートObjectを格納
-  selectNote : null,
-});
+import { defineStore } from 'pinia';
 
-const mutations = {
-  setSelectNote (state, note) {
-    state.selectNote = note;
-  },
-  unsetSelectNote (state) {
-    state.selectNote = null;
-  },
-  setNoteTab (state, note) {
-    state.noteTab.push(note);
-  },
-  updateNote (state, { note, data, }) {
-    note.title = data.noteTitle;
-  },
-  removeNoteTab (state, noteId) {
-    const index = state.noteTab.findIndex(value => value.id === noteId);
-    if (index !== -1) {
-      state.noteTab.splice(index, 1);
-    }
-  },
-  unsetNoteTab (state) {
-    state.noteTab = [];
-  },
-};
+const nuxtApp = useNuxtApp();
 
-const getters = {
-  getNoteTab      : state => state.noteTab,
-  getSelectNote   : state => state.selectNote,
-  getSelectNoteId : state => state.selectNote ? state.selectNote.id : null,
-  getNextNote     : state => {
-    const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
-    if (state.noteTab[index + 1]) {
-      return state.noteTab[index + 1];
-    } else if (state.noteTab.length > 1) {
-      return state.noteTab[0];
-    } else {
-      return null;
-    }
+export const useNoteTabStore = defineStore({
+  id    : 'noteTab',
+  state : () => ({
+    noteTab    : [], // ノートObjectを格納
+    selectNote : null,
+  }),
+  getters : {
+    getNoteTab      : state => state.noteTab,
+    getSelectNote   : state => state.selectNote,
+    getSelectNoteId : state=> state.selectNote ? state.selectNote.id : null,
+    getNextNote     : state => {
+      const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
+      if (state.noteTab[index + 1]) {
+        return state.noteTab[index + 1];
+      } else if (state.noteTab.length > 1) {
+        return state.noteTab[0];
+      } else {
+        return null;
+      }
+    },
+    getPrevNote : state => {
+      const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
+      if (state.noteTab[index - 1]) {
+        return state.noteTab[index - 1];
+      } else if (state.noteTab.length > 1) {
+        return state.noteTab[state.noteTab.length - 1];
+      } else {
+        return null;
+      }
+    },
+    findNote : state => (id) => {
+      const noteTab = state.noteTab;
+      const index   = noteTab.findIndex(value => value.id === id);
+      if (index === -1) {
+        return null;
+      }
+      return noteTab[index];
+    },
   },
-  getPrevNote : state => {
-    const index = state.noteTab.findIndex(note => note.id === state.selectNote.id);
-    if (state.noteTab[index - 1]) {
-      return state.noteTab[index - 1];
-    } else if (state.noteTab.length > 1) {
-      return state.noteTab[state.noteTab.length - 1];
-    } else {
-      return null;
-    }
-  },
-  findNote : state => (id) => {
-    const noteTab = state.noteTab;
-    const index   = noteTab.findIndex(value => value.id === id);
-    if (index === -1) {
-      return null;
-    }
-    return noteTab[index];
-  },
-};
+  actions : {
+    setSelectNote (note) {
+      this.selectNote = note;
+    },
+    setNextNote () {
+      const note = this.getNextNote;
+      if (note !== null) {
+        this.selectNote = note;
+      }
+    },
+    setPrevNote () {
+      const note = this.getPrevNote;
+      if (note !== null) {
+        this.selectNote = note;
+      }
+    },
+    unsetSelectNote () {
+      this.selectNote = null;
+    },
+    initNoteTab () {
+      this.noteTab = [];
+    },
+    loadNoteTab (user) {
+      if (this.noteTab.length !== 0) {
+        return;
+      }
 
-const actions = {
-  setSelectNote ({commit}, note) {
-    commit('setSelectNote', note);
-  },
-  setNextNote ({getters, commit}) {
-    const note = getters.getNextNote;
-    if (note !== null) {
-      commit('setSelectNote', note);
-    }
-  },
-  setPrevNote ({getters, commit}) {
-    const note = getters.getPrevNote;
-    if (note !== null) {
-      commit('setSelectNote', note);
-    }
-  },
-  unsetSelectNote ({ commit, }) {
-    commit('unsetSelectNote');
-  },
-  initNoteTab ({ commit, }) {
-    commit('unsetNoteTab');
-  },
-  loadNoteTab ({ state, commit, dispatch, }, user) {
-    if (state.noteTab.length !== 0) {
-      return;
-    }
+      const noteTabArray = nuxtApp.$util.localStorage.get('noteTab');
+      if (noteTabArray) {
+        noteTabArray.forEach((note) => {
+          if (user.id === note.user_id) {
+            this.noteTab.push(note);
+          }
+        });
+        this.saveLocalStorage();
+      } else {
+        nuxtApp.$util.localStorage.set('noteTab', []);
+      }
+    },
+    setNoteTab (note) {
+      this.noteTab.push(note);
 
-    const noteTabArray = this.$util.localStorage.get('noteTab');
-    if (noteTabArray) {
+      this.saveLocalStorage();
+    },
+    updateNote ({ data }) {
+      const note = this.findNote(data.noteId);
+      note.title = data.noteTitle;
+
+      this.saveLocalStorage();
+    },
+    removeNoteTab (id) {
+      if (this.getSelectNoteId === id) {
+        this.setNextNote();
+      }
+
+      const index = this.noteTab.findIndex(value => value.id === id);
+      if (index !== -1) {
+        this.noteTab.splice(index, 1);
+      }
+
+      const noteTab = this.getNoteTab;
+      if (noteTab.length === 0) {
+        this.unsetSelectNote();
+      }
+
+      this.saveLocalStorage();
+    },
+    moveNoteTab (noteTabArray) {
+      this.noteTab = [];
       noteTabArray.forEach((note) => {
-        if (user.id === note.user_id) {
-          commit('setNoteTab', note);
-        }
+        this.noteTab.push(note);
       });
-      dispatch('saveLocalStorage');
-    } else {
-      this.$util.localStorage.set('noteTab', []);
-    }
-  },
-  setNoteTab ({ commit, dispatch, }, note) {
-    commit('setNoteTab', note);
 
-    dispatch('saveLocalStorage');
+      this.saveLocalStorage();
+    },
+    saveLocalStorage () {
+      const noteTab = this.getNoteTab;
+      nuxtApp.$util.localStorage.set('noteTab', noteTab);
+    },
   },
-  updateNote ({ commit, getters, dispatch, }, { data, }) {
-    const note = getters.findNote(data.noteId);
-    commit('updateNote', { note, data, });
-
-    dispatch('saveLocalStorage');
-  },
-  removeNoteTab ({ getters, commit, dispatch, }, id) {
-    if (getters.getSelectNoteId === id) {
-      dispatch('setNextNote');
-    }
-    commit('removeNoteTab', id);
-
-    const noteTab = getters.getNoteTab;
-    if (noteTab.length === 0) {
-      dispatch('unsetSelectNote');
-    }
-
-    dispatch('saveLocalStorage');
-  },
-  moveNoteTab ({ commit, dispatch, }, noteTabArray) {
-    commit('unsetNoteTab');
-    noteTabArray.forEach((note) => {
-      commit('setNoteTab', note);
-    });
-
-    dispatch('saveLocalStorage');
-  },
-  saveLocalStorage ({ getters, }) {
-    const noteTab = getters.getNoteTab;
-    this.$util.localStorage.set('noteTab', noteTab);
-  },
-};
-
-export default {
-  namespaced : true,
-  state,
-  mutations,
-  getters,
-  actions,
-};
+});

@@ -44,6 +44,7 @@ import {
   ContextmenuSubmenu
 } from 'v-contextmenu';
 import 'v-contextmenu/dist/themes/default.css';
+import { useNoteTabStore } from '~/store/NoteTab';
 
 export default {
   directives : {
@@ -56,8 +57,9 @@ export default {
   },
   data () {
     return {
-      note   : null,
-      config : {
+      noteTabStore : useNoteTabStore(),
+      note         : null,
+      config       : {
         headers : {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
@@ -93,8 +95,8 @@ export default {
         noteTitle,
       };
       await this.$store.dispatch('NoteTree/updateNode', { data, });
-      if (this.$store.getters['NoteTab/findNote'](data.noteId)) {
-        await this.$store.dispatch('NoteTab/updateNote', { data, });
+      if (this.noteTabStore.findNote(data.noteId)) {
+        await this.noteTabStore.updateNote({ data });
       }
     },
     // Todo:編集 Modalを開いてそこでプロパティも一緒に出す
@@ -109,14 +111,14 @@ export default {
     deleteNoteTab (deleteInfo) {
       deleteInfo.deleteNoteId.forEach(
         (noteId) => {
-          this.$store.dispatch('NoteTab/removeNoteTab', noteId);
+          this.noteTabStore.removeNoteTab(noteId);
         }
       );
     },
     deleteNoteContent (deleteInfo) {
-      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId'];
+      const selectNoteId = this.noteTabStore.getSelectNoteId;
       if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
-        this.$store.dispatch('NoteTab/unsetSelectNote');
+        this.noteTabStore.unsetSelectNote();
       }
     },
     async property () {

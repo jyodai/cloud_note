@@ -54,6 +54,7 @@
 
 <script>
 import DirectoryContextmenu from '../Contextmenu/DirectoryContextmenu.vue';
+import { useNoteTabStore } from '~/store/NoteTab';
 
 import { Tree, Fold, Draggable, } from 'he-tree-vue';
 import 'he-tree-vue/dist/he-tree-vue.css';
@@ -65,6 +66,7 @@ export default {
   },
   data () {
     return {
+      noteTabStore : useNoteTabStore(),
       treeNodes : [],
       notes     : '',
       config    : {
@@ -101,12 +103,12 @@ export default {
   },
   methods : {
     setNote (note) {
-      const noteTab       = this.$store.getters['NoteTab/getNoteTab'];
+      const noteTab       = this.noteTabStore.getNoteTab;
       const existsNoteTab = noteTab.findIndex(value => value.id === note.id);
       if (existsNoteTab === -1) {
-        this.$store.dispatch('NoteTab/setNoteTab', Object.assign({}, note));
+        this.noteTabStore.setNoteTab(Object.assign({}, note))
       }
-      this.$store.dispatch('NoteTab/setSelectNote', note);
+      this.noteTabStore.setSelectNote(note);
       this.selectNoteTree(note);
     },
     selectNoteTree (note) {

@@ -6,18 +6,20 @@
 </template>
 
 <script>
+import { useNoteTabStore } from '~/store/NoteTab';
 
 export default {
   components : {
   },
   data () {
     return {
-      notePath : 'ファイル未選択',
+      noteTabStore : useNoteTabStore(),
+      notePath     : 'ファイル未選択',
     };
   },
   computed : {
     changeSelectNote () {
-      return this.$store.getters['NoteTab/getSelectNote'];
+      return this.noteTabStore.getSelectNote;
     },
   },
   watch : {
