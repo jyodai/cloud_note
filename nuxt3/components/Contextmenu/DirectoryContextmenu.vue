@@ -98,7 +98,7 @@ export default {
       };
       await this.noteTreeStore.updateNode({ data });
       if (this.noteTabStore.findNote(data.noteId)) {
-        await this.noteTabStore.updateNote({ data });
+        await this.noteTabStore.updateNote(data);
       }
     },
     // Todo:編集 Modalを開いてそこでプロパティも一緒に出す

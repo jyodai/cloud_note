@@ -78,7 +78,7 @@ export default {
   methods : {
     async load (note: Note) {
       this.visible = false;
-      await this.noteContentStore.loadSelectContent({ noteId : note.id });
+      await this.noteContentStore.loadSelectContent(note);
       this.visible = true;
     },
     handleKeyDown(event: KeyboardEvent) {
