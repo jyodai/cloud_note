@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
-use App\Models\NoteContent;
 use App\Http\Requests\Note\StoreRequest;
 use App\Http\Requests\Note\UpdateRequest;
+use App\Http\Resources\NoteResource;
+use App\Models\Note;
+use App\Models\NoteContent;
+use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
@@ -34,21 +35,20 @@ class NoteController extends Controller
         return response()->json($ret);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): NoteResource
     {
-        $data           = [
+        $data       = [
             'parent_note_id' => $request->parent_note_id,
             'note_type'      => $request->note_type,
             'title'          => $request->title,
             'user_id'        => $this->user->id,
         ];
-        $noteEntity     = new Note();
-        $note           = $noteEntity->create($data);
-        $note->children = [];
-        return response()->json($note);
+        $noteEntity = new Note();
+        $note       = $noteEntity->create($data);
+        return new NoteResource($note);
     }
 
-    public function update(int $noteId, UpdateRequest $request)
+    public function update(int $noteId, UpdateRequest $request): NoteResource
     {
         $noteTitle = $request['title'];
 
@@ -56,7 +56,7 @@ class NoteController extends Controller
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
         $entity->save();
 
-        return response()->json($entity);
+        return new NoteResource($entity);
     }
 
     public function destroy(int $noteId)
