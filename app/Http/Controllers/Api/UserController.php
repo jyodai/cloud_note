@@ -80,7 +80,7 @@ class UserController extends Controller
         return response()->noContent();
     }
 
-    public function createToken(Request $request): array
+    public function createToken(Request $request): UserResource
     {
         $email = $request->email;
         $user  = \App\Models\User::where("email", $email)->first();
@@ -101,10 +101,8 @@ class UserController extends Controller
         $user->api_token    = $token;
         $user->attempts_num = 0;
         $user->save();
-        return [
-            'user'  => new UserResource($user),
-            'token' => $token,
-        ];
+
+        return new UserResource($user, ['api_token']);
     }
 
     protected function overAttempts($user): bool
