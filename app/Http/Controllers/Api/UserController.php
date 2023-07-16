@@ -102,7 +102,7 @@ class UserController extends Controller
         $user->attempts_num = 0;
         $user->save();
 
-        return new UserResource($user, ['api_token']);
+        return new UserResource($user, null, ['api_token']);
     }
 
     protected function overAttempts($user): bool
