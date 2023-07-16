@@ -8,8 +8,11 @@ class UserResource extends JsonResource
 {
     private $includeAttrs;
 
-    public function __construct($resource, array $includeAttrs = [])
-    {
+    public function __construct(
+        $resource,
+        string $className = null,
+        array $includeAttrs = []
+    ) {
         parent::__construct($resource);
         $this->includeAttrs = $includeAttrs;
     }
