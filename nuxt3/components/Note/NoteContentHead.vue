@@ -35,7 +35,7 @@ export default {
       }
       const url      = this.$config.public.apiUrl + '/notes/' + note.id;
       const response = await this.$axios.get(url);
-      this.notePath  = response.path;
+      this.notePath  = response.data.path;
     },
   },
 };

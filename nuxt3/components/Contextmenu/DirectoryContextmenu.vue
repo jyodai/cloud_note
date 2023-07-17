@@ -70,9 +70,10 @@ export default {
   },
   methods : {
     async getNote () {
-      const noteId = this.noteTreeStore.getSelectNoteId;
-      const url    = this.$config.public.apiUrl + `/notes/${noteId}`;
-      return await this.$axios.get(url);
+      const noteId   = this.noteTreeStore.getSelectNoteId;
+      const url      = this.$config.public.apiUrl + `/notes/${noteId}`;
+      const response = await this.$axios.get(url);
+      return response.data;
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       if (noteId === null) {

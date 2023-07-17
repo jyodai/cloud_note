@@ -28,12 +28,12 @@ class NoteController extends Controller
         });
     }
 
-    public function show(int $noteId)
+    public function show(int $noteId): NoteResource
     {
-        $ret = Note::where('user_id', $this->user->id)
+        $note = Note::where('user_id', $this->user->id)
         ->where('id', $noteId)
         ->first();
-        return response()->json($ret);
+        return new NoteResource($note);
     }
 
     public function store(StoreRequest $request): NoteResource
