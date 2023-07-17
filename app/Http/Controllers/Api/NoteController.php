@@ -60,7 +60,7 @@ class NoteController extends Controller
         return new NoteResource($entity);
     }
 
-    public function destroy(int $noteId)
+    public function destroy(int $noteId): DestroyNoteResource
     {
         $deleteNoteId = [];
         $model        = new Note();
