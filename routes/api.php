@@ -25,21 +25,21 @@ use App\Http\Controllers\Api\LibraryFileController;
 //     return $request->user();
 // });
 
-Route::post("users/token", 'Api\UserController@createToken');
+Route::post("users/token", 'Api\UserController@createToken')->name('user.token.store');
 
 Route::middleware(['auth_api'])->group(function () {
-    Route::prefix('users')->group(function () {
-        Route::delete("/token", 'Api\UserController@deleteToken');
+    Route::prefix('users')->name('user.')->group(function () {
+        Route::delete("/token", 'Api\UserController@deleteToken')->name('token.destroy');
 
-        Route::get('/me', [UserController::class, 'showLoginUser']);
+        Route::get('/me', [UserController::class, 'showLoginUser'])->name('me.show');
 
-        Route::get('/', [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
-        Route::get('/{id}', [UserController::class, 'show']);
-        Route::put('/{id}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class, 'destroy']);
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::put('/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
 
-        Route::put('/{id}/password', [UserController::class, 'updatePassword']);
+        Route::put('/{id}/password', [UserController::class, 'updatePassword'])->name('password.update');
     });
 
     Route::prefix('notes_settings')->group(function () {
