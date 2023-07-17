@@ -26,6 +26,7 @@ help :
 	# lint              ESLintでコードチェック
 	# lintfix           ESLintでコード整形
 	# tsc               TypeScriptでコードチェック
+	# cacheclear        Laravelのキャッシュをクリア
 
 up :
 	docker-compose up -d
@@ -117,8 +118,8 @@ nuxtgenerate :
 	'
 
 test :
+	make cacheclear
 	docker-compose exec -T php /bin/bash -c ' \
-		php artisan config:clear; \
 		php artisan test; \
 	'
 
@@ -151,4 +152,10 @@ lintfix :
 tsc :
 	docker-compose exec -T php /bin/bash -c ' \
 		cd nuxt3 && npm run tsc ; \
+	'
+cacheclear :
+	docker-compose exec -T php /bin/bash -c ' \
+		composer dump-autoload; \
+		php artisan config:clear; \
+		php artisan cache:clear; \
 	'
