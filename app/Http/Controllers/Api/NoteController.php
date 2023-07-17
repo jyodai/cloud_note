@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Note\StoreRequest;
 use App\Http\Requests\Note\UpdateRequest;
 use App\Http\Resources\DestroyNoteResource;
+use App\Http\Resources\NoteContentResource;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use App\Models\NoteContent;
@@ -77,9 +78,9 @@ class NoteController extends Controller
         return new DestroyNoteResource(['delete_note_id' => $deleteNoteId]);
     }
 
-    public function showContent(int $noteId)
+    public function showContent(int $noteId): NoteContentResource
     {
-        $ret = Note::find($noteId)->content;
-        return response()->json($ret);
+        $content = Note::find($noteId)->content;
+        return new NoteContentResource($content);
     }
 }
