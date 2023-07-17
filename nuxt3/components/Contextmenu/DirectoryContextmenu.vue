@@ -111,7 +111,7 @@ export default {
       this.deleteNoteContent(deleteInfo);
     },
     deleteNoteTab (deleteInfo) {
-      deleteInfo.deleteNoteId.forEach(
+      deleteInfo.delete_note_id.forEach(
         (noteId) => {
           this.noteTabStore.removeNoteTab(noteId);
         }
@@ -119,7 +119,7 @@ export default {
     },
     deleteNoteContent (deleteInfo) {
       const selectNoteId = this.noteTabStore.getSelectNoteId;
-      if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
+      if (deleteInfo.delete_note_id.includes(selectNoteId)) {
         this.noteTabStore.unsetSelectNote();
       }
     },

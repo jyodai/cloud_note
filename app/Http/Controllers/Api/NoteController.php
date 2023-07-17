@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Note\StoreRequest;
 use App\Http\Requests\Note\UpdateRequest;
+use App\Http\Resources\DestroyNoteResource;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use App\Models\NoteContent;
@@ -73,9 +74,7 @@ class NoteController extends Controller
         $model->deleteNote($noteId);
         $deleteNoteId[] = $noteId;
 
-        return response()->json([
-            'deleteNoteId' => $deleteNoteId,
-        ]);
+        return new DestroyNoteResource(['delete_note_id' => $deleteNoteId]);
     }
 
     public function showContent(int $noteId)
