@@ -62,7 +62,8 @@ export const useNoteTreeStore = defineStore({
         tree : JSON.stringify(restoreTreeLists),
       };
       const config   = { params, };
-      const response = await nuxtApp.$axios.get(url, config) as Note[];
+      const response = await nuxtApp.$axios.get(url, config);
+      const tree     = response.data as Note[];
 
       const rootNote = {
         id       : 0,
@@ -70,7 +71,7 @@ export const useNoteTreeStore = defineStore({
       } as Note;
 
       const rootTreeNode = {
-        children : convertTree(response),
+        children : convertTree(tree),
         data     : rootNote,
       } as TreeNode;
 
@@ -79,8 +80,9 @@ export const useNoteTreeStore = defineStore({
     async loadChildrenTree (id: number): Promise<void> {
       const url            = nuxtApp.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'children';
       nuxtApp.noteLoadFlag = true;
-      const response       = await nuxtApp.$axios.get(url) as Note[];
-      const addTreeNodes   = convertTree(response);
+      const response       = await nuxtApp.$axios.get(url);
+      const tree           = response.data as Note[];
+      const addTreeNodes   = convertTree(tree);
 
       const parentTreeNode    = this.findTreeNode(this.getTree, id) as TreeNode;
       parentTreeNode.children = addTreeNodes;
@@ -142,7 +144,8 @@ export const useNoteTreeStore = defineStore({
         type,
       };
       const url      = nuxtApp.$config.public.apiUrl + '/tree' + '/' + id + '/' + 'move';
-      const response = await nuxtApp.$axios.put(url, params) as Note;
+      const response = await nuxtApp.$axios.put(url, params);
+      const note     = response.data as Note;
 
       const node       = this.findTreeNode(this.getTree, id) as TreeNode;
       const parentNode = this.findTreeNode(this.getTree, node.data.parent_note_id) as TreeNode;
@@ -152,7 +155,7 @@ export const useNoteTreeStore = defineStore({
       }
 
       const insertNode = node;
-      this.setNodeData(insertNode, response);
+      this.setNodeData(insertNode, note);
       const insertParentNode         = this.findTreeNode(this.getTree, insertNode.data.parent_note_id) as TreeNode;
       insertParentNode.data.hasChild = true;
 
