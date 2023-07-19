@@ -206,8 +206,9 @@ export const useNoteTreeStore = defineStore({
         throw new Error('ID is null');
       }
 
-      const url      = nuxtApp.$config.public.apiUrl + '/notes' + '/' + id;
-      const response = await nuxtApp.$axios.delete(url) as Array<number>;
+      const url        = nuxtApp.$config.public.apiUrl + '/notes' + '/' + id;
+      const response   = await nuxtApp.$axios.delete(url);
+      const deleteInfo = response.data as Array<number>;
 
       const node       = this.findTreeNode(this.getTree, id) as TreeNode;
       const parentNode = this.findTreeNode(this.getTree, node.data.parent_note_id) as TreeNode;
@@ -216,7 +217,7 @@ export const useNoteTreeStore = defineStore({
         parentNode.data.hasChild = false;
       }
 
-      return response;
+      return deleteInfo;
     },
     deleteNodeExec (parentNode: TreeNode, id: number): void {
       parentNode.children.forEach((node, index) => {

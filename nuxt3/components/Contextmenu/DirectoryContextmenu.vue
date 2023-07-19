@@ -70,9 +70,10 @@ export default {
   },
   methods : {
     async getNote () {
-      const noteId = this.noteTreeStore.getSelectNoteId;
-      const url    = this.$config.public.apiUrl + `/notes/${noteId}`;
-      return await this.$axios.get(url);
+      const noteId   = this.noteTreeStore.getSelectNoteId;
+      const url      = this.$config.public.apiUrl + `/notes/${noteId}`;
+      const response = await this.$axios.get(url);
+      return response.data;
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       if (noteId === null) {
@@ -111,7 +112,7 @@ export default {
       this.deleteNoteContent(deleteInfo);
     },
     deleteNoteTab (deleteInfo) {
-      deleteInfo.deleteNoteId.forEach(
+      deleteInfo.delete_note_id.forEach(
         (noteId) => {
           this.noteTabStore.removeNoteTab(noteId);
         }
@@ -119,7 +120,7 @@ export default {
     },
     deleteNoteContent (deleteInfo) {
       const selectNoteId = this.noteTabStore.getSelectNoteId;
-      if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
+      if (deleteInfo.delete_note_id.includes(selectNoteId)) {
         this.noteTabStore.unsetSelectNote();
       }
     },

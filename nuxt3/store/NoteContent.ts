@@ -21,8 +21,9 @@ export const useNoteContentStore = defineStore({
     async loadSelectContent (note: Note): Promise<void> {
       const noteId       = note.id;
       const url          = nuxtApp.$config.public.apiUrl + `/notes/${noteId}/content`;
-      const response     = await nuxtApp.$axios.get(url) as NoteContent;
-      this.selectContent = response;
+      const response     = await nuxtApp.$axios.get(url);
+      const noteContent  = response.data as NoteContent;
+      this.selectContent = noteContent;
     },
     unsetSelectContent () {
       this.selectContent = null;

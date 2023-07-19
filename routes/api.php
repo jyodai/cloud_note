@@ -56,13 +56,13 @@ Route::middleware(['auth_api'])->group(function () {
         Route::delete('/', [LibraryFileController::class, 'destroy']);
     });
 
-    Route::prefix('notes')->group(function () {
-        Route::get('/{id}', 'Api\NoteController@show');
-        Route::post('/', 'Api\NoteController@store');
-        Route::put('/{id}', 'Api\NoteController@update');
-        Route::delete('/{id}', 'Api\NoteController@destroy');
+    Route::prefix('notes')->name('notes.')->group(function () {
+        Route::get('/{id}', 'Api\NoteController@show')->name('show');
+        Route::post('/', 'Api\NoteController@store')->name('store');
+        Route::put('/{id}', 'Api\NoteController@update')->name('update');
+        Route::delete('/{id}', 'Api\NoteController@destroy')->name('destroy');
 
-        Route::get('/{id}/content', 'Api\NoteController@showContent');
+        Route::get('/{id}/content', 'Api\NoteController@showContent')->name('content.show');
     });
 
     Route::put('note_content/{id}', 'Api\NoteContentController@update');
