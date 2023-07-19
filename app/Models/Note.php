@@ -37,8 +37,10 @@ class Note extends Model
 
     public function getPathAttribute()
     {
-        $id = $this->attributes['id'];
-        return $this->getPath($id);
+        $id       = $this->attributes['id'];
+        $allNotes = self::where('user_id', $this->attributes['user_id'])
+                        ->get();
+        return $this->getPath($id, $allNotes);
     }
 
     public function getHasChildAttribute()
@@ -135,16 +137,16 @@ class Note extends Model
         }
     }
 
-    public function getPath($id, $path = '')
+    public function getPath($id, $allNotes, $path = '')
     {
-        $note = $this->where('id', $id)->first();
+        $note = $allNotes->firstWhere('id', $id);
         if ($path === '') {
             $path = $note->title;
         } else {
             $path = $note->title . ' > ' . $path;
         }
         if ($note->parent_note_id) {
-            return $this->getPath($note->parent_note_id, $path);
+            return $this->getPath($note->parent_note_id, $allNotes, $path);
         } else {
             return $path;
         }
