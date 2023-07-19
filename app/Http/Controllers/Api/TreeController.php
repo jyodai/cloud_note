@@ -27,7 +27,7 @@ class TreeController extends Controller
 
     public function index(Request $request): AnonymousResourceCollection
     {
-        $restoreTree = json_decode($request['tree']);
+        $restoreTree = $request['tree'] ? json_decode($request['tree']) : [];
         $tree        = $this->note->getTree($restoreTree);
         $resources   = NoteTreeResource::collection($tree);
         return $resources;
