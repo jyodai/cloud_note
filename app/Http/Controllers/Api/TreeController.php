@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
 use App\Http\Requests\Tree\MoveRequest;
+use App\Http\Resources\NoteTree\NoteTreeResource;
+use App\Http\Resources\Note\NoteResource;
+use App\Models\Note;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TreeController extends Controller
 {
@@ -22,24 +25,26 @@ class TreeController extends Controller
         });
     }
 
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $restoreTree = json_decode($request['tree']);
         $tree        = $this->note->getTree($restoreTree);
-        return response()->json($tree);
+        $resources   = NoteTreeResource::collection($tree);
+        return $resources;
     }
 
-    public function getTreeChildren(int $id)
+    public function getTreeChildren(int $id): AnonymousResourceCollection
     {
-        $tree = $this->note->getTree([], $id);
-        return response()->json($tree);
+        $tree      = $this->note->getTree([], $id);
+        $resources = NoteTreeResource::collection($tree);
+        return $resources;
     }
 
-    public function move(int $id, MoveRequest $request)
+    public function move(int $id, MoveRequest $request): NoteResource
     {
         $targetNoteId = $request['target_note_id'];
         $type         = $request['type'];
         $note         = $this->note->moveTree($id, $targetNoteId, $type);
-        return $note;
+        return new NoteResource($note);
     }
 }
