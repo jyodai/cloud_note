@@ -152,18 +152,29 @@ class Note extends Model
 
     public function getTree($data, $id = 0)
     {
-        $notes = self::where('parent_note_id', $id)
-           ->where('user_id', $this->user->id)
-           ->orderBy('display_num', 'asc')
-           ->get();
-        foreach ($notes as $key => $note) {
-            if (in_array($note->id, $data)) {
-                $notes[$key]->children = $this->getTree($data, $note->id);
-            } else {
-                $notes[$key]->children = [];
+        $allNotes = self::where('user_id', $this->user->id)
+                      ->orderBy('display_num', 'asc')
+                      ->get();
+
+        $groupedNotes = $allNotes->groupBy('parent_note_id');
+
+        return $this->buildTree($groupedNotes, $data, $id);
+    }
+
+    private function buildTree($groupedNotes, $data, $id)
+    {
+        $collect = $groupedNotes->get($id, collect());
+        return $collect->map(
+            function ($note) use ($groupedNotes, $data) {
+                if (in_array($note->id, $data)) {
+                    $note->children = $this->buildTree($groupedNotes, $data, $note->id);
+                } else {
+                    $note->children = [];
+                }
+
+                return $note;
             }
-        }
-        return $notes;
+        );
     }
 
     /**
