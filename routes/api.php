@@ -65,7 +65,9 @@ Route::middleware(['auth_api'])->group(function () {
         Route::get('/{id}/content', 'Api\NoteController@showContent')->name('content.show');
     });
 
-    Route::put('note_content/{id}', 'Api\NoteContentController@update');
+    Route::prefix('note_content')->name('note_content.')->group(function () {
+        Route::put('/{id}', 'Api\NoteContentController@update')->name('update');
+    });
 
     Route::prefix('tree')->group(function () {
         Route::get('/', 'Api\TreeController@index');
