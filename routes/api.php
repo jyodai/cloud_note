@@ -42,9 +42,9 @@ Route::middleware(['auth_api'])->group(function () {
         Route::put('/{id}/password', [UserController::class, 'updatePassword'])->name('password.update');
     });
 
-    Route::prefix('notes_settings')->group(function () {
-        Route::get('/', [NoteSettingController::class, 'show']);
-        Route::put('/{id}', [NoteSettingController::class, 'update']);
+    Route::prefix('notes_settings')->name('notes_settings.')->group(function () {
+        Route::get('/', [NoteSettingController::class, 'show'])->name('show');
+        Route::put('/{id}', [NoteSettingController::class, 'update'])->name('update');
     });
 
     Route::prefix('libraries')->group(function () {
