@@ -69,9 +69,9 @@ Route::middleware(['auth_api'])->group(function () {
         Route::put('/{id}', 'Api\NoteContentController@update')->name('update');
     });
 
-    Route::prefix('tree')->group(function () {
-        Route::get('/', 'Api\TreeController@index');
-        Route::get('/{id}/children', 'Api\TreeController@getTreeChildren');
-        Route::put('/{id}/move', 'Api\TreeController@move');
+    Route::prefix('tree')->name('tree.')->group(function () {
+        Route::get('/', 'Api\TreeController@index')->name('index');
+        Route::get('/{id}/children', 'Api\TreeController@getTreeChildren')->name('children.index');
+        Route::put('/{id}/move', 'Api\TreeController@move')->name('move');
     });
 });
