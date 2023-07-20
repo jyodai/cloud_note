@@ -13,7 +13,6 @@ class Note extends Model
 
     protected $table   = 'notes';
     protected $appends = [
-        'path',
         'hasChild',
     ];
     protected $casts   = [
@@ -21,6 +20,7 @@ class Note extends Model
         'user_id'        => 'integer',
         'display_num'    => 'integer',
         'hierarchy'      => 'integer',
+        'path'           => 'array',
     ];
 
     protected $user = null;
@@ -33,14 +33,6 @@ class Note extends Model
     public function setUser($user)
     {
         $this->user = $user;
-    }
-
-    public function getPathAttribute()
-    {
-        $id       = $this->attributes['id'];
-        $allNotes = self::where('user_id', $this->attributes['user_id'])
-                        ->get();
-        return $this->getPath($id, $allNotes);
     }
 
     public function getHasChildAttribute()
@@ -56,22 +48,30 @@ class Note extends Model
 
     public function create($data)
     {
+         $path = array_merge(self::getPath($data['parent_note_id']), [$data['title']]);
+
          $this->parent_note_id    = $data['parent_note_id'];
          $this->user_id           = $data['user_id'];
          $this->note_type         = $data['note_type'];
          $this->title             = $data['title'];
+         $this->path              = $path;
          $this->display_num       = $this->nextDisplayNum($data['parent_note_id']);
          $this->hierarchy         = $this->belongHierarchy($data['parent_note_id']);
          $this->invalidation_flag = 0;
          $this->save();
 
+         $this->createAfter();
+
+         return self::find($this->id);
+    }
+
+    private function createAfter(): void
+    {
          $noteContentEntity = new $this->note_type();
          $noteContentEntity->create($this);
 
          // 順番がおかしくなっている場合の保険
          $this->adjustOrder($this->parent_note_id);
-
-         return self::find($this->id);
     }
 
     public function deleteNote($noteId)
@@ -137,21 +137,6 @@ class Note extends Model
         }
     }
 
-    public function getPath($id, $allNotes, $path = '')
-    {
-        $note = $allNotes->firstWhere('id', $id);
-        if ($path === '') {
-            $path = $note->title;
-        } else {
-            $path = $note->title . ' > ' . $path;
-        }
-        if ($note->parent_note_id) {
-            return $this->getPath($note->parent_note_id, $allNotes, $path);
-        } else {
-            return $path;
-        }
-    }
-
     public function getTree($data, $id = 0)
     {
         $allNotes = self::where('user_id', $this->user->id)
@@ -208,6 +193,7 @@ class Note extends Model
 
         $note                 = self::find($id);
         $note->parent_note_id = $parentNoteId;
+        $note->path           = array_merge(self::getPath($parentNoteId), [$note->title]);
         $note->display_num    = $displayNum;
         $note->save();
 
@@ -238,5 +224,20 @@ class Note extends Model
             $ret .= $this->convertToTextTree($tree['children']);
         }
         return $ret;
+    }
+
+    public static function getPath($id, $path = []): array
+    {
+        $note = self::where('id', $id)->first();
+        if (!$note) {
+            return $path;
+        }
+
+        array_unshift($path, $note->title);
+        if ($note->parent_note_id) {
+            return self::getPath($note->parent_note_id, $path);
+        } else {
+            return $path;
+        }
     }
 }
