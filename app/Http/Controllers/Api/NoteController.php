@@ -56,6 +56,7 @@ class NoteController extends Controller
 
         $entity        = Note::find($noteId);
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
+        $entity->path  = array_merge(Note::getPath($entity->parent_note_id), [$entity->title]);
         $entity->save();
 
         return new NoteResource($entity);
