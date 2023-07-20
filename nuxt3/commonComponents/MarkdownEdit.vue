@@ -18,6 +18,7 @@ import codemirror from 'codemirror-editor-vue3';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
 import 'codemirror/keymap/vim.js';
+import { useUserStore } from '~/store/User';
 
 export default {
   components : {
@@ -35,6 +36,7 @@ export default {
   ],
   data () {
     return {
+      userStore         : useUserStore(),
       contentChangeFlag : false,
       codemirrorContent : null,
       codemirrorOptions : {
@@ -90,7 +92,7 @@ export default {
       }
     },
     mergeCodemirrorOption () {
-      const user             = this.$store.getters['User/getUser'];
+      const user             = this.userStore.getUser;
       const editorOption     = JSON.parse(user.note_setting.editor_option);
       this.codemirrorOptions = Object.assign(this.codemirrorOptions, editorOption);
     },

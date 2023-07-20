@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:8.2-apache
 
 ARG CONTAINER_USER_ID
 ARG CONTAINER_GROUP_ID
@@ -6,8 +6,8 @@ ARG CONTAINER_USER_NAME
 ARG CONTAINER_GROUP_NAME
 
 # create user and group
-RUN addgroup --gid $CONTAINER_GROUP_ID $CONTAINER_GROUP_NAME \
-    && adduser --disabled-password --gecos '' --uid $CONTAINER_USER_ID --gid $CONTAINER_GROUP_ID $CONTAINER_USER_NAME
+RUN addgroup --gid $CONTAINER_GROUP_ID $CONTAINER_GROUP_NAME 2>/dev/null || true \
+    && adduser --disabled-password --gecos '' --uid $CONTAINER_USER_ID --gid $CONTAINER_GROUP_ID $CONTAINER_USER_NAME 2>/dev/null || true
 
 # ドキュメントルートをデフォルトから修正
 # ENV APACHE_DOCUMENT_ROOT /var/www/html/app/public

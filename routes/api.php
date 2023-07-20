@@ -25,26 +25,26 @@ use App\Http\Controllers\Api\LibraryFileController;
 //     return $request->user();
 // });
 
-Route::post("users/token", 'Api\UserController@createToken');
+Route::post("users/token", 'Api\UserController@createToken')->name('user.token.store');
 
 Route::middleware(['auth_api'])->group(function () {
-    Route::prefix('users')->group(function () {
-        Route::delete("/token", 'Api\UserController@deleteToken');
+    Route::prefix('users')->name('user.')->group(function () {
+        Route::delete("/token", 'Api\UserController@deleteToken')->name('token.destroy');
 
-        Route::get('/me', [UserController::class, 'showLoginUser']);
+        Route::get('/me', [UserController::class, 'showLoginUser'])->name('me.show');
 
-        Route::get('/', [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
-        Route::get('/{id}', [UserController::class, 'show']);
-        Route::put('/{id}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class, 'destroy']);
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::put('/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
 
-        Route::put('/{id}/password', [UserController::class, 'updatePassword']);
+        Route::put('/{id}/password', [UserController::class, 'updatePassword'])->name('password.update');
     });
 
-    Route::prefix('notes_settings')->group(function () {
-        Route::get('/', [NoteSettingController::class, 'show']);
-        Route::put('/{id}', [NoteSettingController::class, 'update']);
+    Route::prefix('notes_settings')->name('notes_settings.')->group(function () {
+        Route::get('/', [NoteSettingController::class, 'show'])->name('show');
+        Route::put('/{id}', [NoteSettingController::class, 'update'])->name('update');
     });
 
     Route::prefix('libraries')->group(function () {
@@ -56,20 +56,22 @@ Route::middleware(['auth_api'])->group(function () {
         Route::delete('/', [LibraryFileController::class, 'destroy']);
     });
 
-    Route::prefix('notes')->group(function () {
-        Route::get('/{id}', 'Api\NoteController@show');
-        Route::post('/', 'Api\NoteController@store');
-        Route::put('/{id}', 'Api\NoteController@update');
-        Route::delete('/{id}', 'Api\NoteController@destroy');
+    Route::prefix('notes')->name('notes.')->group(function () {
+        Route::get('/{id}', 'Api\NoteController@show')->name('show');
+        Route::post('/', 'Api\NoteController@store')->name('store');
+        Route::put('/{id}', 'Api\NoteController@update')->name('update');
+        Route::delete('/{id}', 'Api\NoteController@destroy')->name('destroy');
 
-        Route::get('/{id}/content', 'Api\NoteController@showContent');
+        Route::get('/{id}/content', 'Api\NoteController@showContent')->name('content.show');
     });
 
-    Route::put('note_content/{id}', 'Api\NoteContentController@update');
+    Route::prefix('note_content')->name('note_content.')->group(function () {
+        Route::put('/{id}', 'Api\NoteContentController@update')->name('update');
+    });
 
-    Route::prefix('tree')->group(function () {
-        Route::get('/', 'Api\TreeController@index');
-        Route::get('/{id}/children', 'Api\TreeController@getTreeChildren');
-        Route::put('/{id}/move', 'Api\TreeController@move');
+    Route::prefix('tree')->name('tree.')->group(function () {
+        Route::get('/', 'Api\TreeController@index')->name('index');
+        Route::get('/{id}/children', 'Api\TreeController@getTreeChildren')->name('children.index');
+        Route::put('/{id}/move', 'Api\TreeController@move')->name('move');
     });
 });

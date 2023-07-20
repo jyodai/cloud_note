@@ -14,16 +14,16 @@
         <contextmenu-item @click="addNote(0)">
           ルートノート
         </contextmenu-item>
-        <contextmenu-item @click="addNote($store.getters['NoteTree/getSelectNoteId'])">
+        <contextmenu-item @click="addNote(noteTreeStore.getSelectNoteId)">
           ノート
         </contextmenu-item>
         <!-- <contextmenu-item -->
-        <!--   @click="addNote($store.getters['NoteTree/getSelectNoteId'], $const.NOTE_TYPE_TASK)" -->
+        <!--   @click="addNote(noteTreeStore.getSelectNoteId, $const.NOTE_TYPE_TASK)" -->
         <!-- > -->
         <!--   タスク -->
         <!-- </contextmenu-item> -->
       </contextmenu-submenu>
-      <contextmenu-item @click="editNote($store.getters['NoteTree/getSelectNoteId'])">
+      <contextmenu-item @click="editNote(noteTreeStore.getSelectNoteId)">
         編集
       </contextmenu-item>
       <contextmenu-item @click="deleteNote()">
@@ -44,6 +44,8 @@ import {
   ContextmenuSubmenu
 } from 'v-contextmenu';
 import 'v-contextmenu/dist/themes/default.css';
+import { useNoteTabStore } from '~/store/NoteTab';
+import { useNoteTreeStore } from '~/store/NoteTree';
 
 export default {
   directives : {
@@ -56,8 +58,10 @@ export default {
   },
   data () {
     return {
-      note   : null,
-      config : {
+      noteTabStore  : useNoteTabStore(),
+      noteTreeStore : useNoteTreeStore(),
+      note          : null,
+      config        : {
         headers : {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
@@ -66,9 +70,10 @@ export default {
   },
   methods : {
     async getNote () {
-      const noteId = this.$store.getters['NoteTree/getSelectNoteId'];
-      const url    = this.$config.public.apiUrl + `/notes/${noteId}`;
-      return await this.$axios.get(url);
+      const noteId   = this.noteTreeStore.getSelectNoteId;
+      const url      = this.$config.public.apiUrl + `/notes/${noteId}`;
+      const response = await this.$axios.get(url);
+      return response.data;
     },
     async addNote (noteId = null, noteType = this.$const.NOTE_TYPE_NORMAL) {
       if (noteId === null) {
@@ -83,7 +88,7 @@ export default {
         noteType,
         noteTitle,
       };
-      await this.$store.dispatch('NoteTree/addNode', { data, });
+      await this.noteTreeStore.addNode({ data });
     },
     async editNote (noteId = null) {
       const noteTitle = window.prompt('ノートのタイトルを入力してください。');
@@ -92,9 +97,9 @@ export default {
         noteId,
         noteTitle,
       };
-      await this.$store.dispatch('NoteTree/updateNode', { data, });
-      if (this.$store.getters['NoteTab/findNote'](data.noteId)) {
-        await this.$store.dispatch('NoteTab/updateNote', { data, });
+      await this.noteTreeStore.updateNode({ data });
+      if (this.noteTabStore.findNote(data.noteId)) {
+        await this.noteTabStore.updateNote(data);
       }
     },
     // Todo:編集 Modalを開いてそこでプロパティも一緒に出す
@@ -102,21 +107,21 @@ export default {
       if (!confirm('ファイルを削除します')) {
         return;
       }
-      const deleteInfo = await this.$store.dispatch('NoteTree/deleteNode');
+      const deleteInfo = await this.noteTreeStore.deleteNode();
       this.deleteNoteTab(deleteInfo);
       this.deleteNoteContent(deleteInfo);
     },
     deleteNoteTab (deleteInfo) {
-      deleteInfo.deleteNoteId.forEach(
+      deleteInfo.delete_note_id.forEach(
         (noteId) => {
-          this.$store.dispatch('NoteTab/removeNoteTab', noteId);
+          this.noteTabStore.removeNoteTab(noteId);
         }
       );
     },
     deleteNoteContent (deleteInfo) {
-      const selectNoteId = this.$store.getters['NoteTab/getSelectNoteId'];
-      if (deleteInfo.deleteNoteId.includes(selectNoteId)) {
-        this.$store.dispatch('NoteTab/unsetSelectNote');
+      const selectNoteId = this.noteTabStore.getSelectNoteId;
+      if (deleteInfo.delete_note_id.includes(selectNoteId)) {
+        this.noteTabStore.unsetSelectNote();
       }
     },
     async property () {

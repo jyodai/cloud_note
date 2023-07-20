@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Note;
-use App\Models\NoteContent;
 use App\Http\Requests\Note\StoreRequest;
 use App\Http\Requests\Note\UpdateRequest;
+use App\Http\Resources\NoteContent\NoteContentResource;
+use App\Http\Resources\Note\DestroyNoteResource;
+use App\Http\Resources\Note\NoteResource;
+use App\Models\Note;
+use App\Models\NoteContent;
+use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
@@ -26,29 +29,28 @@ class NoteController extends Controller
         });
     }
 
-    public function show(int $noteId)
+    public function show(int $noteId): NoteResource
     {
-        $ret = Note::where('user_id', $this->user->id)
+        $note = Note::where('user_id', $this->user->id)
         ->where('id', $noteId)
         ->first();
-        return response()->json($ret);
+        return new NoteResource($note);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): NoteResource
     {
-        $data           = [
+        $data       = [
             'parent_note_id' => $request->parent_note_id,
             'note_type'      => $request->note_type,
             'title'          => $request->title,
             'user_id'        => $this->user->id,
         ];
-        $noteEntity     = new Note();
-        $note           = $noteEntity->create($data);
-        $note->children = [];
-        return response()->json($note);
+        $noteEntity = new Note();
+        $note       = $noteEntity->create($data);
+        return new NoteResource($note);
     }
 
-    public function update(int $noteId, UpdateRequest $request)
+    public function update(int $noteId, UpdateRequest $request): NoteResource
     {
         $noteTitle = $request['title'];
 
@@ -56,10 +58,10 @@ class NoteController extends Controller
         $entity->title = $noteTitle ? $noteTitle : $entity->title;
         $entity->save();
 
-        return response()->json($entity);
+        return new NoteResource($entity);
     }
 
-    public function destroy(int $noteId)
+    public function destroy(int $noteId): DestroyNoteResource
     {
         $deleteNoteId = [];
         $model        = new Note();
@@ -73,14 +75,12 @@ class NoteController extends Controller
         $model->deleteNote($noteId);
         $deleteNoteId[] = $noteId;
 
-        return response()->json([
-            'deleteNoteId' => $deleteNoteId,
-        ]);
+        return new DestroyNoteResource(['delete_note_id' => $deleteNoteId]);
     }
 
-    public function showContent(int $noteId)
+    public function showContent(int $noteId): NoteContentResource
     {
-        $ret = Note::find($noteId)->content;
-        return response()->json($ret);
+        $content = Note::find($noteId)->content;
+        return new NoteContentResource($content);
     }
 }

@@ -24,6 +24,7 @@
 import NoteTab from './NoteTab.vue';
 import NoteContentHead from './NoteContentHead.vue';
 import NoteContentBody from './NoteContentBody.vue';
+import { useNoteTabStore } from '~/store/NoteTab';
 
 export default {
   components : {
@@ -33,12 +34,13 @@ export default {
   },
   data () {
     return {
-      note : null,
+      noteTabStore : useNoteTabStore(),
+      note         : null,
     };
   },
   computed : {
     changeSelectNote () {
-      return this.$store.getters['NoteTab/getSelectNote'];
+      return this.noteTabStore.getSelectNote;
     },
   },
   watch : {

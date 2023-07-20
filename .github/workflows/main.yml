@@ -10,21 +10,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.3'
+      - name: setUp .env
+        run: cp .env.ci.example .env
 
-      - name: npm ci
-        run: npm ci
-        working-directory: ./nuxt3
+      - name: setUp Docker
+        run: docker compose up -d --wait
+
+      - name: SetUp App
+        run: make build
+
+      - name: Create admin user
+        run: make create_admin_user
 
       - name: ESLint
-        run: npm run lint
-        working-directory: ./nuxt3
+        run: make lint
 
-      - name: composer install
-        run: composer install
+      - name: Check TypeScript
+        run: make tsc
 
       - name: PHPCS
-        run: ./vendor/bin/phpcs
+        run: make phpcs
+
+      - name: Backend test
+        run: make test

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NoteSetting\UpdateRequest;
-use App\Http\Resources\NoteSettingResource;
+use App\Http\Resources\NoteSetting\NoteSettingResource;
 use App\Models\NoteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

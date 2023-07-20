@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\NoteSetting;
 use App\Models\User;
 use App\Services\UserService;
@@ -80,7 +80,7 @@ class UserController extends Controller
         return response()->noContent();
     }
 
-    public function createToken(Request $request): array
+    public function createToken(Request $request): UserResource
     {
         $email = $request->email;
         $user  = \App\Models\User::where("email", $email)->first();
@@ -101,10 +101,8 @@ class UserController extends Controller
         $user->api_token    = $token;
         $user->attempts_num = 0;
         $user->save();
-        return [
-            'user'  => new UserResource($user),
-            'token' => $token,
-        ];
+
+        return new UserResource($user, null, ['api_token']);
     }
 
     protected function overAttempts($user): bool

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Note;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NoteSettingResource extends JsonResource
+class DestroyNoteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,7 @@ class NoteSettingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
-            'user_id'       => $this->user_id,
-            'editor_option' => $this->editor_option,
-            'editor_css'    => $this->editor_css,
+            'delete_note_id' => $this['delete_note_id'],
         ];
     }
 }

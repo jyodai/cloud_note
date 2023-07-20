@@ -25,6 +25,8 @@ help :
 	# phpcbf            phpcbfを実行
 	# lint              ESLintでコードチェック
 	# lintfix           ESLintでコード整形
+	# tsc               TypeScriptでコードチェック
+	# cacheclear        Laravelのキャッシュをクリア
 
 up :
 	docker-compose up -d
@@ -46,12 +48,12 @@ shdb :
 	"
 
 build :
-	docker-compose exec php /bin/bash -c ' \
-		composer install; \
+	docker-compose exec -T php /bin/bash -c ' \
+		composer install --no-interaction; \
 		chmod 777 -R ./storage/; \
 		php artisan key:generate; \
 		php artisan migrate; \
-		cd nuxt3 && npm install && cp .env.example .env; \
+		cd nuxt3 && npm install -y && cp .env.example .env; \
 	'
 	make cert
 
@@ -96,7 +98,7 @@ createUser :
 cu : createUser
 
 create_admin_user : 
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		php artisan user:create-admin; \
 	'
 
@@ -116,19 +118,19 @@ nuxtgenerate :
 	'
 
 test :
-	docker-compose exec php /bin/bash -c ' \
-		php artisan config:clear; \
+	make cacheclear
+	docker-compose exec -T php /bin/bash -c ' \
 		php artisan test; \
 	'
 
 cert :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		cd nuxt3/ssl && mkcert localhost; \
 		chown -R 1000:1000 ./; \
 	'
 
 phpcs :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		vendor/bin/phpcs; \
 	'
 
@@ -138,11 +140,23 @@ phpcbf :
 	'
 
 lint :
-	docker-compose exec php /bin/bash -c ' \
+	docker-compose exec -T php /bin/bash -c ' \
 		cd nuxt3 && npm run lint; \
 	'
 
 lintfix :
 	docker-compose exec php /bin/bash -c ' \
 		cd nuxt3 && npm run lintfix; \
+	'
+
+tsc :
+	docker-compose exec -T php /bin/bash -c ' \
+		cd nuxt3 && npm run tsc ; \
+	'
+cacheclear :
+	docker-compose exec -T php /bin/bash -c ' \
+		composer dump-autoload; \
+		php artisan config:clear; \
+		php artisan cache:clear; \
+		php artisan route:clear; \
 	'

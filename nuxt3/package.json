@@ -7,8 +7,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint --ext .js,.vue ./",
-    "lintfix": "eslint --fix --ext .js,.vue ./"
+    "lint": "eslint --ext .js,.vue,.ts ./",
+    "lintfix": "eslint --fix --ext .js,.vue,.ts ./",
+    "tsc": "vue-tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
@@ -24,10 +25,14 @@
     "eslint-plugin-vue-scoped-css": "^2.4.0",
     "nuxt": "^3.5.2",
     "sass": "^1.63.3",
-    "vue-eslint-parser": "^9.3.1"
+    "typescript": "^5.1.6",
+    "vue-eslint-parser": "^9.3.1",
+    "vue-tsc": "^1.8.4"
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
+    "@pinia/nuxt": "^0.4.11",
+    "@types/splitpanes": "^2.2.1",
     "axios": "^1.4.0",
     "codemirror": "^5.65.13",
     "codemirror-editor-vue3": "^2.3.0",
@@ -36,6 +41,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-task-checkbox": "^1.0.6",
     "mermaid": "^10.2.3",
+    "pinia": "^2.1.4",
     "prismjs": "^1.29.0",
     "splitpanes": "^3.1.5",
     "v-contextmenu": "^3.0.0",
@@ -43,5 +49,8 @@
     "vuedraggable": "^4.1.0",
     "vuetify": "^3.3.3",
     "vuex": "^4.0.2"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

@@ -7,7 +7,7 @@
     <template #item="{ element }">
       <div
         class="note-title g-up-down-center"
-        :class="{select : element.id === $store.getters['NoteTab/getSelectNoteId']}"
+        :class="{select : element.id === noteTabStore.getSelectNoteId}"
       >
         <span
           class="title"
@@ -27,25 +27,32 @@
 
 <script>
 import Draggable from 'vuedraggable';
+import { useUserStore } from '~/store/User';
+import { useNoteTabStore } from '~/store/NoteTab';
 
 export default {
   components : {
     Draggable,
   },
-  data () { return {}; },
+  data () {
+    return {
+      userStore    : useUserStore(),
+      noteTabStore : useNoteTabStore(),
+    };
+  },
   computed : {
     noteTab : {
       get () {
-        return this.$store.getters['NoteTab/getNoteTab'];
+        return this.noteTabStore.getNoteTab;
       },
       set (noteTabArray) {
-        this.$store.dispatch('NoteTab/moveNoteTab', noteTabArray);
+        this.noteTabStore.moveNoteTab(noteTabArray);
       },
     },
   },
   created () {
-    this.$store.dispatch('NoteTab/initNoteTab');
-    this.$store.dispatch('NoteTab/loadNoteTab');
+    this.noteTabStore.initNoteTab();
+    this.noteTabStore.loadNoteTab(this.userStore.user);
   },
   mounted () {
     this.initSelectNote();
@@ -59,27 +66,27 @@ export default {
       if (event.ctrlKey && event.key === 'j') {
         event.preventDefault();
         event.stopPropagation();
-        this.$store.dispatch('NoteTab/setPrevNote');
+        this.noteTabStore.setPrevNote();
       }
 
       if (event.ctrlKey && event.key === 'k') {
         event.preventDefault();
         event.stopPropagation();
-        this.$store.dispatch('NoteTab/setNextNote');
+        this.noteTabStore.setNextNote();
       }
     },
     initSelectNote () {
-      const noteTab = this.$store.getters['NoteTab/getNoteTab'];
+      const noteTab = this.noteTabStore.getNoteTab;
       if (noteTab.length === 0) {
         return;
       }
-      this.$store.dispatch('NoteTab/setSelectNote', noteTab[0]);
+      this.noteTabStore.setSelectNote(noteTab[0]);
     },
     setNote (note) {
-      this.$store.dispatch('NoteTab/setSelectNote', note);
+      this.noteTabStore.setSelectNote(note);
     },
     removeNoteTab (id) {
-      this.$store.dispatch('NoteTab/removeNoteTab', id);
+      this.noteTabStore.removeNoteTab(id);
     },
   },
 };

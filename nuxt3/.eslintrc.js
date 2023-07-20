@@ -12,16 +12,18 @@ module.exports = {
     'plugin:vue-scoped-css/vue3-recommended',
   ],
   globals : {
-    mermaid                   : true,
     Prism                     : false,
-    process                   : false,
+    PropType                  : false,
+    defineNuxtConfig          : false,
     defineNuxtPlugin          : false,
     defineNuxtRouteMiddleware : false,
     definePageMeta            : false,
-    useRuntimeConfig          : false,
-    setPageLayout             : false,
+    mermaid                   : true,
     navigateTo                : false,
+    process                   : false,
+    setPageLayout             : false,
     useNuxtApp                : false,
+    useRuntimeConfig          : false,
   },
   plugins : [
     'align-assignments',
@@ -42,8 +44,12 @@ module.exports = {
     ],
     'no-var'      : 2, //varを禁止
     'no-debugger' : 'warn',
-    semi          : ['error', 'always'],
-    
+
+    "semi"                    : "off",
+    "@typescript-eslint/semi" : ["error", "always"],
+
+    "no-unused-vars"                    : "off",
+    "@typescript-eslint/no-unused-vars" : ["error"],
 
     // 以降プラグインから追加
 
