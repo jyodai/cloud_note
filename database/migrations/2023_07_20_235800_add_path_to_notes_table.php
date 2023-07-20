@@ -15,7 +15,7 @@ class AddPathToNotesTable extends Migration
     public function up()
     {
         Schema::table('notes', function (Blueprint $table) {
-            $table->string('path')->after('title')->default(null)->nullable();
+            $table->text('path')->after('title')->default(null)->nullable();
         });
 
         $notes = Note::get();
