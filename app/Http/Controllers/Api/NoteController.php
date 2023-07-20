@@ -59,6 +59,8 @@ class NoteController extends Controller
         $entity->path  = array_merge(Note::getPath($entity->parent_note_id), [$entity->title]);
         $entity->save();
 
+        Note::adjustPath($noteId);
+
         return new NoteResource($entity);
     }
 
@@ -67,7 +69,7 @@ class NoteController extends Controller
         $deleteNoteId = [];
         $model        = new Note();
 
-        $childNotes = $model->getChildNote($noteId);
+        $childNotes = Note::getChildNote($noteId);
         foreach ($childNotes as $childNote) {
             $model->deleteNote($childNote['id']);
             $deleteNoteId[] = $childNote['id'];

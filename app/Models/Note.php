@@ -74,6 +74,7 @@ class Note extends Model
          $this->adjustOrder($this->parent_note_id);
     }
 
+
     public function deleteNote($noteId)
     {
         NoteContent::where('note_id', '=', $noteId)->delete();
@@ -104,23 +105,6 @@ class Note extends Model
     {
         $notes = $this->where('parent_note_id', $parentNoteId)->get();
         return (count($notes) * 10) + 10;
-    }
-
-    /**
-     * @brief 配下に所属するノートを取得（再帰的）
-     * @return array
-     */
-    public function getChildNote($id)
-    {
-        $notes = $this->where('parent_note_id', $id)->get()->toArray();
-        $ret   = $notes;
-        foreach ($notes as $note) {
-            $childNotes = $this->getChildNote($note['id']);
-            foreach ($childNotes as $childNote) {
-                array_push($ret, $childNote);
-            }
-        }
-        return $ret;
     }
 
     /**
@@ -199,6 +183,8 @@ class Note extends Model
 
         $this->adjustOrder($parentNoteId);
 
+        self::adjustPath($id);
+
         return self::find($id);
     }
 
@@ -238,6 +224,33 @@ class Note extends Model
             return self::getPath($note->parent_note_id, $path);
         } else {
             return $path;
+        }
+    }
+
+    /**
+     * @brief 配下に所属するノートを取得（再帰的）
+     * @return array
+     */
+    public static function getChildNote($id): array
+    {
+        $notes = self::where('parent_note_id', $id)->get()->toArray();
+        $ret   = $notes;
+        foreach ($notes as $note) {
+            $childNotes = self::getChildNote($note['id']);
+            foreach ($childNotes as $childNote) {
+                array_push($ret, $childNote);
+            }
+        }
+        return $ret;
+    }
+
+    public static function adjustPath($id): void
+    {
+        $childNotes = self::getChildNote($id);
+        foreach ($childNotes as $childNote) {
+            $note       = self::find($childNote['id']);
+            $note->path = array_merge(self::getPath($note->id));
+            $note->save();
         }
     }
 }
