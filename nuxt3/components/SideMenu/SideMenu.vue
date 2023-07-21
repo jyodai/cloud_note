@@ -41,6 +41,15 @@
         <template v-if="menu.edit.show">
           <div
             class="g-pointer"
+            @click="openModal('FuzzySearch')"
+          >
+            <v-icon size="14">
+              mdi-checkbox-blank-circle
+            </v-icon>
+            検索
+          </div>
+          <div
+            class="g-pointer"
             @click="openModal('LibraryList')"
           >
             <v-icon size="14">
