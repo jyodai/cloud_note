@@ -11,6 +11,7 @@ use App\Http\Resources\Note\NoteResource;
 use App\Models\Note;
 use App\Models\NoteContent;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NoteController extends Controller
 {
@@ -27,6 +28,12 @@ class NoteController extends Controller
             $this->user = auth()->user();
             return $next($request);
         });
+    }
+
+    public function index(): AnonymousResourceCollection
+    {
+        $note = Note::where('user_id', $this->user->id)->get();
+        return NoteResource::collection($note);
     }
 
     public function show(int $noteId): NoteResource
