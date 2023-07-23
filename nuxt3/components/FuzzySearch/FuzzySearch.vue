@@ -41,104 +41,85 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 import Modal from '../Modal/ModalWrapper.vue';
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 import Fuse from 'fuse.js';
 import { useNoteTabStore } from '~/store/NoteTab';
 
-export default {
-  components : {
-    Modal,
-    ModalFooterButton,
-  },
-  setup() {
-    const nuxtApp = useNuxtApp();
+const nuxtApp = useNuxtApp();
 
-    const modalName = 'FuzzySearch';
-    let   fuse      = null;
+const modalName = 'FuzzySearch';
+let   fuse      = null;
 
-    const noteTabStore = useNoteTabStore();
-    const visible      = ref(false);
-    const searchList   = ref([]);
-    const searchResult = ref([]);
+const noteTabStore = useNoteTabStore();
+const visible      = ref(false);
+const searchList   = ref([]);
+const searchResult = ref([]);
 
-    const modalOption = {
-      beforeOpen : beforeOpen,
-    };
-
-    async function beforeOpen() {
-      visible.value = false;
-
-      await init();
-
-      visible.value = true;
-    }
-
-    function closeModal() {
-      nuxtApp.$vfm.close(modalName, nuxtApp.$const.MODAL_CLOSE_TYPE_CLOSE);
-    }
-
-    async function init() {
-      searchResult.value = [];
-      if (searchList.value.length === 0) {
-        await setSearchList();
-        initFuse();
-      }
-    }
-
-    async function setSearchList() {
-      const url      = nuxtApp.$config.public.apiUrl + '/notes?fields=id,path';
-      const response = await nuxtApp.$axios.get(url);
-      const notes    = convert(response.data);
-
-      searchList.value = notes;
-    }
-
-    function initFuse() {
-      const options = {
-        keys : [
-          "path",
-        ]
-      };
-      fuse          = new Fuse(searchList.value, options);
-    }
-
-    function search(value) {
-      searchResult.value = fuse.search(value);
-    }
-
-    async function select(noteId) {
-      const url      = nuxtApp.$config.public.apiUrl + `/notes/${noteId}`;
-      const response = await nuxtApp.$axios.get(url);
-      const note     = response.data;
-
-      noteTabStore.setNoteTab(Object.assign({}, note));
-      noteTabStore.setSelectNote(note);
-
-      closeModal();
-    }
-
-    function convert(notes) {
-      notes.forEach((note) => {
-        note.path = nuxtApp.$util.note.convertPath(note);
-      });
-      return notes;
-    }
-
-    return {
-      modalName,
-      modalOption,
-      visible,
-      searchResult,
-      beforeOpen,
-      closeModal,
-      search,
-      select,
-    };
-  },
+const modalOption = {
+  beforeOpen : beforeOpen,
 };
+
+async function beforeOpen() {
+  visible.value = false;
+
+  await init();
+
+  visible.value = true;
+}
+
+function closeModal() {
+  nuxtApp.$vfm.close(modalName, nuxtApp.$const.MODAL_CLOSE_TYPE_CLOSE);
+}
+
+async function init() {
+  searchResult.value = [];
+  if (searchList.value.length === 0) {
+    await setSearchList();
+    initFuse();
+  }
+}
+
+async function setSearchList() {
+  const url      = nuxtApp.$config.public.apiUrl + '/notes?fields=id,path';
+  const response = await nuxtApp.$axios.get(url);
+  const notes    = convert(response.data);
+
+  searchList.value = notes;
+}
+
+function initFuse() {
+  const options = {
+    keys : [
+      "path",
+    ]
+  };
+  fuse          = new Fuse(searchList.value, options);
+}
+
+function search(value) {
+  searchResult.value = fuse.search(value);
+}
+
+async function select(noteId) {
+  const url      = nuxtApp.$config.public.apiUrl + `/notes/${noteId}`;
+  const response = await nuxtApp.$axios.get(url);
+  const note     = response.data;
+
+  noteTabStore.setNoteTab(Object.assign({}, note));
+  noteTabStore.setSelectNote(note);
+
+  closeModal();
+}
+
+function convert(notes) {
+  notes.forEach((note) => {
+    note.path = nuxtApp.$util.note.convertPath(note);
+  });
+  return notes;
+}
 </script>
 
 <style lang="scss" scoped>
