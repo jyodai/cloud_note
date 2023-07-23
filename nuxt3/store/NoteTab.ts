@@ -96,6 +96,11 @@ export const useNoteTabStore = defineStore({
       }
     },
     setNoteTab (note: Note): void {
+      const existsNoteTab = this.noteTab.findIndex(value => value.id === note.id);
+      if (existsNoteTab !== -1) {
+        return;
+      }
+
       this.noteTab.push(note);
 
       this.saveLocalStorage();
