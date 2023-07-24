@@ -66,8 +66,8 @@ const searchInputRef: Ref<HTMLInputElement | null>     = ref(null);
 
 const modalOption = {
   opened : opened,
-  width  : '90%',
-  height : '90%',
+  width  : '95%',
+  height : '95%',
 };
 
 async function opened(): Promise<void> {
