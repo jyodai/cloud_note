@@ -27,6 +27,34 @@ class NoteControllerTest extends TestCase
         $this->headers = ['Authorization' => 'Bearer ' . $this->user->api_token];
     }
 
+    public function testIndex()
+    {
+        $note = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->withHeaders($this->headers)->getJson(route('notes.index'));
+
+        $response->assertStatus(200);
+    }
+
+    public function testIndexWithFields()
+    {
+        $note = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->withHeaders($this->headers)
+            ->getJson(route('notes.index', ['fields' => 'id,path']));
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ['id', 'path'],
+                ],
+            ]);
+    }
+
     public function testShow()
     {
         $note = Note::factory()->create([

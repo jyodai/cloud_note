@@ -10,7 +10,17 @@ interface ClosedInfo {
   closeType: number | null;
 }
 
-export default class VueFinalModal {
+interface IVueFinalModal {
+  get(id: string): ExtendedModal;
+  open(id: string, params?: object): void;
+  close(id: string, closeType: number): void;
+  setClosedCallback(id: string, callback: () => void): void;
+  getClosedInfo(): ClosedInfo;
+  setParams(id: string, params: object): void;
+  getParams(id: string): object;
+}
+
+export default class VueFinalModal implements IVueFinalModal {
   private vfm: Vfm;
   private closedInfo: ClosedInfo = {
     id        : null,
@@ -49,7 +59,7 @@ export default class VueFinalModal {
     modal.closedCallback = callback;
   }
 
-  public getClosedInfo(): object {
+  public getClosedInfo(): ClosedInfo {
     return this.closedInfo;
   }
 

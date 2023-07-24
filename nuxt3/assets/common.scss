@@ -41,6 +41,9 @@ input[type="text"] {
   padding : 5px;
   color: #EEEEEE;
   border: 1px solid #555555;
+  &:focus-visible {
+    outline : none;
+  }
 }
 
 input[type="text"]:disabled {

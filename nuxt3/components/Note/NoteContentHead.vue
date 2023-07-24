@@ -24,19 +24,23 @@ export default {
   },
   watch : {
     changeSelectNote (newVal) {
-      this.getNotePath(newVal);
+      this.changeNotePath(newVal);
     },
   },
   methods : {
-    async getNotePath (note) {
+    changeNotePath (note) {
       if (!note) {
         this.notePath = 'ファイル未選択';
-        return;
+      } else {
+        this.setNotePath(note.id);
       }
-      const url      = this.$config.public.apiUrl + '/notes/' + note.id;
-      const response = await this.$axios.get(url);
-      this.notePath  = response.data.path.join(" > ");
     },
+    async setNotePath (noteId) {
+      const url      = this.$config.public.apiUrl + '/notes/' + noteId;
+      const response = await this.$axios.get(url);
+      const note     = response.data;
+      this.notePath  = this.$util.note.convertPath(note);
+    }
   },
 };
 </script>

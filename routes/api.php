@@ -57,6 +57,7 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('notes')->name('notes.')->group(function () {
+        Route::get('/', 'Api\NoteController@index')->name('index');
         Route::get('/{id}', 'Api\NoteController@show')->name('show');
         Route::post('/', 'Api\NoteController@store')->name('store');
         Route::put('/{id}', 'Api\NoteController@update')->name('update');
