@@ -146,6 +146,7 @@ function convert(notes: Note[]) {
     height: calc(100% - 50px);
     overflow: auto;
     .search-result {
+      font-size: 12px;
       &:hover {
         background: #666666;
       }
