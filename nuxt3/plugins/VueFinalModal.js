@@ -6,5 +6,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   const vfm                                   = nuxtApp.vueApp.config.globalProperties.$vfm;
   const wrapVfm                               = new VueFinalModal(vfm);
   nuxtApp.vueApp.config.globalProperties.$vfm = wrapVfm;
-  nuxtApp.provide('vfm', wrapVfm);
+  return {
+    provide : {
+      vfm : wrapVfm
+    },
+  };
 });
