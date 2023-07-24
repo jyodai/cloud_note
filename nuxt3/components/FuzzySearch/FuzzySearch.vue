@@ -8,12 +8,12 @@
         検索
       </template>
       <template
-        v-if="visible"
         #modalContent
       >
         <div class="content-header">
           <div>
             <input
+              ref="searchInputRef"
               type="text"
               @change="search(($event.target as HTMLInputElement).value)"
             >
@@ -60,20 +60,19 @@ const modalName = 'FuzzySearch';
 let   fuse: Fuse<SearchList>;
 
 const noteTabStore                                     = useNoteTabStore();
-const visible: Ref<boolean>                            = ref(false);
 const searchList:Ref<SearchList[]>                     = ref([]);
 const searchResult: Ref<Fuse.FuseResult<SearchList>[]> = ref([]);
+const searchInputRef: Ref<HTMLInputElement | null>     = ref(null);
 
 const modalOption = {
-  beforeOpen : beforeOpen,
+  opened : opened,
 };
 
-async function beforeOpen(): Promise<void> {
-  visible.value = false;
-
+async function opened(): Promise<void> {
   await init();
-
-  visible.value = true;
+  if (searchInputRef.value) {
+    searchInputRef.value.focus();
+  }
 }
 
 function closeModal(): void {
