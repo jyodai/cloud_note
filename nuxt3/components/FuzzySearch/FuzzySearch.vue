@@ -15,7 +15,7 @@
           <div>
             <input
               type="text"
-              @change="search($event.target.value)"
+              @change="search(($event.target as HTMLInputElement).value)"
             >
           </div>
         </div>
@@ -23,9 +23,9 @@
         <div class="content-body">
           <div
             v-for="result in searchResult"
-            :key="result.item.id"
+            :key="result.item.noteId"
             class="search-result g-pointer"
-            @click="select(result.item.id)"
+            @click="select(result.item.noteId)"
           >
             {{ result.item.path }}
           </div>
@@ -41,28 +41,34 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref, Ref } from 'vue';
 import Modal from '../Modal/ModalWrapper.vue';
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 import Fuse from 'fuse.js';
 import { useNoteTabStore } from '~/store/NoteTab';
+import Note from '~/types/models/note';
+
+interface SearchList {
+  noteId : number;
+  path : string;
+}
 
 const nuxtApp = useNuxtApp();
 
 const modalName = 'FuzzySearch';
-let   fuse      = null;
+let   fuse: Fuse<SearchList>;
 
-const noteTabStore = useNoteTabStore();
-const visible      = ref(false);
-const searchList   = ref([]);
-const searchResult = ref([]);
+const noteTabStore                                     = useNoteTabStore();
+const visible: Ref<boolean>                            = ref(false);
+const searchList:Ref<SearchList[]>                     = ref([]);
+const searchResult: Ref<Fuse.FuseResult<SearchList>[]> = ref([]);
 
 const modalOption = {
   beforeOpen : beforeOpen,
 };
 
-async function beforeOpen() {
+async function beforeOpen(): Promise<void> {
   visible.value = false;
 
   await init();
@@ -70,11 +76,11 @@ async function beforeOpen() {
   visible.value = true;
 }
 
-function closeModal() {
+function closeModal(): void {
   nuxtApp.$vfm.close(modalName, nuxtApp.$const.MODAL_CLOSE_TYPE_CLOSE);
 }
 
-async function init() {
+async function init(): Promise<void> {
   searchResult.value = [];
   if (searchList.value.length === 0) {
     await setSearchList();
@@ -82,15 +88,14 @@ async function init() {
   }
 }
 
-async function setSearchList() {
-  const url      = nuxtApp.$config.public.apiUrl + '/notes?fields=id,path';
-  const response = await nuxtApp.$axios.get(url);
-  const notes    = convert(response.data);
-
-  searchList.value = notes;
+async function setSearchList(): Promise<void> {
+  const url          = nuxtApp.$config.public.apiUrl + '/notes?fields=id,path';
+  const response     = await nuxtApp.$axios.get(url);
+  const note: Note[] = response.data;
+  searchList.value   = convert(note);
 }
 
-function initFuse() {
+function initFuse(): void {
   const options = {
     keys : [
       "path",
@@ -99,11 +104,11 @@ function initFuse() {
   fuse          = new Fuse(searchList.value, options);
 }
 
-function search(value) {
+function search(value: string): void {
   searchResult.value = fuse.search(value);
 }
 
-async function select(noteId) {
+async function select(noteId: number): Promise<void> {
   const url      = nuxtApp.$config.public.apiUrl + `/notes/${noteId}`;
   const response = await nuxtApp.$axios.get(url);
   const note     = response.data;
@@ -114,11 +119,15 @@ async function select(noteId) {
   closeModal();
 }
 
-function convert(notes) {
+function convert(notes: Note[]) {
+  const list: SearchList[] = [];
   notes.forEach((note) => {
-    note.path = nuxtApp.$util.note.convertPath(note);
+    list.push({
+      'noteId' : note.id,
+      'path'   : nuxtApp.$util.note.convertPath(note),
+    });
   });
-  return notes;
+  return list;
 }
 </script>
 

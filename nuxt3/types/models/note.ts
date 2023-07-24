@@ -11,6 +11,5 @@ export default interface Note {
   updated_at: string;
   invalidation_flag: number;
   children: Note[];
-  path: string;
   hasChild: boolean;
 }
