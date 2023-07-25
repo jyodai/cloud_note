@@ -5,7 +5,7 @@
   >
     <v-icon
       v-if="showIcons.includes(icon.key)"
-      size="20"
+      :size="size"
       class="icon"
       @click="icon.event()"
     >
@@ -20,9 +20,13 @@ defineProps({
     type     : Array as PropType<Array<string>>,
     required : true,
   },
+  size : {
+    type    : Number,
+    default : 20,
+  }
 });
 
-const emits = defineEmits(['copy', 'edit', 'lock', 'trash']);
+const emits = defineEmits(['copy', 'edit', 'lock', 'trash', 'preview']);
 
 const icons = [
   {
@@ -44,6 +48,11 @@ const icons = [
     key   : 'trash',
     icon  : 'mdi-trash-can-outline',
     event : () => emits("trash"),
+  },
+  {
+    key   : 'preview',
+    icon  : 'mdi-eye-outline',
+    event : () => emits("preview"),
   },
 ];
 </script>

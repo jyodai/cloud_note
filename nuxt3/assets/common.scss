@@ -26,6 +26,14 @@ html {
       background-color:#363636;
     }
   }
+
+  .fuzzy-search {
+    .splitpanes__splitter {
+      min-width: 2px !important;
+      cursor: col-resize;
+      background-color:#555555;
+    }
+  }
 }
 
 .g-pointer {
