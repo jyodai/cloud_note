@@ -31,15 +31,17 @@
                 :key="result.item.noteId"
                 class="search-result g-pointer"
               >
-                <span :class="{'select': noteContent && noteContent.note_id === result.item.noteId}">
-                  <icon-list
-                    :show-icons="['preview']"
-                    @preview="select(result.item.noteId)"
-                  />
-                </span>
-                <span @click="open(result.item.noteId)">
-                  {{ result.item.path }}
-                </span>
+                <div :class="{'select': noteContent && noteContent.note_id === result.item.noteId}">
+                  <span>
+                    <icon-list
+                      :show-icons="['preview']"
+                      @preview="select(result.item.noteId)"
+                    />
+                  </span>
+                  <span @click="open(result.item.noteId)">
+                    {{ result.item.path }}
+                  </span>
+                </div>
               </div>
             </pane>
             <pane class="search-preview-area">
