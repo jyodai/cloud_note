@@ -105,6 +105,40 @@ class TaskElementControllerTest extends TestCase
              ]);
     }
 
+    public function testUpdate()
+    {
+        $note        = $this->createNote();
+        $task        = $this->createTask($note);
+        $taskElement = TaskElement::factory()->create([
+            'task_id' => $task->id,
+            'name'    => $this->faker->sentence,
+        ]);
+
+        $name       = $this->faker->sentence;
+        $content    = $this->faker->paragraph;
+        $stargeDate = now()->format('Y-m-d');
+        $dueDate    = now()->format('Y-m-d');
+        $data       = [
+            'name'       => $name,
+            'content'    => $content,
+            'start_date' => $stargeDate,
+            'due_date'   => $dueDate,
+        ];
+
+        $response = $this->withHeaders($this->headers)
+            ->putJson(route('tasks.elements.update', $taskElement->id), $data);
+
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'name'       => $name,
+                     'content'    => $content,
+                     'start_date' => $stargeDate,
+                     'due_date'   => $dueDate,
+                 ],
+             ]);
+    }
+
     public function testDestory()
     {
         $note = $this->createNote();

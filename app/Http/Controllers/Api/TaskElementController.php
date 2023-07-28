@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskElement\StoreRequest;
+use App\Http\Requests\TaskElement\UpdateRequest;
 use App\Http\Resources\TaskElement\TaskElementResource;
 use App\Models\TaskElement;
 use Illuminate\Http\Request;
@@ -39,8 +40,11 @@ class TaskElementController extends Controller
         return new TaskElementResource($element);
     }
 
-    public function update()
+    public function update(int $id, UpdateRequest $request): TaskElementResource
     {
+        $element = TaskElement::findOrFail($id);
+        $element->fill($request->validated())->save();
+        return new TaskElementResource($element);
     }
 
     public function destroy(int $id): Response
