@@ -63,6 +63,48 @@ class TaskElementControllerTest extends TestCase
              ]);
     }
 
+    public function testStore()
+    {
+        $note = $this->createNote();
+        $task = $this->createTask($note);
+
+        $dataA = [
+            'task_id'                => $task->id,
+            'parent_task_element_id' => 0,
+            'name'                   => $this->faker->sentence,
+        ];
+
+        $response     = $this->withHeaders($this->headers)->postJson(route('tasks.elements.store'), $dataA);
+        $responseData = $response->json();
+
+        $response->assertStatus(201)
+             ->assertJson([
+                 'data' => [
+                     'name'        => $dataA['name'],
+                     'display_num' => 10,
+                     'hierarchy'   => 1,
+                 ],
+             ]);
+
+        $dataB = [
+            'task_id'                => $task->id,
+            'parent_task_element_id' => 0,
+            'name'                   => $this->faker->sentence,
+        ];
+
+        $response     = $this->withHeaders($this->headers)->postJson(route('tasks.elements.store'), $dataB);
+        $responseData = $response->json();
+
+        $response->assertStatus(201)
+             ->assertJson([
+                 'data' => [
+                     'name'        => $dataB['name'],
+                     'display_num' => 20,
+                     'hierarchy'   => 1,
+                 ],
+             ]);
+    }
+
     public function testDestory()
     {
         $note = $this->createNote();

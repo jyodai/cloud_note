@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskElement\StoreRequest;
 use App\Http\Resources\TaskElement\TaskElementResource;
 use App\Models\TaskElement;
 use Illuminate\Http\Request;
@@ -32,8 +33,10 @@ class TaskElementController extends Controller
         return new TaskElementResource($element);
     }
 
-    public function store()
+    public function store(StoreRequest $request): TaskElementResource
     {
+        $element = TaskElement::createCustom($request->all());
+        return new TaskElementResource($element);
     }
 
     public function update()
