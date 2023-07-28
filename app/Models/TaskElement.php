@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Consts\Common as C_Common;
 use Database\Factories\TaskElementFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -55,9 +56,9 @@ class TaskElement extends Model
             'display_num'            => self::nextDisplayNum($attrs['parent_task_element_id']),
             'hierarchy'              => self::belongHierarchy($attrs['parent_task_element_id']),
             'content'                => '',
-            'completion_flag'        => 0,
+            'completion_flag'        => C_Common::FLAG_OFF,
             'register_date'          => now()->format('Y-m-d'),
-            'invalidation_flag'      => 0,
+            'invalidation_flag'      => C_Common::FLAG_OFF,
         ];
         return static::create($data);
     }
@@ -65,7 +66,7 @@ class TaskElement extends Model
     public static function nextDisplayNum($parentTaskElementId)
     {
         $notes = self::where('parent_task_element_id', $parentTaskElementId)->get();
-        return (count($notes) * 10) + 10;
+        return (count($notes) * C_Common::INCREMENT) + C_Common::INCREMENT;
     }
 
     public static function belongHierarchy($parentTaskElementId)
