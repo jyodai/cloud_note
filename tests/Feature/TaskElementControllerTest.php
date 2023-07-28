@@ -43,6 +43,26 @@ class TaskElementControllerTest extends TestCase
         ]);
     }
 
+    public function testShow()
+    {
+        $note        = $this->createNote();
+        $task        = $this->createTask($note);
+        $taskElement = TaskElement::factory()->create([
+            'task_id' => $task->id,
+        ]);
+
+        $response = $this->withHeaders($this->headers)->getJson(
+            route('tasks.elements.show', $taskElement->id)
+        );
+
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'id' => $taskElement->id,
+                 ],
+             ]);
+    }
+
     public function testDestory()
     {
         $note = $this->createNote();

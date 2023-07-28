@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskElement\TaskElementResource;
 use App\Models\TaskElement;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -25,8 +26,10 @@ class TaskElementController extends Controller
         });
     }
 
-    public function show()
+    public function show(int $id): TaskElementResource
     {
+        $element = TaskElement::find($id);
+        return new TaskElementResource($element);
     }
 
     public function store()
