@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Consts\Common as C_Common;
+use App\Models\Traits\Nested;
 use Database\Factories\TaskElementFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaskElement extends Model
 {
     use HasFactory;
+    use Nested;
 
     protected $table    = 'tasks_elements';
     protected $casts    = [];
@@ -53,7 +55,10 @@ class TaskElement extends Model
             'task_id'                => $attrs['task_id'],
             'parent_task_element_id' => $attrs['parent_task_element_id'],
             'name'                   => $attrs['name'],
-            'display_num'            => self::nextDisplayNum($attrs['parent_task_element_id']),
+            'display_num'            => self::nextDisplayNum(
+                $attrs['parent_task_element_id'],
+                'parent_task_element_id'
+            ),
             'hierarchy'              => self::belongHierarchy($attrs['parent_task_element_id']),
             'content'                => '',
             'completion_flag'        => C_Common::FLAG_OFF,
@@ -61,20 +66,5 @@ class TaskElement extends Model
             'invalidation_flag'      => C_Common::FLAG_OFF,
         ];
         return static::create($data);
-    }
-
-    public static function nextDisplayNum($parentTaskElementId)
-    {
-        $notes = self::where('parent_task_element_id', $parentTaskElementId)->get();
-        return (count($notes) * C_Common::INCREMENT) + C_Common::INCREMENT;
-    }
-
-    public static function belongHierarchy($parentTaskElementId)
-    {
-        if ($parentTaskElementId === 0) {
-            return 1;
-        }
-        $element = self::where('id', $parentTaskElementId)->first();
-        return $element->hierarchy + 1;
     }
 }
