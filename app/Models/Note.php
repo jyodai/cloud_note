@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\NoteContent;
+use App\Models\Traits\Nested;
 use Database\Factories\NoteFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Note extends Model
 {
     use HasFactory;
+    use Nested;
 
     protected $table   = 'notes';
     protected $appends = [
@@ -55,8 +57,11 @@ class Note extends Model
          $this->note_type         = $data['note_type'];
          $this->title             = $data['title'];
          $this->path              = $path;
-         $this->display_num       = $this->nextDisplayNum($data['parent_note_id']);
-         $this->hierarchy         = $this->belongHierarchy($data['parent_note_id']);
+         $this->display_num       = self::nextDisplayNum(
+             $data['parent_note_id'],
+             'parent_note_id'
+         );
+         $this->hierarchy         = self::belongHierarchy($data['parent_note_id']);
          $this->invalidation_flag = 0;
          $this->save();
 
@@ -84,27 +89,6 @@ class Note extends Model
 
        //歯抜けになったdisplay_numを調整
         $this->adjustOrder($entity->parent_note_id);
-    }
-
-    /**
-     * @brief 親Idを渡すことで、自身の所属する階層を取得
-     */
-    public function belongHierarchy($parentNoteId)
-    {
-        if ($parentNoteId === 0) {
-            return 1;
-        }
-        $note = $this->where('id', $parentNoteId)->first();
-        return $note->hierarchy + 1;
-    }
-
-    /**
-     * @brief 親Idを渡すことで、自身の所属する階層の次の表示順序を取得
-     */
-    public function nextDisplayNum($parentNoteId)
-    {
-        $notes = $this->where('parent_note_id', $parentNoteId)->get();
-        return (count($notes) * 10) + 10;
     }
 
     /**
@@ -169,7 +153,7 @@ class Note extends Model
                 break;
             case 'inside':
                 $parentNoteId = $targetNote->id;
-                $displayNum   = $this->nextDisplayNum($parentNoteId);
+                $displayNum   = self::nextDisplayNum($parentNoteId, 'parent_note_id');
                 break;
         }
 
