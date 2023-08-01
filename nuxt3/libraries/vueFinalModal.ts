@@ -2,6 +2,7 @@ import { Vfm, Modal} from 'vue-final-modal';
 
 interface ExtendedModal extends Modal {
   params?: object;
+  throwData?: object;
   closedCallback?: () => void;
 }
 
@@ -18,6 +19,8 @@ interface IVueFinalModal {
   getClosedInfo(): ClosedInfo;
   setParams(id: string, params: object): void;
   getParams(id: string): object;
+  setThrowData(id: string, params: object): void;
+  getThrowData(id: string): object|null;
 }
 
 export default class VueFinalModal implements IVueFinalModal {
@@ -40,6 +43,8 @@ export default class VueFinalModal implements IVueFinalModal {
   }
 
   public open(id: string, params: object | null = null): void {
+    this.unsetThrowData(id);
+
     this.vfm.open(id);
     if (params !== null) {
       this.setParams(id, params);
@@ -99,6 +104,26 @@ export default class VueFinalModal implements IVueFinalModal {
     const modal = this.get(id);
     if ('params' in modal) {
       delete modal.params;
+    }
+  }
+
+  public setThrowData(id: string, throwData: object): void {
+    const modal     = this.get(id);
+    modal.throwData = throwData;
+  }
+
+  public getThrowData(id: string): object|null {
+    const modal = this.get(id);
+    if (modal.throwData) {
+      return modal.throwData;
+    }
+    return null;
+  }
+
+  private unsetThrowData(id: string): void {
+    const modal = this.get(id);
+    if ('throwData' in modal) {
+      delete modal.throwData;
     }
   }
 }

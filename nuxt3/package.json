@@ -33,6 +33,7 @@
     "@mdi/font": "^7.2.96",
     "@pinia/nuxt": "^0.4.11",
     "@types/splitpanes": "^2.2.1",
+    "@vuepic/vue-datepicker": "^5.4.0",
     "axios": "^1.4.0",
     "codemirror": "^5.65.13",
     "codemirror-editor-vue3": "^2.3.0",

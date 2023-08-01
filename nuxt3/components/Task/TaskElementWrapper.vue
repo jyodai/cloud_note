@@ -122,7 +122,7 @@ function deleteItem(id: number): void {
         display: flex;
         align-items: right;
         .item-date {
-          width : 120px;
+          width : 130px;
         }
         .icon-list {
           width : 100px;
