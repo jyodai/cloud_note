@@ -6,7 +6,7 @@ export default interface TaskElement {
     content: string;
     display_num: number;
     hierarchy: number;
-    completion_flag: number;
+    completion_flag: boolean;
     register_date: string;
     start_date: string | null;
     due_date: string | null;
