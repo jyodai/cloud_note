@@ -29,27 +29,23 @@
 
       <div class="right">
         <div class="item-date">
-          <icon-list
-            :show-icons="['calendar']"
-          />
           {{ taskElement.register_date }}
         </div>
         <div class="item-date">
           <icon-list
             :show-icons="['calendar']"
+            @calendar="startEditingStartDate"
           />
-          {{ taskElement.start_date }}
+          {{ editedStartDate }}
         </div>
         <div class="item-date">
           <icon-list
             :show-icons="['calendar']"
+            @calendar="startEditingDueDate"
           />
-          {{ taskElement.due_date }}
+          {{ editedDueDate }}
         </div>
         <div class="item-date">
-          <icon-list
-            :show-icons="['calendar']"
-          />
           {{ taskElement.completion_date }}
         </div>
 
@@ -93,6 +89,8 @@ import Task from '~/types/models/task';
 import TaskElement from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import IconList from '~/commonComponents/IconList.vue';
+import Datepicker from '~/commonComponents/Datepicker.vue';
+import ThrowDatepicker from '~/types/modals/throwDatepicker';
 
 const nuxtApp = useNuxtApp();
 
@@ -126,6 +124,8 @@ const isEdigingName:Ref<boolean>          = ref(false);
 const editedName:Ref<string>              = ref(props.taskElement.name);
 const isEdigingContent:Ref<boolean>       = ref(false);
 const editedContent:Ref<string>           = ref(props.taskElement.content);
+const editedStartDate:Ref<string|null>    = ref(props.taskElement.start_date);
+const editedDueDate:Ref<string|null>      = ref(props.taskElement.due_date);
 
 const nameInput: Ref<HTMLInputElement | null>       = ref(null);
 const contentTextarea: Ref<HTMLInputElement | null> = ref(null);
@@ -157,6 +157,14 @@ function startEditingContent(): void {
   });
 }
 
+function startEditingStartDate(): void {
+  openDatepicker(editedStartDate);
+}
+
+function startEditingDueDate(): void {
+  openDatepicker(editedDueDate);
+}
+
 function finishEditing(): void {
   isEdigingName.value    = false;
   isEdigingContent.value = false;
@@ -165,10 +173,28 @@ function finishEditing(): void {
     ...props.taskElement,
     name            : editedName.value,
     content         : editedContent.value,
+    start_date      : editedStartDate.value,
+    due_date        : editedDueDate.value,
     completion_flag : completionFlag.value,
     completion_date : completionFlag.value ? nuxtApp.$util.date.getToday() : null,
   };
   emit('edit', editedTaskElement);
+}
+
+
+function openDatepicker(changeDate: Ref<string|null>): void {
+  const id = 'Datepicker';
+  nuxtApp.$vfm.open(id);
+  nuxtApp.$vfm.setClosedCallback(
+    id,
+    () => {
+      const data = nuxtApp.$vfm.getThrowData(id) as ThrowDatepicker|null;
+      if (data) {
+        changeDate.value = data.selectDate;
+        finishEditing();
+      }
+    }
+  );
 }
 </script>
 
@@ -191,7 +217,7 @@ function finishEditing(): void {
       display: flex;
       align-items: right;
       .item-date {
-        width : 120px;
+        width : 130px;
       }
       .icon-list {
         width : 100px;
