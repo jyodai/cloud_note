@@ -89,7 +89,6 @@ import Task from '~/types/models/task';
 import TaskElement from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import IconList from '~/commonComponents/IconList.vue';
-import Datepicker from '~/commonComponents/Datepicker.vue';
 import ThrowDatepicker from '~/types/modals/throwDatepicker';
 
 const nuxtApp = useNuxtApp();
