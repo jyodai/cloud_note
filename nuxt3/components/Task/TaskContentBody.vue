@@ -5,11 +5,12 @@
     @add="add"
     @edit="edit"
     @delete-item="deleteItem"
+    @toggle-tree="toggleTree"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { ref, Ref, watch } from 'vue';
 import Note from '~/types/models/note';
 import Task from '~/types/models/task';
 import TaskElement from '~/types/models/taskElement';
@@ -25,8 +26,18 @@ const props = defineProps({
   },
 });
 
+const treePath:Ref<string>           = ref('/unfinished');
 const task:Ref<Task>                 = ref(await loadTask());
 const taskElement:Ref<TaskElement[]> = ref(await loadTaskElement());
+
+watch(
+  () => props.note,
+  async (newNote: Note, oldNote: Note) => {
+    if (newNote !== oldNote) {
+      await reload();
+    }
+  }
+);
 
 async function reload(): Promise<void> {
   task.value        = await loadTask();
@@ -40,7 +51,7 @@ async function loadTask(): Promise<Task> {
 }
 
 async function loadTaskElement(): Promise<TaskElement[]> {
-  const url      = nuxtApp.$config.public.apiUrl + `/tasks/${task.value.id}/tree`;
+  const url      = nuxtApp.$config.public.apiUrl + `/tasks/${task.value.id}/tree${treePath.value}`;
   const response = await nuxtApp.$axios.get(url);
   return response.data as TaskElement[];
 }
@@ -64,6 +75,22 @@ async function deleteItem(taskElementId: number): Promise<void> {
   const url = nuxtApp.$config.public.apiUrl + `/tasks/elements/${taskElementId}`;
   await nuxtApp.$axios.delete(url);
   reload();
+}
+
+async function toggleTree(status: number): Promise<void> {
+  switch (status) {
+  case nuxtApp.$const.TASK_TREE_STATUS_ALL:
+    treePath.value = '';
+    break;
+  case nuxtApp.$const.TASK_TREE_STATUS_FINISHED:
+    treePath.value = '/finished';
+    break;
+  case nuxtApp.$const.TASK_TREE_STATUS_UNFINISHED:
+    treePath.value = '/unfinished';
+    break;
+  }
+  console.log(treePath.value);
+  await reload();
 }
 
 </script>
