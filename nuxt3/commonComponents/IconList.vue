@@ -26,7 +26,7 @@ defineProps({
   }
 });
 
-const emits = defineEmits(['copy', 'edit', 'lock', 'trash', 'preview']);
+const emits = defineEmits(['copy', 'add', 'edit', 'commentEdit', 'calendar', 'lock', 'trash', 'preview']);
 
 const icons = [
   {
@@ -35,9 +35,24 @@ const icons = [
     event : () => emits("copy"),
   },
   {
+    key   : 'add',
+    icon  : 'mdi-plus',
+    event : () => emits("add"),
+  },
+  {
     key   : 'edit',
     icon  : 'mdi-pencil-outline',
     event : () => emits("edit"),
+  },
+  {
+    key   : 'commentEdit',
+    icon  : 'mdi-comment-edit-outline',
+    event : () => emits("commentEdit"),
+  },
+  {
+    key   : 'calendar',
+    icon  : 'mdi-calendar-month',
+    event : () => emits('calendar'),
   },
   {
     key   : 'lock',

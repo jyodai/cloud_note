@@ -58,6 +58,13 @@ input[type="text"]:disabled {
   opacity: 0.4;
 }
 
+textarea {
+  width: 100%;
+  border: 1px solid #555555;
+  color: #EEEEEE;
+  padding : 5px;
+}
+
 /*スクロールバー全体*/
 ::-webkit-scrollbar {
   width: 8px;

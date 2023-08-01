@@ -14,7 +14,9 @@ class TaskElement extends Model
     use Nested;
 
     protected $table    = 'tasks_elements';
-    protected $casts    = [];
+    protected $casts    = [
+        'completion_flag' => 'boolean',
+    ];
     protected $fillable = [
         'task_id',
         'parent_task_element_id',
