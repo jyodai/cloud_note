@@ -74,6 +74,11 @@ Route::middleware(['auth_api'])->group(function () {
 
     Route::prefix('tasks')->name('tasks.')->group(function () {
         Route::get('/{id}/tree', [TaskController::class, 'showTree'])->name('tree.show');
+        Route::get('/{id}/tree/finished', [TaskController::class, 'showFinishedTree'])->name('tree.finished.show');
+        Route::get(
+            '/{id}/tree/unfinished',
+            [TaskController::class, 'showUnfinishedTree']
+        )->name('tree.unfinished.show');
 
         Route::prefix('elements')->name('elements.')->group(function () {
             Route::post('/', [TaskElementController::class, 'store'])->name('store');

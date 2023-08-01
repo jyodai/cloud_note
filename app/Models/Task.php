@@ -28,7 +28,7 @@ class Task extends Model
          $this->save();
     }
 
-    public static function getTree(int $id)
+    public static function getTree(int $id, ?bool $completionFlag = null)
     {
         $allElements = TaskElement::where('task_id', $id)
                      ->orderBy('display_num', 'asc')
@@ -36,17 +36,25 @@ class Task extends Model
 
         $groupedElements = $allElements->groupBy('parent_task_element_id');
 
-        return self::buildTree($groupedElements);
+        return self::buildTree($groupedElements, $completionFlag);
     }
 
-    private static function buildTree($groupedElements, $elementId = 0)
+    private static function buildTree($groupedElements, ?bool $completionFlag = null, int $elementId = 0)
     {
         $collect = $groupedElements->get($elementId, collect());
         return $collect->map(
-            function ($element) use ($groupedElements) {
-                $element->children = self::buildTree($groupedElements, $element->id);
+            function ($element) use ($groupedElements, $completionFlag) {
+                if (
+                    $completionFlag !== null &&
+                    ($element->parent_task_element_id === 0 && $element->completion_flag !== $completionFlag)
+                ) {
+                    logger('hogehoge');
+                    return;
+                }
+                logger('fuga');
+                $element->children = self::buildTree($groupedElements, $completionFlag, $element->id);
                 return $element;
             }
-        );
+        )->filter();
     }
 }
