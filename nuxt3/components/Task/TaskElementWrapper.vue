@@ -140,7 +140,7 @@ function toggleTree(status: number): void {
   height: 100%;
   font-size: 14px;
   .header {
-    height : 120px;
+    height : 130px;
     .toggle-tree {
     }
     .name {
@@ -170,7 +170,7 @@ function toggleTree(status: number): void {
     }
   }
   .body {
-    height: calc(100% - 120px);
+    height: calc(100% - 130px);
     overflow: auto;
   }
 }
