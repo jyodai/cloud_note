@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskElement\MoveRequest;
 use App\Http\Requests\TaskElement\StoreRequest;
 use App\Http\Requests\TaskElement\UpdateRequest;
 use App\Http\Resources\TaskElement\TaskElementResource;
@@ -55,5 +56,13 @@ class TaskElementController extends Controller
         }
         TaskElement::destroy($id);
         return response()->noContent();
+    }
+
+    public function move(int $id, MoveRequest $request): TaskElementResource
+    {
+        $targetNoteId = $request['target_task_element_id'];
+        $type         = $request['type'];
+        $taskElement  = TaskElement::move($id, $targetNoteId, $type);
+        return new TaskElementResource($taskElement);
     }
 }

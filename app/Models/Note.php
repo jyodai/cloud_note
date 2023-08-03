@@ -76,7 +76,7 @@ class Note extends Model
          $noteContentEntity->create($this);
 
          // 順番がおかしくなっている場合の保険
-         $this->adjustOrder($this->parent_note_id);
+         self::adjustOrder($this->parent_note_id, 'parent_note_id');
     }
 
 
@@ -88,21 +88,7 @@ class Note extends Model
         $this->where('id', '=', $noteId)->delete();
 
        //歯抜けになったdisplay_numを調整
-        $this->adjustOrder($entity->parent_note_id);
-    }
-
-    /**
-     * @brief display_numは10刻, 10スタート
-     */
-    public function adjustOrder($parentNoteId)
-    {
-        $array = $this->where('parent_note_id', $parentNoteId)
-        ->orderBy('display_num', 'asc')
-        ->get();
-        for ($i = 0; $i < count($array); $i++) {
-            $array[$i]['display_num'] = 10 * ($i + 1);
-            $array[$i]->save();
-        }
+        self::adjustOrder($entity->parent_note_id, 'parent_note_id');
     }
 
     public function getTree($data, $id = 0)
@@ -157,7 +143,7 @@ class Note extends Model
                 break;
         }
 
-        $this->adjustOrder($parentNoteId);
+        self::adjustOrder($parentNoteId, 'parent_note_id');
 
         $note                 = self::find($id);
         $note->parent_note_id = $parentNoteId;
@@ -165,7 +151,7 @@ class Note extends Model
         $note->display_num    = $displayNum;
         $note->save();
 
-        $this->adjustOrder($parentNoteId);
+        self::adjustOrder($parentNoteId, 'parent_note_id');
 
         self::adjustPath($id);
 

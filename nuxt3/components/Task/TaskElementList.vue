@@ -2,6 +2,7 @@
   <draggable
     :list="taskElement"
     item-key="id"
+    @change="prepareChangeSort"
   >
     <template #item="{ element }">
       <div
@@ -22,6 +23,7 @@
             @add="add"
             @edit="edit"
             @delete-item="deleteItem"
+            @change-sort="changeSort"
           />
         </div>
       </div>
@@ -36,8 +38,9 @@ import TaskElement from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import TaskElementItem from '~/components/Task/TaskElementItem.vue';
 import TaskElementList from '~/components/Task/TaskElementList.vue';
+import { TaskMovement, TaskMovedInfo } from '~/types/libraries/draggable';
 
-defineProps({
+const props = defineProps({
   task : {
     type     : Object as () => Task,
     required : true,
@@ -52,6 +55,7 @@ const emit = defineEmits<{
   add: [addTaskElement: AddTaskElement],
   edit: [editedTaskElement: TaskElement],
   deleteItem: [id: number],
+  changeSort: [movedInfo: TaskMovedInfo],
 }>();
 
 function add(element: AddTaskElement): void {
@@ -64,6 +68,35 @@ function edit(element: TaskElement): void {
 
 function deleteItem(id: number): void {
   emit('deleteItem', id);
+}
+
+function prepareChangeSort(movement: TaskMovement) {
+  if (!movement.moved) { 
+    return;
+  }
+
+  const index           = movement.moved.newIndex;
+  let targetTaskElement = null;
+  let type              = null;
+  if (props.taskElement[index + 1]) {
+    targetTaskElement = props.taskElement[index + 1];
+    type              = 'before';
+  } else {
+    targetTaskElement = props.taskElement[index - 1];
+    type              = 'after';
+  }
+
+  const movedInfo: TaskMovedInfo = {
+    movement,
+    type,
+    targetTaskElement,
+  };
+
+  changeSort(movedInfo);
+}
+
+function changeSort(movedInfo: TaskMovedInfo): void {
+  emit('changeSort', movedInfo);
 }
 
 </script>
