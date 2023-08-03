@@ -171,7 +171,7 @@ function toggleTree(status: number): void {
           width : 130px;
         }
         .icon-list {
-          width : 100px;
+          width : 110px;
         }
       }
     }

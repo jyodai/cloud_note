@@ -51,8 +51,9 @@
 
         <div class="icon-list">
           <icon-list
-            :show-icons="['add', 'commentEdit', 'trash']"
+            :show-icons="['add', 'edit', 'commentEdit', 'trash']"
             @add="add()"
+            @edit="startEditingName()"
             @comment-edit="startEditingContent()"
             @trash="deleteItem()"
           />
@@ -219,7 +220,7 @@ function openDatepicker(changeDate: Ref<string|null>): void {
         width : 130px;
       }
       .icon-list {
-        width : 100px;
+        width : 110px;
       }
     }
   }
