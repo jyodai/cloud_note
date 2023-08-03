@@ -48,10 +48,8 @@ class Task extends Model
                     $completionFlag !== null &&
                     ($element->parent_task_element_id === 0 && $element->completion_flag !== $completionFlag)
                 ) {
-                    logger('hogehoge');
                     return;
                 }
-                logger('fuga');
                 $element->children = self::buildTree($groupedElements, $completionFlag, $element->id);
                 return $element;
             }
