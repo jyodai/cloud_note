@@ -27,9 +27,10 @@ trait Nested
         return (count($entities) * C_Common::INCREMENT) + C_Common::INCREMENT;
     }
 
-    public function adjustOrder(int $parentId, string $column): void
+    public static function adjustOrder(int $parentId, string $column, array $where = []): void
     {
-        $array = $this->where($column, $parentId)
+        $array = self::where($column, $parentId)
+        ->where($where)
         ->orderBy('display_num', 'asc')
         ->get();
         for ($i = 0; $i < count($array); $i++) {

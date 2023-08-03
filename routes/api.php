@@ -85,6 +85,7 @@ Route::middleware(['auth_api'])->group(function () {
             Route::get('/{id}', [TaskElementController::class, 'show'])->name('show');
             Route::put('/{id}', [TaskElementController::class, 'update'])->name('update');
             Route::delete('/{id}', [TaskElementController::class, 'destroy'])->name('destroy');
+            Route::put('/{id}/move', [TaskElementController::class, 'move'])->name('move');
         });
     });
 

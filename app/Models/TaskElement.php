@@ -69,4 +69,43 @@ class TaskElement extends Model
         ];
         return static::create($data);
     }
+
+    /**
+     * @param array $id 移動対象のID
+     * @param array $targetTaskElementId 移動先のノートID
+     */
+    public static function move($id, $targetTaskElementId, $type)
+    {
+        $parentNoteId = null;
+        $displayNum   = null;
+
+        $targetTaskElement = self::find($targetTaskElementId);
+        switch ($type) {
+            case 'before':
+                $parentTaskElementId = $targetTaskElement->parent_task_element_id;
+                $displayNum          = $targetTaskElement->display_num - 1;
+                break;
+            case 'after':
+                $parentTaskElementId = $targetTaskElement->parent_task_element_id;
+                $displayNum          = $targetTaskElement->display_num + 1;
+                break;
+            case 'inside':
+                $parentTaskElementId = $targetTaskElement->id;
+                $displayNum          = self::nextDisplayNum($parentTaskElementId, 'parent_task_element_id');
+                break;
+        }
+
+        $where = ['task_id' => $targetTaskElement->task_id];
+
+        self::adjustOrder($parentTaskElementId, 'parent_task_element_id', $where);
+
+        $taskElement                         = self::find($id);
+        $taskElement->parent_task_element_id = $parentTaskElementId;
+        $taskElement->display_num            = $displayNum;
+        $taskElement->save();
+
+        self::adjustOrder($parentTaskElementId, 'parent_task_element_id', $where);
+
+        return self::find($id);
+    }
 }
