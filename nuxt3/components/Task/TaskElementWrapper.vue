@@ -1,6 +1,36 @@
 <template>
   <div class="wrapper">
     <div class="header">
+      <div class="toggle-tree mb-5">
+        <label class="mr-2">
+          <input
+            v-model="treeStatus"
+            type="radio"
+            :value="nuxtApp.$const.TASK_TREE_STATUS_UNFINISHED"
+            @change="toggleTree(nuxtApp.$const.TASK_TREE_STATUS_UNFINISHED)"
+          >
+          未完了
+        </label>
+        <label class="mr-2">
+          <input
+            v-model="treeStatus"
+            type="radio"
+            :value="nuxtApp.$const.TASK_TREE_STATUS_FINISHED"
+            @change="toggleTree(nuxtApp.$const.TASK_TREE_STATUS_FINISHED)"
+          >
+          完了済み
+        </label>
+        <label>
+          <input
+            v-model="treeStatus"
+            type="radio"
+            :value="nuxtApp.$const.TASK_TREE_STATUS_ALL"
+            @change="toggleTree(nuxtApp.$const.TASK_TREE_STATUS_ALL)"
+          >
+          全て
+        </label>
+      </div>
+
       <div class="mb-5">
         <input
           v-model="addTaskElement.name"
@@ -55,6 +85,8 @@ import TaskElementModel from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import TaskElementList from '~/components/Task/TaskElementList.vue';
 
+const nuxtApp = useNuxtApp();
+
 const props = defineProps({
   task : {
     type     : Object as () => Task,
@@ -70,6 +102,7 @@ const emit = defineEmits<{
   add: [addTaskElement: AddTaskElement],
   edit: [editedTaskElement: TaskElementModel],
   deleteItem: [id: number],
+  toggleTree: [status: number],
 }>();
 
 const addTaskElement: Ref<AddTaskElement> = ref({
@@ -80,7 +113,7 @@ const addTaskElement: Ref<AddTaskElement> = ref({
   start_date             : null,
   due_date               : null,
 });
-
+const treeStatus: Ref<number>             = ref(nuxtApp.$const.TASK_TREE_STATUS_UNFINISHED);
 
 function add(addTaskElement: AddTaskElement): void {
   emit('add', addTaskElement);
@@ -94,6 +127,10 @@ function deleteItem(id: number): void {
   emit('deleteItem', id);
 }
 
+function toggleTree(status: number): void {
+  emit('toggleTree', status);
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -103,7 +140,9 @@ function deleteItem(id: number): void {
   height: 100%;
   font-size: 14px;
   .header {
-    height : 90px;
+    height : 130px;
+    .toggle-tree {
+    }
     .name {
       width : 600px;
     }
@@ -131,7 +170,7 @@ function deleteItem(id: number): void {
     }
   }
   .body {
-    height: calc(100% - 90px);
+    height: calc(100% - 130px);
     overflow: auto;
   }
 }
