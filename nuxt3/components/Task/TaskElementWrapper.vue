@@ -73,6 +73,7 @@
         @add="add"
         @edit="edit"
         @delete-item="deleteItem"
+        @change-sort="changeSort"
       />
     </div>
   </div>
@@ -84,6 +85,7 @@ import Task from '~/types/models/task';
 import TaskElementModel from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import TaskElementList from '~/components/Task/TaskElementList.vue';
+import { TaskMovedInfo } from '~/types/libraries/draggable';
 
 const nuxtApp = useNuxtApp();
 
@@ -102,6 +104,7 @@ const emit = defineEmits<{
   add: [addTaskElement: AddTaskElement],
   edit: [editedTaskElement: TaskElementModel],
   deleteItem: [id: number],
+  changeSort: [movedInfo: TaskMovedInfo],
   toggleTree: [status: number],
 }>();
 
@@ -125,6 +128,10 @@ function edit(editedTaskElement: TaskElementModel): void {
 
 function deleteItem(id: number): void {
   emit('deleteItem', id);
+}
+
+function changeSort(movedInfo: TaskMovedInfo): void {
+  emit('changeSort', movedInfo);
 }
 
 function toggleTree(status: number): void {

@@ -5,6 +5,7 @@
     @add="add"
     @edit="edit"
     @delete-item="deleteItem"
+    @change-sort="changeSort"
     @toggle-tree="toggleTree"
   />
 </template>
@@ -16,6 +17,7 @@ import Task from '~/types/models/task';
 import TaskElement from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
 import TaskElementWrapper from '~/components/Task/TaskElementWrapper.vue';
+import { TaskMovedInfo } from '~/types/libraries/draggable';
 
 const nuxtApp = useNuxtApp();
 
@@ -74,6 +76,16 @@ async function deleteItem(taskElementId: number): Promise<void> {
   }
   const url = nuxtApp.$config.public.apiUrl + `/tasks/elements/${taskElementId}`;
   await nuxtApp.$axios.delete(url);
+  reload();
+}
+
+async function changeSort(movedInfo: TaskMovedInfo): Promise<void> {
+  const params = {
+    'target_task_element_id' : movedInfo.targetTaskElement.id,
+    'type'                   : movedInfo.type,
+  };
+  const url    = nuxtApp.$config.public.apiUrl + `/tasks/elements/${movedInfo.movement.moved.element.id}/move`;
+  await nuxtApp.$axios.put(url, params);
   reload();
 }
 
