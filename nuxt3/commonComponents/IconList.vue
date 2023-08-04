@@ -5,7 +5,7 @@
   >
     <v-icon
       v-if="showIcons.includes(icon.key)"
-      size="20"
+      :size="size"
       class="icon"
       @click="icon.event()"
     >
@@ -20,9 +20,23 @@ defineProps({
     type     : Array as PropType<Array<string>>,
     required : true,
   },
+  size : {
+    type    : Number,
+    default : 20,
+  }
 });
 
-const emits = defineEmits(['copy', 'edit', 'lock', 'trash']);
+const emits = defineEmits([
+  'copy',
+  'add',
+  'edit',
+  'commentEdit',
+  'calendar',
+  'lock',
+  'trash',
+  'preview',
+  'noPreview',
+]);
 
 const icons = [
   {
@@ -31,9 +45,24 @@ const icons = [
     event : () => emits("copy"),
   },
   {
+    key   : 'add',
+    icon  : 'mdi-plus',
+    event : () => emits("add"),
+  },
+  {
     key   : 'edit',
     icon  : 'mdi-pencil-outline',
     event : () => emits("edit"),
+  },
+  {
+    key   : 'commentEdit',
+    icon  : 'mdi-comment-edit-outline',
+    event : () => emits("commentEdit"),
+  },
+  {
+    key   : 'calendar',
+    icon  : 'mdi-calendar-month',
+    event : () => emits('calendar'),
   },
   {
     key   : 'lock',
@@ -44,6 +73,16 @@ const icons = [
     key   : 'trash',
     icon  : 'mdi-trash-can-outline',
     event : () => emits("trash"),
+  },
+  {
+    key   : 'preview',
+    icon  : 'mdi-eye-outline',
+    event : () => emits("preview"),
+  },
+  {
+    key   : 'noPreview',
+    icon  : 'mdi-eye-off-outline',
+    event : () => emits("preview"),
   },
 ];
 </script>

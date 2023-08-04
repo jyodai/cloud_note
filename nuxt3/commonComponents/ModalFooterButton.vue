@@ -26,6 +26,7 @@ export default {
     },
   },
   emits : [
+    'select',
     'save',
     'delete',
     'close',
@@ -33,6 +34,11 @@ export default {
   data () {
     return {
       buttonLists : [
+        {
+          name  : 'select',
+          label : '選択',
+          event : () => this.select(),
+        },
         {
           name  : 'save',
           label : '保存',
@@ -52,6 +58,9 @@ export default {
     };
   },
   methods : {
+    select ()  {
+      this.$emit('select');
+    },
     save () {
       this.$emit('save');
     },

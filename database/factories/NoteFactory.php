@@ -24,19 +24,17 @@ class NoteFactory extends Factory
      */
     public function definition()
     {
-        $user       = User::all()->random();
-        $parentNote = null;
-        if (Note::exists()) {
-            $parentNote = Note::all()->random();
-        }
+        $user  = User::all()->random();
+        $title = $this->faker->sentence;
 
         return [
-            'parent_note_id'    => $parentNote ? $parentNote->id : 0,
+            'parent_note_id'    => 0,
             'user_id'           => $user->id,
             'note_type'         => C_Note::NOTE_TYPE_NORMAL,
-            'title'             => $this->faker->sentence,
+            'title'             => $title,
+            'path'              => [$title],
             'display_num'       => $this->faker->randomDigit,
-            'hierarchy'         => $parentNote ? $parentNote->hierarchy + 1 : 1,
+            'hierarchy'         => 1,
             'invalidation_flag' => 0,
         ];
     }

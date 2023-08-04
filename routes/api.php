@@ -1,13 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\NoteSettingController;
 use App\Http\Controllers\Api\LibraryFileController;
+use App\Http\Controllers\Api\NoteSettingController;
+use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\TaskElementController;
+use App\Http\Controllers\Api\UserController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,7 @@ Route::middleware(['auth_api'])->group(function () {
     });
 
     Route::prefix('notes')->name('notes.')->group(function () {
+        Route::get('/', 'Api\NoteController@index')->name('index');
         Route::get('/{id}', 'Api\NoteController@show')->name('show');
         Route::post('/', 'Api\NoteController@store')->name('store');
         Route::put('/{id}', 'Api\NoteController@update')->name('update');
@@ -67,6 +70,23 @@ Route::middleware(['auth_api'])->group(function () {
 
     Route::prefix('note_content')->name('note_content.')->group(function () {
         Route::put('/{id}', 'Api\NoteContentController@update')->name('update');
+    });
+
+    Route::prefix('tasks')->name('tasks.')->group(function () {
+        Route::get('/{id}/tree', [TaskController::class, 'showTree'])->name('tree.show');
+        Route::get('/{id}/tree/finished', [TaskController::class, 'showFinishedTree'])->name('tree.finished.show');
+        Route::get(
+            '/{id}/tree/unfinished',
+            [TaskController::class, 'showUnfinishedTree']
+        )->name('tree.unfinished.show');
+
+        Route::prefix('elements')->name('elements.')->group(function () {
+            Route::post('/', [TaskElementController::class, 'store'])->name('store');
+            Route::get('/{id}', [TaskElementController::class, 'show'])->name('show');
+            Route::put('/{id}', [TaskElementController::class, 'update'])->name('update');
+            Route::delete('/{id}', [TaskElementController::class, 'destroy'])->name('destroy');
+            Route::put('/{id}/move', [TaskElementController::class, 'move'])->name('move');
+        });
     });
 
     Route::prefix('tree')->name('tree.')->group(function () {

@@ -83,7 +83,7 @@ export const useNoteTabStore = defineStore({
         return;
       }
 
-      const noteTabArray = nuxtApp.$util.localStorage.get<Note[]>('noteTab');
+      const noteTabArray = nuxtApp.$util.localStorage.get('noteTab') as Note[];
       if (noteTabArray) {
         noteTabArray.forEach((note) => {
           if (user.id === note.user_id) {
@@ -96,6 +96,11 @@ export const useNoteTabStore = defineStore({
       }
     },
     setNoteTab (note: Note): void {
+      const existsNoteTab = this.noteTab.findIndex(value => value.id === note.id);
+      if (existsNoteTab !== -1) {
+        return;
+      }
+
       this.noteTab.push(note);
 
       this.saveLocalStorage();

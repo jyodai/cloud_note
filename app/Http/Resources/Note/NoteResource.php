@@ -12,10 +12,9 @@ class NoteResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-
     public function toArray($request)
     {
-        return [
+        $availableFields = [
             'id'                => $this->id,
             'parent_note_id'    => $this->parent_note_id,
             'user_id'           => $this->user_id,
@@ -30,5 +29,13 @@ class NoteResource extends JsonResource
             'path'              => $this->path,
             'hasChild'          => $this->hasChild,
         ];
+
+        $requestedFields = explode(',', $request->query('fields', ''));
+
+        if (empty($requestedFields[0])) {
+            return $availableFields;
+        }
+
+        return array_intersect_key($availableFields, array_flip($requestedFields));
     }
 }

@@ -8,6 +8,8 @@
     <user-edit />
     <user-password-edit />
     <note-setting />
+    <fuzzy-search />
+    <datepicker-modal />
   </div>
 </template>
 
@@ -20,6 +22,8 @@ import UserAdd from '~/components/UserAdd/UserAdd.vue';
 import UserEdit from '~/components/UserEdit/UserEdit.vue';
 import UserPasswordEdit from '~/components/UserPasswordEdit/UserPasswordEdit.vue';
 import NoteSetting from '~/components/NoteSetting/NoteSetting.vue';
+import FuzzySearch from '~/components/FuzzySearch/FuzzySearch.vue';
+import DatepickerModal from '~/components/Datepicker/DatepickerModal.vue';
 
 export default {
   components : {
@@ -31,6 +35,8 @@ export default {
     UserEdit,
     UserPasswordEdit,
     NoteSetting,
+    FuzzySearch,
+    DatepickerModal,
   },
 };
 </script>

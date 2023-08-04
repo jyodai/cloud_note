@@ -105,11 +105,7 @@ export default {
   },
   methods : {
     setNote (note) {
-      const noteTab       = this.noteTabStore.getNoteTab;
-      const existsNoteTab = noteTab.findIndex(value => value.id === note.id);
-      if (existsNoteTab === -1) {
-        this.noteTabStore.setNoteTab(Object.assign({}, note));
-      }
+      this.noteTabStore.setNoteTab(Object.assign({}, note));
       this.noteTabStore.setSelectNote(note);
       this.selectNoteTree(note);
     },

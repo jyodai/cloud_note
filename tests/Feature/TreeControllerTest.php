@@ -57,14 +57,26 @@ class TreeControllerTest extends TestCase
 
     public function testMove()
     {
-        $note       = Note::factory()->create(['user_id' => $this->user->id, 'parent_note_id' => $this->note->id]);
+        $note      = Note::factory()->create(['user_id' => $this->user->id, 'parent_note_id' => $this->note->id]);
+        $childNote = Note::factory()->create(['user_id' => $this->user->id, 'parent_note_id' => $note->id]);
+
         $targetNote = Note::factory()->create(['user_id' => $this->user->id, 'parent_note_id' => $this->note->id]);
 
-        $response = $this->withHeaders($this->headers)->putJson(route('tree.move', $note->id), [
+        $response     = $this->withHeaders($this->headers)->putJson(route('tree.move', $note->id), [
             'target_note_id' => $targetNote->id,
             'type'           => 'inside',
         ]);
+        $responseData = $response->json();
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'parent_note_id' => $targetNote->id,
+                     'path'           => Note::getPath($responseData['data']['id']),
+                 ],
+             ]);
+
+        $updatedChildNote = Note::find($childNote->id);
+        $this->assertEquals($updatedChildNote->path, Note::getPath($updatedChildNote->id));
     }
 }

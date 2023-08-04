@@ -10,6 +10,9 @@
       :modal-id="modalName"
       :teleport-to="false"
       @before-open="option.beforeOpen"
+      @opened="option.opened"
+      @before-close="option.beforeClose"
+      @closed="option.closed"
     >
       <span class="modal__title">
         <slot name="modalTitle" />
@@ -55,9 +58,12 @@ export default {
   methods : {
     setOption () {
       const defaultOption = {
-        width      : '60%',
-        height     : '60%',
-        beforeOpen : () => { return; },
+        width       : '60%',
+        height      : '60%',
+        beforeOpen  : () => { return; },
+        opened      : () => { return; },
+        beforeClose : () => { return; },
+        closed      : () => { return; },
       };
       this.option         = Object.assign(defaultOption, this.modalOption);
       this.width          = this.option.width;

@@ -27,6 +27,34 @@ class NoteControllerTest extends TestCase
         $this->headers = ['Authorization' => 'Bearer ' . $this->user->api_token];
     }
 
+    public function testIndex()
+    {
+        $note = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->withHeaders($this->headers)->getJson(route('notes.index'));
+
+        $response->assertStatus(200);
+    }
+
+    public function testIndexWithFields()
+    {
+        $note = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $response = $this->withHeaders($this->headers)
+            ->getJson(route('notes.index', ['fields' => 'id,path']));
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ['id', 'path'],
+                ],
+            ]);
+    }
+
     public function testShow()
     {
         $note = Note::factory()->create([
@@ -35,7 +63,14 @@ class NoteControllerTest extends TestCase
 
         $response = $this->withHeaders($this->headers)->getJson(route('notes.show', $note->id));
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'id'    => $note->id,
+                     'title' => $note->title,
+                     'path'  => $note->path,
+                 ],
+             ]);
     }
 
     public function testStore()
@@ -46,9 +81,41 @@ class NoteControllerTest extends TestCase
             'title'          => $this->faker->sentence,
         ];
 
-        $response = $this->withHeaders($this->headers)->postJson(route('notes.store'), $data);
+        $response     = $this->withHeaders($this->headers)->postJson(route('notes.store'), $data);
+        $responseData = $response->json();
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'title' => $data['title'],
+                     'path'  => Note::getPath($responseData['data']['id']),
+                 ],
+             ]);
+    }
+
+    public function testStoreWithNestedNote()
+    {
+        $parentNote = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $data = [
+            'parent_note_id' => $parentNote->id,
+            'note_type'      => C_Note::NOTE_TYPE_NORMAL,
+            'title'          => $this->faker->sentence,
+        ];
+
+        $response     = $this->withHeaders($this->headers)->postJson(route('notes.store'), $data);
+        $responseData = $response->json();
+
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'parent_note_id' => $parentNote->id,
+                     'title'          => $data['title'],
+                     'path'           => Note::getPath($responseData['data']['id']),
+                 ],
+             ]);
     }
 
     public function testUpdate()
@@ -64,6 +131,38 @@ class NoteControllerTest extends TestCase
         $response = $this->withHeaders($this->headers)->putJson(route('notes.update', $note->id), $data);
 
         $response->assertStatus(200);
+    }
+
+    public function testUpdateWithNestedNote()
+    {
+        $parentNote = Note::factory()->create([
+            'user_id' => $this->user->id,
+        ]);
+
+        $title = $this->faker->sentence;
+
+        $note = Note::factory()->create([
+            'parent_note_id' => $parentNote->id,
+            'user_id'        => $this->user->id,
+            'title'          => $title,
+            'path'           => array_merge(Note::getPath($parentNote->id), [$title]),
+        ]);
+
+        $data = [
+            'title' => $this->faker->sentence,
+        ];
+
+        $response     = $this->withHeaders($this->headers)->putJson(route('notes.update', $note->id), $data);
+        $responseData = $response->json();
+
+        $response->assertStatus(200)
+             ->assertJson([
+                 'data' => [
+                     'parent_note_id' => $parentNote->id,
+                     'title'          => $data['title'],
+                     'path'           => Note::getPath($responseData['data']['id']),
+                 ],
+             ]);
     }
 
     public function testDestroy()

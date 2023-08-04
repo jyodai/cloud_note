@@ -26,6 +26,14 @@ html {
       background-color:#363636;
     }
   }
+
+  .fuzzy-search {
+    .splitpanes__splitter {
+      min-width: 2px !important;
+      cursor: col-resize;
+      background-color:#555555;
+    }
+  }
 }
 
 .g-pointer {
@@ -41,10 +49,20 @@ input[type="text"] {
   padding : 5px;
   color: #EEEEEE;
   border: 1px solid #555555;
+  &:focus-visible {
+    outline : none;
+  }
 }
 
 input[type="text"]:disabled {
   opacity: 0.4;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #555555;
+  color: #EEEEEE;
+  padding : 5px;
 }
 
 /*スクロールバー全体*/

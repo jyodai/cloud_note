@@ -10,11 +10,10 @@
           v-if="note && note.note_type === $const.NOTE_TYPE_NORMAL"
           :note="note"
         />
-        <div
+        <task-content-body
           v-if="note && note.note_type === $const.NOTE_TYPE_TASK"
-        >
-          Sample Task
-        </div>
+          :note="note"
+        />
       </div>
     </div>
   </div>
@@ -25,12 +24,14 @@ import NoteTab from './NoteTab.vue';
 import NoteContentHead from './NoteContentHead.vue';
 import NoteContentBody from './NoteContentBody.vue';
 import { useNoteTabStore } from '~/store/NoteTab';
+import TaskContentBody from '~/components/Task/TaskContentBody.vue';
 
 export default {
   components : {
     NoteTab,
     NoteContentHead,
     NoteContentBody,
+    TaskContentBody,
   },
   data () {
     return {

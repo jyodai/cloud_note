@@ -1,0 +1,14 @@
+export default {
+  NOTE_TYPE_NORMAL : 'App\\Models\\NoteContent',
+  NOTE_TYPE_TASK   : 'App\\Models\\Task',
+
+  USER_TYPE_ADMIN : 1,
+
+  MODAL_CLOSE_TYPE_SAVE   : 1,
+  MODAL_CLOSE_TYPE_CLOSE  : 2,
+  MODAL_CLOSE_TYPE_SELECT : 3,
+
+  TASK_TREE_STATUS_ALL        : 1,
+  TASK_TREE_STATUS_FINISHED   : 2,
+  TASK_TREE_STATUS_UNFINISHED : 3,
+};
