@@ -26,7 +26,17 @@ defineProps({
   }
 });
 
-const emits = defineEmits(['copy', 'add', 'edit', 'commentEdit', 'calendar', 'lock', 'trash', 'preview']);
+const emits = defineEmits([
+  'copy',
+  'add',
+  'edit',
+  'commentEdit',
+  'calendar',
+  'lock',
+  'trash',
+  'preview',
+  'noPreview',
+]);
 
 const icons = [
   {
@@ -67,6 +77,11 @@ const icons = [
   {
     key   : 'preview',
     icon  : 'mdi-eye-outline',
+    event : () => emits("preview"),
+  },
+  {
+    key   : 'noPreview',
+    icon  : 'mdi-eye-off-outline',
     event : () => emits("preview"),
   },
 ];

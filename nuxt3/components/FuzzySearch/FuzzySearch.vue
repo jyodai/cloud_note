@@ -32,10 +32,15 @@
                 class="search-result g-pointer"
               >
                 <div :class="{'select': noteContent && noteContent.note_id === result.item.noteId}">
-                  <span>
+                  <span v-if="result.item.noteType === nuxtApp.$const.NOTE_TYPE_NORMAL">
                     <icon-list
                       :show-icons="['preview']"
                       @preview="select(result.item.noteId)"
+                    />
+                  </span>
+                  <span v-else>
+                    <icon-list
+                      :show-icons="['noPreview']"
                     />
                   </span>
                   <span @click="open(result.item.noteId)">
@@ -77,6 +82,7 @@ import IconList from '~/commonComponents/IconList.vue';
 
 interface SearchList {
   noteId : number;
+  noteType : string;
   path : string;
 }
 
@@ -126,7 +132,7 @@ async function init(): Promise<void> {
 }
 
 async function setSearchList(): Promise<void> {
-  const url          = nuxtApp.$config.public.apiUrl + '/notes?fields=id,path';
+  const url          = nuxtApp.$config.public.apiUrl + '/notes?fields=id,note_type,path';
   const response     = await nuxtApp.$axios.get(url);
   const note: Note[] = response.data;
   searchList.value   = convert(note);
@@ -166,8 +172,9 @@ function convert(notes: Note[]) {
   const list: SearchList[] = [];
   notes.forEach((note) => {
     list.push({
-      'noteId' : note.id,
-      'path'   : nuxtApp.$util.note.convertPath(note),
+      'noteId'   : note.id,
+      'noteType' : note.note_type,
+      'path'     : nuxtApp.$util.note.convertPath(note),
     });
   });
   return list;
