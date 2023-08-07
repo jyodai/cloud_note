@@ -59,6 +59,7 @@ export default {
         theme          : 'dark',
         themeVariables : {
           darkMode : true,
+          fontSize : '14px',
         },
       });
     },
