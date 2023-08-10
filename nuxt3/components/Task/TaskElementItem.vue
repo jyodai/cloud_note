@@ -10,7 +10,7 @@
         >
         <span
           v-if="!isEdigingName"
-          class="mr-2 item-name"
+          class="mr-2 item-name g-draggable-handle g-pointer"
           :class="{'font-weight-bold' : taskElement.hierarchy === 1}"
           @dblclick="startEditingName"
         >
@@ -43,7 +43,9 @@
             :show-icons="['calendar']"
             @calendar="startEditingDueDate"
           />
-          {{ editedDueDate }}
+          <span :class="deadlineClass">
+            {{ editedDueDate }}
+          </span>
         </div>
         <div class="item-date">
           {{ taskElement.completion_date }}
@@ -85,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, nextTick } from 'vue';
+import { ref, Ref, computed, nextTick } from 'vue';
 import Task from '~/types/models/task';
 import TaskElement from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
@@ -129,6 +131,23 @@ const editedDueDate:Ref<string|null>      = ref(props.taskElement.due_date);
 
 const nameInput: Ref<HTMLInputElement | null>       = ref(null);
 const contentTextarea: Ref<HTMLInputElement | null> = ref(null);
+
+const deadlineClass = computed(() => {
+  if (editedDueDate.value === null) {
+    return '';
+  }
+
+  const currentDate = new Date();
+  const dueDate     = new Date(editedDueDate.value);
+  const diffDays    = (dueDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+
+  if (diffDays < 0) {
+    return 'missed-deadline';
+  } else if (diffDays <= 3) {
+    return 'approaching-deadline';
+  }
+  return '';
+});
 
 function add(): void {
   addTaskElement.value.parent_task_element_id = props.taskElement.id;
@@ -221,6 +240,12 @@ function openDatepicker(changeDate: Ref<string|null>): void {
       }
       .icon-list {
         width : 110px;
+      }
+      .approaching-deadline {
+          color: $color-warning;
+        }
+      .missed-deadline {
+        color: $color-error;
       }
     }
   }

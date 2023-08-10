@@ -21,22 +21,35 @@
                 v-if="node.data.hasChild"
                 @click.stop="tree.toggleFold(node, path);"
               >
-                <v-icon
-                  v-if="node.$folded"
-                  size="12"
-                >
-                  mdi-folder
-                </v-icon>
-                <v-icon
-                  v-else
-                  size="12"
-                >
-                  mdi-folder-open
-                </v-icon>
+                <template v-if="node.$folded">
+                  <v-icon
+                    size="14"
+                  >
+                    mdi-chevron-right
+                  </v-icon>
+                  <v-icon
+                    size="14"
+                  >
+                    mdi-folder
+                  </v-icon>
+                </template>
+                <template v-else>
+                  <v-icon
+                    size="14"
+                  >
+                    mdi-chevron-down
+                  </v-icon>
+                  <v-icon
+                    size="14"
+                  >
+                    mdi-folder-open
+                  </v-icon>
+                </template>
               </span>
 
               <span v-else>
-                <v-icon size="12">
+                <v-icon size="14" />
+                <v-icon size="14">
                   mdi-file-outline
                 </v-icon>
               </span>
@@ -168,7 +181,7 @@ export default {
   margin-top:20px;
   padding-left : 10px;
   padding-right : 10px;
-  font-size: 12px;
+  font-size: 14px;
   #dir-frame {
     width :100%;
     height : calc(100% - 20px);
