@@ -1,6 +1,7 @@
 <template>
   <draggable
     :list="taskElement"
+    handle=".g-draggable-handle"
     item-key="id"
     @change="prepareChangeSort"
   >
