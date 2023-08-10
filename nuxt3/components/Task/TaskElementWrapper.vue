@@ -38,7 +38,7 @@
           class="name mr-3"
         >
         <v-btn
-          @click="add(addTaskElement)"
+          @click="add(addTaskElement); init();"
         >
           追加
         </v-btn>
@@ -117,6 +117,10 @@ const addTaskElement: Ref<AddTaskElement> = ref({
   due_date               : null,
 });
 const treeStatus: Ref<number>             = ref(nuxtApp.$const.TASK_TREE_STATUS_UNFINISHED);
+
+function init () {
+  addTaskElement.value.name = '';
+}
 
 function add(addTaskElement: AddTaskElement): void {
   emit('add', addTaskElement);
