@@ -6,16 +6,16 @@
         <note-content-head />
       </div>
       <div class="note-content-body">
-        <note-content-body
-          v-if="note && note.note_type === $const.NOTE_TYPE_NORMAL"
-          :key="note.id"
-          :note="note"
-        />
-        <task-content-body
-          v-if="note && note.note_type === $const.NOTE_TYPE_TASK"
-          :key="note.id"
-          :note="note"
-        />
+        <template v-if="visible">
+          <note-content-body
+            v-if="note && note.note_type === $const.NOTE_TYPE_NORMAL"
+            :note="note"
+          />
+          <task-content-body
+            v-if="note && note.note_type === $const.NOTE_TYPE_TASK"
+            :note="note"
+          />
+        </template>
       </div>
     </div>
   </div>
@@ -39,6 +39,7 @@ export default {
     return {
       noteTabStore : useNoteTabStore(),
       note         : null,
+      visible      : true,
     };
   },
   computed : {
@@ -48,7 +49,11 @@ export default {
   },
   watch : {
     changeSelectNote (newVal) {
-      this.note = newVal;
+      this.note    = newVal;
+      this.visible = false;
+      this.$nextTick(() => {
+        this.visible = true;
+      });
     },
   },
 };
