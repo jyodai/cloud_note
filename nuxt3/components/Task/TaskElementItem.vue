@@ -10,7 +10,7 @@
         >
         <span
           v-if="!isEdigingName"
-          class="mr-2 item-name"
+          class="mr-2 item-name g-draggable-handle g-pointer"
           :class="{'font-weight-bold' : taskElement.hierarchy === 1}"
           @dblclick="startEditingName"
         >
