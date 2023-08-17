@@ -120,4 +120,9 @@ export default {
     background: #222222;
   }
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
 </style>
