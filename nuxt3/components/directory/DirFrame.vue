@@ -1,7 +1,7 @@
 <template>
   <div class="dir-frame">
     <directory-contextmenu>
-      <div id="dir-frame">
+      <div id="dir-frame" class="tree-area">
         <Tree
           ref="tree"
           :value="treeNodes"
@@ -178,13 +178,12 @@ export default {
 .dir-frame {
   width: 100%;
   height: 100%;
-  margin-top:20px;
-  padding-left : 10px;
-  padding-right : 10px;
+  width: 100%;
+  padding-left: 10px;
   font-size: 14px;
-  #dir-frame {
+  .tree-area {
     width :100%;
-    height : calc(100% - 20px);
+    height : 100%;
   }
 }
 </style>
@@ -197,6 +196,7 @@ export default {
   background-color: inherit;
   border : 0px;
   overflow : auto;
+  padding-top : 10px;
   .tree-children {
     overflow : initial;
     .tree-branch {
