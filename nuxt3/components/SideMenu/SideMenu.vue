@@ -90,6 +90,7 @@ export default {
 .side-menu {
   height: 100%;
   width: 100%;
+  min-width: 200px;
   overflow : auto;
   border-bottom: 1px solid #444444;
   .header {
