@@ -1,6 +1,6 @@
 <template>
   <div class="title-area thin-scroll-bar">
-    <span><v-icon size="14">mdi-folder</v-icon></span>
+    <span class="mr-1"><v-icon size="14">mdi-folder</v-icon></span>
     <span>{{ notePath }}</span>
   </div>
 </template>
