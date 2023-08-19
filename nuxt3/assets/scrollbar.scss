@@ -1,0 +1,25 @@
+/*スクロールバー全体*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(202, 204, 206, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #474c50;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(202, 204, 206, 0.04);
+}
+
+*::selection {
+    background: rgba(35, 131, 226, 0.28);
+}

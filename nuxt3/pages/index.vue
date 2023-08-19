@@ -1,7 +1,7 @@
 <template>
   <splitpanes class="note">
-    <pane size="15">
-      <dir-frame />
+    <pane size="20">
+      <side-bar />
     </pane>
     <pane>
       <note-frame />
@@ -24,14 +24,14 @@ await userStore.setUser();
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import NoteFrame from '../components/Note/NoteContainer.vue';
-import DirFrame from '../components/directory/DirFrame.vue';
+import SideBar from '../components/SideBar/SideBar.vue';
 
 export default {
   components : {
     Splitpanes,
     Pane,
-    DirFrame,
     NoteFrame,
+    SideBar,
   },
 };
 </script>
