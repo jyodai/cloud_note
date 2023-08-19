@@ -54,6 +54,7 @@
                 </v-icon>
               </span>
 
+              <span class="mr-1" />
               <span>
                 {{ node.title }}
               </span>
