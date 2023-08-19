@@ -36,7 +36,7 @@ export default {
   .main-panel {
     min-width: calc(100% - 250px);
     .content-area {
-      background: #222;
+      background: $color-primary;
       height: 100%;
     }
   }

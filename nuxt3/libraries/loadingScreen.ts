@@ -9,7 +9,7 @@ export default class LoadingScreen {
   private setLoadScreen(): void {
     const screen                 = document.createElement('div');
     screen.id                    = 'load-screen';
-    screen.style.backgroundColor = 'rgb(33, 33, 33)';
+    screen.style.backgroundColor = 'rgba(15, 15, 15, 0.8)';
     screen.style.opacity         = '0.46';
     screen.style.width           = '100%';
     screen.style.height          = '100%';

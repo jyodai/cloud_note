@@ -92,7 +92,7 @@ export default {
   width: 100%;
   min-width: 200px;
   overflow : auto;
-  border-bottom: 1px solid #444444;
+  border-bottom: 1px solid $color-border;
   .header {
     height: 40px;
     font-weight: bold;
@@ -107,7 +107,7 @@ export default {
         margin-bottom: 0px;
       }
       &:hover {
-        background: #666666;
+        background: $color-hover;
       }
     }
   }

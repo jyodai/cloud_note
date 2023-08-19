@@ -69,14 +69,14 @@ export default {
 .login {
   width: 100%;
   height: 100vh;
-  background-color: #333333;
+  background-color: $color-primary-dark;
   .login-form {
     position: relative;
     top : 100px;
     margin: auto;
     padding : 20px;
     width: 400px;
-    background-color: #222222;
+    background-color: $color-primary-light;
     border-radius: 10px;
   }
 }

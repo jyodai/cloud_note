@@ -23,7 +23,7 @@ html {
     .splitpanes__splitter {
       min-width: 2px !important;
       cursor: col-resize;
-      background-color:#363636;
+      background-color: $color-border;
     }
   }
 
@@ -31,7 +31,7 @@ html {
     .splitpanes__splitter {
       min-width: 2px !important;
       cursor: col-resize;
-      background-color:#555555;
+      background-color: $color-border;
     }
   }
 }
@@ -47,8 +47,8 @@ html {
 input[type="text"] {
   width: 100%;
   padding : 5px;
-  color: #EEEEEE;
-  border: 1px solid #555555;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
   &:focus-visible {
     outline : none;
   }
@@ -60,7 +60,7 @@ input[type="text"]:disabled {
 
 textarea {
   width: 100%;
-  border: 1px solid #555555;
-  color: #EEEEEE;
+  border: 1px solid $color-border;
+  color: $color-text-primary;
   padding : 5px;
 }

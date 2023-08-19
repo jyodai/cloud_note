@@ -77,6 +77,9 @@ export default {
 .modal {
   height: 100%;
   width: 100%;
+  :deep(.vfm--overlay) {
+    background-color: $color-overlay;
+  }
   :deep(.modal-container) {
     display: flex;
     justify-content: center;
@@ -91,10 +94,10 @@ export default {
     max-height: 90%;
     margin: 0 1rem;
     padding: 1rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid;
     border-radius: 0.25rem;
-    border-color: #363636;
-    background-color: #333333;
+    border-color: $color-primary-light;
+    background-color: $color-primary;
   }
   .modal__title {
     margin: 0 2rem 0 0;

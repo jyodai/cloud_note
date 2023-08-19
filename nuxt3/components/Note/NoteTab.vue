@@ -99,25 +99,25 @@ export default {
   width: 100%;
   height: 40px;
   display: flex;
-  background: #333333;
+  border-bottom: 1px solid $color-border;
   .note-title {
     white-space: nowrap;
     height: 100%;
-    border-right: 1px solid #444444;
+    border-right: 1px solid $color-border;
     padding: 0px 10px;
     cursor: pointer;
     .title {
       margin-right: 5px;
     }
     .title:hover {
-      background: #666666;
+      background: $color-hover; 
     }
     .close-icon:hover {
-      background: #666666;
+      background: $color-hover;
     }
   }
   .select {
-    background: #222222;
+    opacity : 0.6;
   }
 }
 

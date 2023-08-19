@@ -127,12 +127,12 @@ export default {
 .markdown-edit {
   height: 100%;
   width: 100%;
+  border-right: 1px solid $color-border;
   .editor {
     font-family: 'Lucida Console', monospace;
     resize: none;
     height: 100%;
     width: 100%;
-    padding:5px;
     font-size:14px;
     line-height: 18px;
     white-space : pre;
@@ -141,12 +141,13 @@ export default {
   .CodeMirror {
     height: 100%;
     width: 100%;
+    padding: 0px 5px;
     .CodeMirror-dialog-bottom {
       position: absolute;
       bottom: 5px;
       left : 5px;
       width :95%;
-      background : #222;
+      background : $color-primary;
     }
   }
 }
