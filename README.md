@@ -9,7 +9,7 @@
 * テキストでダイアグラムを作成
 * vimのキーバインド
 
-![image](https://github.com/jyodai/cloud_note/assets/50922604/556dc0ce-fb86-477c-9264-83d901138875)
+![スクリーンショット 2023-08-20 182725](https://github.com/jyodai/cloud_note/assets/50922604/f4653d05-65df-4036-9e31-5ce026a74da0)
 
 ## 開発環境構築
 
