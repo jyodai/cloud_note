@@ -19,6 +19,21 @@
 * 階層構造でのデータ管理
 * 検索
 
+## スクリーンショット
+
+### シンタックスハイライト
+
+![cloud_note_シンタックスハイライト](https://github.com/jyodai/cloud_note/assets/50922604/da8624d3-2b88-4567-8f3a-5340eafc5ba9)
+
+
+### ダイアグラム
+
+![cloud_note_ダイアグラム](https://github.com/jyodai/cloud_note/assets/50922604/a41a535c-6988-4779-a67b-026c1250cbda)
+
+### タスク
+
+![cloud_note_タスク機能](https://github.com/jyodai/cloud_note/assets/50922604/448574dd-3d9c-4be4-886f-c55c4dc297a9)
+
 ## クイックスタート
 
 ### 前提条件
