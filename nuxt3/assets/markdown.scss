@@ -181,10 +181,11 @@
     border-top: solid 1px #888888;
     border-bottom: solid 1px #888888;
     ul {
-      color: #777777;
+      color: $color-text-primary-dark;
       list-style: none;
       padding : 5px;
       margin-left : 0px;
+      cursor: pointer;
       .head_content_1 {
         margin-left: 0px;
       }

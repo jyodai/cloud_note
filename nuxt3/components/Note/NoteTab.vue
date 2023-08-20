@@ -11,6 +11,7 @@
       >
         <span
           class="title"
+          :class="{'select-title' : element.id === noteTabStore.getSelectNoteId}"
           @click="setNote(element)"
         >{{ element.title }}</span>
         <v-icon
@@ -100,6 +101,7 @@ export default {
   height: 40px;
   display: flex;
   border-bottom: 1px solid $color-border;
+  color: $color-text-primary-dark;
   .note-title {
     white-space: nowrap;
     height: 100%;
@@ -117,7 +119,10 @@ export default {
     }
   }
   .select {
-    opacity : 0.6;
+    color: $color-text-primary;
+  }
+  .select-title {
+    background: $color-select;
   }
 }
 

@@ -18,6 +18,7 @@ import DirFrame from '~/components/directory/DirFrame.vue';
 .side-bar {
   width: 100%;
   height: 100%;
+  color: $color-text-primary-dark;
   .menu {
     width : 100%;
     height : 175px;

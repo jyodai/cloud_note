@@ -97,6 +97,7 @@ export default {
     height: 40px;
     font-weight: bold;
     padding: 10px;
+    color: $color-text-primary;
   }
   .body {
     font-size: 14px;
