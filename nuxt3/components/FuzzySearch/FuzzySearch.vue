@@ -198,7 +198,7 @@ function convert(notes: Note[]) {
       .search-result {
         font-size: 12px;
         &:hover {
-          background: #666666;
+          background: $color-hover;
         }
         .select {
           opacity: 0.6;

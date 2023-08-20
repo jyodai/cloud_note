@@ -68,6 +68,7 @@ export default {
     height: calc(100% - 40px);
     box-shadow: inset 3px 0px 20px 1px rgb(0 0 0 / 45%);
     padding : 20px;
+    background: $color-primary-dark;
     .note-content-head {
       width: 100%;
       height: 40px;

@@ -23,7 +23,7 @@ html {
     .splitpanes__splitter {
       min-width: 2px !important;
       cursor: col-resize;
-      background-color:#363636;
+      background-color: $color-border;
     }
   }
 
@@ -31,7 +31,7 @@ html {
     .splitpanes__splitter {
       min-width: 2px !important;
       cursor: col-resize;
-      background-color:#555555;
+      background-color: $color-border;
     }
   }
 }
@@ -47,8 +47,8 @@ html {
 input[type="text"] {
   width: 100%;
   padding : 5px;
-  color: #EEEEEE;
-  border: 1px solid #555555;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
   &:focus-visible {
     outline : none;
   }
@@ -60,45 +60,7 @@ input[type="text"]:disabled {
 
 textarea {
   width: 100%;
-  border: 1px solid #555555;
-  color: #EEEEEE;
+  border: 1px solid $color-border;
+  color: $color-text-primary;
   padding : 5px;
-}
-
-/*スクロールバー全体*/
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-/*スクロールバーの軌道*/
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px rgba(191, 191, 191);
-}
-
-/*スクロールバーの動く部分*/
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, .5);
-  border-radius: 10px;
-  box-shadow:0 0 0 1px rgba(91, 91, 91);
-}
-
-/*スクロールバー全体*/
-.thin-scroll-bar::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
-}
-  
-/*スクロールバーの軌道*/
-.thin-scroll-bar::-webkit-scrollbar-track {
-  border-radius: 0px;
-  box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
-}
-  
-/*スクロールバーの動く部分*/
-.thin-scroll-bar::-webkit-scrollbar-thumb {
-  background-color: #444444;
-  border-radius: 0px;
-  box-shadow:0 0 0 1px rgba(0, 0, 0, 0);
 }
