@@ -212,7 +212,8 @@ export default {
             }
           }
           .select-node {
-            opacity: 0.6;
+            color: $color-text-primary;
+            background: $color-select;
           }
         }
     }
