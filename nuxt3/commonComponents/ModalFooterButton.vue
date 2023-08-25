@@ -16,65 +16,53 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+interface ButtonItem {
+  name: string;
+  label: string;
+  event: () => void;
+}
 
-export default {
-  props : {
-    visibleLists : {
-      type    : Array,
-      default : () => [],
-    },
+const props = defineProps({
+  visibleLists : {
+    type    : Array,
+    default : () => [],
   },
-  emits : [
-    'select',
-    'save',
-    'delete',
-    'close',
-  ],
-  data () {
-    return {
-      buttonLists : [
-        {
-          name  : 'select',
-          label : '選択',
-          event : () => this.select(),
-        },
-        {
-          name  : 'save',
-          label : '保存',
-          event : () => this.save(),
-        },
-        {
-          name  : 'delete',
-          label : '削除',
-          event : () => this.delete(),
-        },
-        {
-          name  : 'close',
-          label : '閉じる',
-          event : () => this.close(),
-        },
-      ],
-    };
+});
+
+const emits = defineEmits([
+  'select',
+  'save',
+  'delete',
+  'close',
+]);
+
+const buttonLists: Array<ButtonItem> = [
+  {
+    name  : 'select',
+    label : '選択',
+    event : () => emits('select'),
   },
-  methods : {
-    select ()  {
-      this.$emit('select');
-    },
-    save () {
-      this.$emit('save');
-    },
-    delete () {
-      this.$emit('delete');
-    },
-    close () {
-      this.$emit('close');
-    },
-    isVisible (name) {
-      return this.visibleLists.includes(name);
-    },
+  {
+    name  : 'save',
+    label : '保存',
+    event : () => emits('save'),
   },
-};
+  {
+    name  : 'delete',
+    label : '削除',
+    event : () => emits('delete'),
+  },
+  {
+    name  : 'close',
+    label : '閉じる',
+    event : () => emits('close'),
+  },
+];
+
+function isVisible (name: string): boolean {
+  return props.visibleLists.includes(name);
+}
 </script>
 
 <style lang="scss" scoped>
