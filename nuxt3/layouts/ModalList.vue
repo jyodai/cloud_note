@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LibraryList from '~/components/LibraryList/LibraryList.vue';
 import LibraryAdd from '~/components/LibraryAdd/LibraryAdd.vue';
 import LibraryEdit from '~/components/LibraryEdit/LibraryEdit.vue';
@@ -24,22 +24,4 @@ import UserPasswordEdit from '~/components/UserPasswordEdit/UserPasswordEdit.vue
 import NoteSetting from '~/components/NoteSetting/NoteSetting.vue';
 import FuzzySearch from '~/components/FuzzySearch/FuzzySearch.vue';
 import DatepickerModal from '~/components/Datepicker/DatepickerModal.vue';
-
-export default {
-  components : {
-    LibraryList,
-    LibraryAdd,
-    LibraryEdit,
-    UserList,
-    UserAdd,
-    UserEdit,
-    UserPasswordEdit,
-    NoteSetting,
-    FuzzySearch,
-    DatepickerModal,
-  },
-};
 </script>
-
-<style lang="scss" scoped>
-</style>
