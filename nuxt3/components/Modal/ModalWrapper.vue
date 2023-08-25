@@ -4,7 +4,6 @@
     class="modal"
   >
     <vue-final-modal
-      v-model="showModal"
       class="modal-container"
       content-class="modal-content"
       :modal-id="modalName"
@@ -27,50 +26,45 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { VueFinalModal } from 'vue-final-modal';
+import { ref, Ref } from 'vue';
 
-export default {
-  components : {
-    VueFinalModal,
+interface ModalOption {
+  width : string;
+  height : string;
+  beforeOpen : () => void;
+  opened : () => void;
+  beforeClose : () => void;
+  closed : () => void;
+}
+
+const props = defineProps({
+  modalName : {
+    type     : String,
+    required : true,
   },
-  props : {
-    modalName : {
-      type    : String,
-      default : '',
-    },
-    modalOption : {
-      type    : Object,
-      default : () => { return {}; },
-    },
+  modalOption : {
+    type    : Object,
+    default : () => { return {}; },
   },
-  data () {
-    return {
-      showModal : false,
-      option    : null,
-      width     : "",
-      height    : "",
-    };
-  },
-  created () {
-    this.setOption();
-  },
-  methods : {
-    setOption () {
-      const defaultOption = {
-        width       : '60%',
-        height      : '60%',
-        beforeOpen  : () => { return; },
-        opened      : () => { return; },
-        beforeClose : () => { return; },
-        closed      : () => { return; },
-      };
-      this.option         = Object.assign(defaultOption, this.modalOption);
-      this.width          = this.option.width;
-      this.height         = this.option.height;
-    },
-  },
+});
+
+const defaultOption       = {
+  width       : '60%',
+  height      : '60%',
+  beforeOpen  : () => { return; },
+  opened      : () => { return; },
+  beforeClose : () => { return; },
+  closed      : () => { return; },
 };
+const option: ModalOption = Object.assign(defaultOption, props.modalOption);
+
+const width: Ref<string>  = ref('');
+const height: Ref<string> = ref('');
+width.value               = option.width;
+height.value              = option.height;
+
 </script>
 
 <style lang="scss" scoped>
