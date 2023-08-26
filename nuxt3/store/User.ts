@@ -22,7 +22,7 @@ export const useUserStore = defineStore({
     isAdminUser : false,
   }),
   getters : {
-    getUser        : state => state.user,
+    getUser        : state => state.user as User,
     getToken       : state => state.token,
     getIsAdminUser : state => state.isAdminUser,
   },

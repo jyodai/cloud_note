@@ -26,71 +26,63 @@
   </draggable>
 </template>
 
-<script>
+<script setup lang="ts">
 import Draggable from 'vuedraggable';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useUserStore } from '~/store/User';
 import { useNoteTabStore } from '~/store/NoteTab';
+import Note from '~/types/models/note';
 
-export default {
-  components : {
-    Draggable,
-  },
-  data () {
-    return {
-      userStore    : useUserStore(),
-      noteTabStore : useNoteTabStore(),
-    };
-  },
-  computed : {
-    noteTab : {
-      get () {
-        return this.noteTabStore.getNoteTab;
-      },
-      set (noteTabArray) {
-        this.noteTabStore.moveNoteTab(noteTabArray);
-      },
-    },
-  },
-  created () {
-    this.noteTabStore.initNoteTab();
-    this.noteTabStore.loadNoteTab(this.userStore.user);
-  },
-  mounted () {
-    this.initSelectNote();
-    document.addEventListener('keydown', this.handleKeyDown);
-  },
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  },
-  methods : {
-    handleKeyDown(event) {
-      if (event.ctrlKey && event.key === 'j') {
-        event.preventDefault();
-        event.stopPropagation();
-        this.noteTabStore.setPrevNote();
-      }
+const userStore    = useUserStore();
+const noteTabStore = useNoteTabStore();
 
-      if (event.ctrlKey && event.key === 'k') {
-        event.preventDefault();
-        event.stopPropagation();
-        this.noteTabStore.setNextNote();
-      }
-    },
-    initSelectNote () {
-      const noteTab = this.noteTabStore.getNoteTab;
-      if (noteTab.length === 0) {
-        return;
-      }
-      this.noteTabStore.setSelectNote(noteTab[0]);
-    },
-    setNote (note) {
-      this.noteTabStore.setSelectNote(note);
-    },
-    removeNoteTab (id) {
-      this.noteTabStore.removeNoteTab(id);
-    },
-  },
-};
+noteTabStore.initNoteTab();
+noteTabStore.loadNoteTab(userStore.getUser);
+
+const noteTab = ref(noteTabStore.getNoteTab);
+watch(noteTab, (newNoteTabArray) => {
+  noteTabStore.moveNoteTab(newNoteTabArray);
+});
+
+onMounted(() => {
+  initSelectNote();
+  document.addEventListener('keydown', handleKeyDown);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', handleKeyDown);
+});
+
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.ctrlKey && event.key === 'j') {
+    event.preventDefault();
+    event.stopPropagation();
+    noteTabStore.setPrevNote();
+  }
+
+  if (event.ctrlKey && event.key === 'k') {
+    event.preventDefault();
+    event.stopPropagation();
+    noteTabStore.setNextNote();
+  }
+}
+
+function initSelectNote() {
+  const currentNoteTab = noteTabStore.getNoteTab;
+  if (currentNoteTab.length === 0) {
+    return;
+  }
+  noteTabStore.setSelectNote(currentNoteTab[0]);
+}
+
+function setNote(note: Note) {
+  noteTabStore.setSelectNote(note);
+}
+
+function removeNoteTab(id: number) {
+  noteTabStore.removeNoteTab(id);
+}
+
 </script>
 
 <style lang="scss" scoped>
