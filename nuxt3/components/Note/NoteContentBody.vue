@@ -34,6 +34,8 @@ import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 import Html2Pdf from '~/libraries/html2Pdf';
+import ShortcutKey from '~/libraries/shortcutKey';
+import { useKeydown } from '~/composable/useKeydown';
 import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
 import { useNoteContentStore } from '~/store/NoteContent';
@@ -59,32 +61,15 @@ watch(() => props.note, async (newVal) => {
   await load(newVal);
 });
 
-onMounted(async () => {
-  document.addEventListener('keydown', handleKeyDown);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('keydown', handleKeyDown);
-});
+const changeEditorKey = new ShortcutKey('e', changeEditor);
+const outputPdfKey    = new ShortcutKey('p', outputPdf);
+useKeydown(changeEditorKey.handleKeyDown);
+useKeydown(outputPdfKey.handleKeyDown);
 
 async function load(note: Note) {
   visible.value = false;
   await noteContentStore.loadSelectContent(note);
   visible.value = true;
-}
-
-function handleKeyDown(event: KeyboardEvent) {
-  if (event.ctrlKey && event.key === 'e') {
-    event.preventDefault();
-    event.stopPropagation();
-    changeEditor();
-  }
-
-  if (event.ctrlKey && event.key === 'p') {
-    event.preventDefault();
-    event.stopPropagation();
-    outputPdf();
-  }
 }
 
 function changeEditor() {
