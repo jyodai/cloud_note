@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, watch, onMounted, onBeforeUnmount, defineProps, computed } from 'vue';
+import { ref, Ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
 import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
