@@ -28,9 +28,11 @@
 
 <script setup lang="ts">
 import Draggable from 'vuedraggable';
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref,  watch } from 'vue';
 import { useUserStore } from '~/store/User';
 import { useNoteTabStore } from '~/store/NoteTab';
+import ShortcutKey from '~/libraries/shortcutKey';
+import { useKeydown } from '~/composable/useKeydown';
 import Note from '~/types/models/note';
 
 const userStore    = useUserStore();
@@ -44,28 +46,9 @@ watch(noteTab, (newNoteTabArray) => {
   noteTabStore.moveNoteTab(newNoteTabArray);
 });
 
-onMounted(() => {
-  initSelectNote();
-  document.addEventListener('keydown', handleKeyDown);
-});
 
-onBeforeUnmount(() => {
-  document.removeEventListener('keydown', handleKeyDown);
-});
-
-function handleKeyDown(event: KeyboardEvent) {
-  if (event.ctrlKey && event.key === 'j') {
-    event.preventDefault();
-    event.stopPropagation();
-    noteTabStore.setPrevNote();
-  }
-
-  if (event.ctrlKey && event.key === 'k') {
-    event.preventDefault();
-    event.stopPropagation();
-    noteTabStore.setNextNote();
-  }
-}
+initSelectNote();
+registerShortcut();
 
 function initSelectNote() {
   const currentNoteTab = noteTabStore.getNoteTab;
@@ -81,6 +64,13 @@ function setNote(note: Note) {
 
 function removeNoteTab(id: number) {
   noteTabStore.removeNoteTab(id);
+}
+
+function registerShortcut() {
+  const prevNoteKey = new ShortcutKey('j', noteTabStore.setPrevNote);
+  const nextNoteKey = new ShortcutKey('k', noteTabStore.setNextNote);
+  useKeydown(prevNoteKey.handleKeyDown);
+  useKeydown(nextNoteKey.handleKeyDown);
 }
 
 </script>

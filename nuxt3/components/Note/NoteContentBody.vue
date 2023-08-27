@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
+import { ref, Ref, watch, computed } from 'vue';
 import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
@@ -56,15 +56,11 @@ const markdownViewRef: Ref<CreateComponentPublicInstance | null> = ref(null);
 const content = computed(() => noteContentStore.getSelectContent);
 
 await load(props.note);
+registerShortcut();
 
 watch(() => props.note, async (newVal) => {
   await load(newVal);
 });
-
-const changeEditorKey = new ShortcutKey('e', changeEditor);
-const outputPdfKey    = new ShortcutKey('p', outputPdf);
-useKeydown(changeEditorKey.handleKeyDown);
-useKeydown(outputPdfKey.handleKeyDown);
 
 async function load(note: Note) {
   visible.value = false;
@@ -97,6 +93,13 @@ function outputPdf() {
   const pdf                  = new Html2Pdf(element, fileName);
   pdf.setCssClass('g-markdown-print');
   pdf.output();
+}
+
+function registerShortcut() {
+  const changeEditorKey = new ShortcutKey('e', changeEditor);
+  const outputPdfKey    = new ShortcutKey('p', outputPdf);
+  useKeydown(changeEditorKey.handleKeyDown);
+  useKeydown(outputPdfKey.handleKeyDown);
 }
 </script>
 
