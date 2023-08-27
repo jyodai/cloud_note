@@ -29,11 +29,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
+import { ref, Ref, watch, computed } from 'vue';
 import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 import Html2Pdf from '~/libraries/html2Pdf';
+import ShortcutKey from '~/libraries/shortcutKey';
+import { useKeydown } from '~/composable/useKeydown';
 import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
 import { useNoteContentStore } from '~/store/NoteContent';
@@ -54,37 +56,16 @@ const markdownViewRef: Ref<CreateComponentPublicInstance | null> = ref(null);
 const content = computed(() => noteContentStore.getSelectContent);
 
 await load(props.note);
+registerShortcut();
 
 watch(() => props.note, async (newVal) => {
   await load(newVal);
-});
-
-onMounted(async () => {
-  document.addEventListener('keydown', handleKeyDown);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('keydown', handleKeyDown);
 });
 
 async function load(note: Note) {
   visible.value = false;
   await noteContentStore.loadSelectContent(note);
   visible.value = true;
-}
-
-function handleKeyDown(event: KeyboardEvent) {
-  if (event.ctrlKey && event.key === 'e') {
-    event.preventDefault();
-    event.stopPropagation();
-    changeEditor();
-  }
-
-  if (event.ctrlKey && event.key === 'p') {
-    event.preventDefault();
-    event.stopPropagation();
-    outputPdf();
-  }
 }
 
 function changeEditor() {
@@ -112,6 +93,13 @@ function outputPdf() {
   const pdf                  = new Html2Pdf(element, fileName);
   pdf.setCssClass('g-markdown-print');
   pdf.output();
+}
+
+function registerShortcut() {
+  const changeEditorKey = new ShortcutKey('e', changeEditor);
+  const outputPdfKey    = new ShortcutKey('p', outputPdf);
+  useKeydown(changeEditorKey.handleKeyDown);
+  useKeydown(outputPdfKey.handleKeyDown);
 }
 </script>
 
