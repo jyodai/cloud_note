@@ -69,8 +69,16 @@ function removeNoteTab(id: number) {
 function registerShortcut() {
   const prevNoteKey = new ShortcutKey('j', noteTabStore.setPrevNote);
   const nextNoteKey = new ShortcutKey('k', noteTabStore.setNextNote);
+  const removeKey   = new ShortcutKey('q', () => {
+    const noteId = noteTabStore.getSelectNoteId;
+    if (noteId === null) {
+      return;
+    }
+    noteTabStore.removeNoteTab(noteId);
+  });
   useKeydown(prevNoteKey.handleKeyDown);
   useKeydown(nextNoteKey.handleKeyDown);
+  useKeydown(removeKey.handleKeyDown);
 }
 
 </script>
