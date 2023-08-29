@@ -9,7 +9,8 @@ export default defineNuxtPlugin(() => {
     typography : false, // 言語に依存しないきれいな 置換 + 引用符 を有効にします。
   });
   instance.use(Checkbox, {
-    ulClass : 'md-checkbox',
+    ulClass  : 'md-checkbox',
+    disabled : false,
   });
   return {
     provide : {
