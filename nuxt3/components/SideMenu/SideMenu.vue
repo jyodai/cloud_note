@@ -26,7 +26,6 @@
         ライブラリ
       </div>
       <div
-        v-if="userStore.getIsAdminUser"
         class="item g-pointer"
         @click="openModal('Setting')"
       >
