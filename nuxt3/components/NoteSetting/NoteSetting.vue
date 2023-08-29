@@ -33,12 +33,10 @@
       </div>
 
       <div class="footer g-center">
-        <v-btn
-          class="mb-2"
+        <primary-button
+          :label="'保存'"
           @click="save()"
-        >
-          保存
-        </v-btn>
+        />
       </div>
     </template>
   </div>
@@ -46,10 +44,12 @@
 
 <script>
 import CodeMirror from '~/commonComponents/CodeMirror.vue';
+import PrimaryButton from '~/commonComponents/PrimaryButton.vue';
 
 export default {
   components : {
     CodeMirror,
+    PrimaryButton,
   },
   data () {
     return {

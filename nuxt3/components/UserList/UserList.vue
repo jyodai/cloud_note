@@ -4,12 +4,10 @@
       v-if="visible"
     >
       <div class="content-header">
-        <v-btn
-          class="mb-2"
+        <primary-button
+          :label="'追加'"
           @click="openAdd()"
-        >
-          追加
-        </v-btn>
+        />
       </div>
 
       <div class="content-body g-table-list">
@@ -60,10 +58,12 @@
 
 <script>
 import IconList from '~/commonComponents/IconList.vue';
+import PrimaryButton from '~/commonComponents/PrimaryButton.vue';
 
 export default {
   components : {
     IconList,
+    PrimaryButton,
   },
   data () {
     return {

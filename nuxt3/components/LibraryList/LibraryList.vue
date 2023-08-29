@@ -12,12 +12,10 @@
         #modalContent
       >
         <div class="content-header">
-          <v-btn
-            class="mb-2"
+          <primary-button
+            :label="'追加'"
             @click="openAddImageLibrary()"
-          >
-            追加
-          </v-btn>
+          />
         </div>
 
         <div class="content-body g-table-list">
@@ -65,12 +63,14 @@
 import Modal from '../Modal/ModalWrapper.vue';
 import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 import IconList from '~/commonComponents/IconList.vue';
+import PrimaryButton from '~/commonComponents/PrimaryButton.vue';
 
 export default {
   components : {
     Modal,
     ModalFooterButton,
     IconList,
+    PrimaryButton,
   },
   data () {
     return {

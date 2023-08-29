@@ -37,11 +37,10 @@
           type="text"
           class="name mr-3"
         >
-        <v-btn
+        <primary-button
+          :label="'追加'"
           @click="add(addTaskElement); init();"
-        >
-          追加
-        </v-btn>
+        />
       </div>
 
       <div class="element-header">
@@ -81,6 +80,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
+import PrimaryButton from '~/commonComponents/PrimaryButton.vue';
 import Task from '~/types/models/task';
 import TaskElementModel from '~/types/models/taskElement';
 import AddTaskElement from '~/types/models/addTaskElement';
