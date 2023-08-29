@@ -49,9 +49,6 @@
         </div>
         <div class="right">
           <div class="item-date">
-            登録日
-          </div>
-          <div class="item-date">
             開始日
           </div>
           <div class="item-date">

@@ -7,7 +7,7 @@
   >
     <template #item="{ element }">
       <div
-        :class="{'pl-5' : element.hierarchy !== 1, 'mb-8' : element.hierarchy === 1}"
+        :class="{'mb-8' : element.hierarchy === 1}"
       >
         <task-element-item
           :task="task"
