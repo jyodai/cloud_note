@@ -26,23 +26,14 @@
         ライブラリ
       </div>
       <div
-        class="item g-pointer"
-        @click="openModal('NoteSetting')"
-      >
-        <v-icon size="16">
-          mdi-comment-edit-outline
-        </v-icon>
-        ノート
-      </div>
-      <div
         v-if="userStore.getIsAdminUser"
         class="item g-pointer"
-        @click="openModal('UserList')"
+        @click="openModal('Setting')"
       >
         <v-icon size="16">
-          mdi-account-edit
+          mdi-cog
         </v-icon>
-        ユーザー
+        設定
       </div>
       <div
         class="item g-pointer"

@@ -139,11 +139,14 @@ height.value              = option.height;
       width: 200px;
       background: $color-primary-light;
       padding: 20px 10px;
+      overflow-y: auto;
+      border-right: 1px solid $color-border;
     }
     .modal__content {
       flex-grow: 1;
       background: $color-primary;
-      padding: 20px 10px;
+      padding: 20px 20px;
+      overflow-y: auto;
     }
   }
 }
