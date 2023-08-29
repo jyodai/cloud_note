@@ -19,11 +19,10 @@
           label="パスワード"
         />
         <div class="g-center">
-          <v-btn
+          <secondary-button
+            :label="'ログイン'"
             @click="execLogin()"
-          >
-            ログイン
-          </v-btn>
+          />
         </div>
       </v-form>
     </div>
@@ -31,6 +30,8 @@
 </template>
 
 <script setup>
+import SecondaryButton from '~/commonComponents/SecondaryButton.vue';
+
 definePageMeta({
   layout : null,
 });
