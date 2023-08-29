@@ -58,6 +58,14 @@ input[type="text"]:disabled {
   opacity: 0.4;
 }
 
+input[type="radio"] {
+  accent-color: $input-radio-color;
+}
+
+input[type="checkbox"] {
+  accent-color: $input-checkbox-color;
+}
+
 textarea {
   width: 100%;
   border: 1px solid $color-border;
