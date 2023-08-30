@@ -1,7 +1,25 @@
 <template>
   <div class="dir-frame">
+    <div class="head-area">
+      <div class="left">
+        ページ一覧
+      </div>
+      <div class="right">
+        <v-icon
+          class="g-pointer"
+          size="16"
+          @click="addNote()"
+        >
+          mdi-plus
+        </v-icon>
+      </div>
+    </div>
+
     <directory-contextmenu>
-      <div id="dir-frame" class="tree-area">
+      <div
+        id="dir-frame"
+        class="tree-area"
+      >
         <Tree
           ref="tree"
           :value="treeNodes"
@@ -170,6 +188,14 @@ export default {
       const id = node.data.id;
       await this.noteTreeStore.closeNode(id);
     },
+    async addNote () {
+      const data = {
+        noteId    : 0,
+        noteType  : this.$const.NOTE_TYPE_NORMAL,
+        noteTitle : '無題',
+      };
+      await this.noteTreeStore.addNode({ data });
+    }
   },
 };
 
@@ -182,9 +208,22 @@ export default {
   width: 100%;
   padding-left: 10px;
   font-size: 14px;
+  overflow : auto;
+
+  .head-area {
+    padding-top : 10px;
+    padding-right : 5px;
+    display: flex;
+    .right {
+      margin-left: auto;
+      &:hover {
+        background: $color-hover;
+      }
+    }
+  }
+
   .tree-area {
-    width :100%;
-    height : 100%;
+    padding-top : 5px;
   }
 }
 </style>
@@ -192,12 +231,8 @@ export default {
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style lang="scss">
 .he-tree {
-  width: 100%;
-  height: 100%;
   background-color: inherit;
   border : 0px;
-  overflow : auto;
-  padding-top : 10px;
   .tree-children {
     overflow : initial;
     .tree-branch {
