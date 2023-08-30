@@ -21,11 +21,11 @@ import DirFrame from '~/components/directory/DirFrame.vue';
   color: $color-text-primary-dark;
   .menu {
     width : 100%;
-    height : 150px;
+    height : 125px;
   }
   .dir {
     width : 100%;
-    height : calc(100% - 150px);
+    height : calc(100% - 125px);
   }
 }
 </style>
