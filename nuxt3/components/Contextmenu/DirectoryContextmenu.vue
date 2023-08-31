@@ -11,9 +11,6 @@
         title="新規作成"
         class="contextmenu-sub"
       >
-        <contextmenu-item @click="addNote(0)">
-          ルートノート
-        </contextmenu-item>
         <contextmenu-item @click="addNote(noteTreeStore.getSelectNoteId)">
           ノート
         </contextmenu-item>
