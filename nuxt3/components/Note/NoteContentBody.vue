@@ -1,7 +1,7 @@
 <template>
   <template v-if="visible">
     <div
-      v-if="content !== null && !showMarkdown"
+      v-if="content !== null && !noteContentStore.getShowMarkdown"
       class="content"
     >
       <markdown-edit
@@ -17,7 +17,7 @@
       />
     </div>
     <div
-      v-else-if="content !== null && showMarkdown"
+      v-else-if="content !== null && noteContentStore.getShowMarkdown"
       class="content"
     >
       <markdown-view
@@ -50,7 +50,6 @@ const props = defineProps({
 const noteContentStore = useNoteContentStore();
 
 const visible                                                    = ref(false);
-const showMarkdown                                               = ref(true);
 const markdownViewRef: Ref<CreateComponentPublicInstance | null> = ref(null);
 
 const content = computed(() => noteContentStore.getSelectContent);
@@ -73,7 +72,7 @@ function changeEditor() {
     alert('ファイルが選択されていません');
     return;
   }
-  showMarkdown.value = !showMarkdown.value;
+  noteContentStore.toggleShowMarkdown();
 }
 
 function blur(data: NoteContent) {
