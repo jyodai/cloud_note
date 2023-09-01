@@ -1,20 +1,33 @@
 <template>
   <div class="title-area thin-scroll-bar">
-    <span class="mr-1"><v-icon size="14">mdi-folder</v-icon></span>
-    <span>{{ notePath }}</span>
+    <div class="left">
+      <span class="mr-1"><v-icon size="14">mdi-folder</v-icon></span>
+      <span>{{ notePath }}</span>
+    </div>
+    <div class="right">
+      <icon-list
+        v-if="noteTabStore.getSelectNote.note_type === $const.NOTE_TYPE_NORMAL"
+        :show-icons="['edit']"
+        @edit="edit()"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { useNoteTabStore } from '~/store/NoteTab';
+import IconList from '~/commonComponents/IconList.vue';
+import { useNoteContentStore } from '~/store/NoteContent';
 
 export default {
   components : {
+    IconList,
   },
   data () {
     return {
-      noteTabStore : useNoteTabStore(),
-      notePath     : 'ファイル未選択',
+      noteContentSotre : useNoteContentStore(),
+      noteTabStore     : useNoteTabStore(),
+      notePath         : 'ファイル未選択',
     };
   },
   computed : {
@@ -40,7 +53,10 @@ export default {
       const response = await this.$axios.get(url);
       const note     = response.data;
       this.notePath  = this.$util.note.convertPath(note);
-    }
+    },
+    edit() {
+      this.noteContentSotre.toggleShowMarkdown();
+    },
   },
 };
 </script>
@@ -53,5 +69,12 @@ export default {
   white-space: nowrap;
   overflow: auto;
   color: $color-text-primary-dark;
+  display: flex;
+  .right {
+    margin-left : auto;
+    &:hover {
+      background: $color-hover;
+    }
+  }
 }
 </style>
