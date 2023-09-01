@@ -3,6 +3,7 @@ import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
 
 interface State {
+  showMarkdown : boolean,
   selectContent: NoteContent | null,
 }
 
@@ -11,9 +12,11 @@ const nuxtApp = useNuxtApp();
 export const useNoteContentStore = defineStore({
   id    : 'noteContent',
   state : (): State => ({
+    showMarkdown  : true,
     selectContent : null,
   }),
   getters : {
+    getShowMarkdown  : state => state.showMarkdown,
     getSelectNoteId  : state => state.selectContent ? state.selectContent.note_id : null,
     getSelectContent : state => state.selectContent,
   },
@@ -24,6 +27,7 @@ export const useNoteContentStore = defineStore({
       const response     = await nuxtApp.$axios.get(url);
       const noteContent  = response.data as NoteContent;
       this.selectContent = noteContent;
+      this.showMarkdown  = true;
     },
     unsetSelectContent () {
       this.selectContent = null;
@@ -45,6 +49,9 @@ export const useNoteContentStore = defineStore({
         .catch(() => {
           alert('メモの保存の失敗しました');
         });
+    },
+    toggleShowMarkdown (): void {
+      this.showMarkdown = !this.showMarkdown;
     },
   }
 });
