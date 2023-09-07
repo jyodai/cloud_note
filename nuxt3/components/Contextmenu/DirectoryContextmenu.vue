@@ -11,9 +11,6 @@
         title="新規作成"
         class="contextmenu-sub"
       >
-        <contextmenu-item @click="addNote(0)">
-          ルートノート
-        </contextmenu-item>
         <contextmenu-item @click="addNote(noteTreeStore.getSelectNoteId)">
           ノート
         </contextmenu-item>
@@ -151,13 +148,21 @@ ParentId : ${note.parent_note_id}
 </style>
 
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
-<style>
+<style lang="scss">
 /* Todo:グローバルなスタイルはどこかにまとめる */
 .v-contextmenu {
-  font-size: 12px;
+  font-size: 14px;
   padding: 3px 5px;
-}
-.v-contextmenu .v-contextmenu-item {
-  padding: 3px 5px;
+  background-color: $color-primary-dark;
+  border: 1px solid $color-border;
+  box-shadow: none;
+   .v-contextmenu-item {
+    padding: 3px 5px;
+    color: $color-text-primary-dark;
+  }
+  .v-contextmenu-item--hover {
+    color: $color-text-primary;
+    background-color: $color-hover;
+  }
 }
 </style>

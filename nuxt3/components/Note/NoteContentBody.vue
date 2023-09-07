@@ -1,7 +1,7 @@
 <template>
   <template v-if="visible">
     <div
-      v-if="content !== null && !showMarkdown"
+      v-if="content !== null && !noteContentStore.getShowMarkdown"
       class="content"
     >
       <markdown-edit
@@ -11,112 +11,95 @@
         @blur="blur"
       />
       <markdown-view
-        ref="markdownView"
+        ref="markdownViewRef"
         class="content-preview"
         :content="content"
       />
     </div>
     <div
-      v-else-if="content !== null && showMarkdown"
+      v-else-if="content !== null && noteContentStore.getShowMarkdown"
       class="content"
     >
       <markdown-view
-        ref="markdownView"
+        ref="markdownViewRef"
         :content="content"
       />
     </div>
   </template>
 </template>
 
-<script lang="ts">
-
+<script setup lang="ts">
+import { ref, Ref, watch, computed } from 'vue';
 import { CreateComponentPublicInstance } from 'vue';
 import MarkdownView from '~/commonComponents/MarkdownView.vue';
 import MarkdownEdit from '~/commonComponents/MarkdownEdit.vue';
 import Html2Pdf from '~/libraries/html2Pdf';
+import ShortcutKey from '~/libraries/shortcutKey';
+import { useKeydown } from '~/composable/useKeydown';
 import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
 import { useNoteContentStore } from '~/store/NoteContent';
 
-export default {
-  components : {
-    MarkdownView,
-    MarkdownEdit,
-  },
-  props : {
-    note : {
-      type     : Object as () => Note,
-      required : true,
-    },
-  },
-  data () {
-    return {
-      noteContentStore : useNoteContentStore(),
-      visible          : false,
-      showMarkdown     : true,
-    };
-  },
-  computed : {
-    content () {
-      return this.noteContentStore.getSelectContent;
-    },
-  },
-  watch : {
-    async note (newVal) {
-      await this.load(newVal);
-    },
-  },
-  async created () {
-    await this.load(this.note);
-  },
-  mounted() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  },
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  },
-  methods : {
-    async load (note: Note) {
-      this.visible = false;
-      await this.noteContentStore.loadSelectContent(note);
-      this.visible = true;
-    },
-    handleKeyDown(event: KeyboardEvent) {
-      if (event.ctrlKey && event.key === 'e') {
-        event.preventDefault();
-        event.stopPropagation();
-        this.changeEditor();
-      }
+const props = defineProps({
+  note : {
+    type     : Object as () => Note,
+    required : true
+  }
+});
 
-      if (event.ctrlKey && event.key === 'p') {
-        event.preventDefault();
-        event.stopPropagation();
-        this.outputPdf();
-      }
-    },
-    changeEditor () {
-      if (this.noteContentStore.getSelectNoteId === null) {
-        alert('ファイルが選択されていません');
-        return;
-      }
-      this.showMarkdown = !this.showMarkdown;
-    },
-    blur (data: NoteContent) {
-      this.saveNote(data);
-    },
-    saveNote (data: NoteContent) {
-      this.noteContentStore.updateSelectContent(data);
-    },
-    outputPdf () {
-      const markdonwView         = this.$refs.markdownView as CreateComponentPublicInstance;
-      const element: HTMLElement = markdonwView.$el.parentNode as HTMLElement;
-      const fileName             = this.note.title;
-      const pdf                  = new Html2Pdf(element, fileName);
-      pdf.setCssClass('g-markdown-print');
-      pdf.output();
-    },
-  },
-};
+const noteContentStore = useNoteContentStore();
+
+const visible                                                    = ref(false);
+const markdownViewRef: Ref<CreateComponentPublicInstance | null> = ref(null);
+
+const content = computed(() => noteContentStore.getSelectContent);
+
+await load(props.note);
+registerShortcut();
+
+watch(() => props.note, async (newVal) => {
+  await load(newVal);
+});
+
+async function load(note: Note) {
+  visible.value = false;
+  await noteContentStore.loadSelectContent(note);
+  visible.value = true;
+}
+
+function changeEditor() {
+  if (noteContentStore.getSelectNoteId === null) {
+    alert('ファイルが選択されていません');
+    return;
+  }
+  noteContentStore.toggleShowMarkdown();
+}
+
+function blur(data: NoteContent) {
+  saveNote(data);
+}
+
+function saveNote(data: NoteContent) {
+  noteContentStore.updateSelectContent(data);
+}
+
+function outputPdf() {
+  if (markdownViewRef.value === null) {
+    return;
+  }
+  const element: HTMLElement = markdownViewRef.value.$el.parentNode;
+  const fileName             = props.note.title;
+  const pdf                  = new Html2Pdf(element, fileName);
+  pdf.setCssClass('g-markdown-print');
+  pdf.output();
+}
+
+function registerShortcut() {
+  const changeEditorKey = new ShortcutKey('e', changeEditor);
+  const outputPdfKey    = new ShortcutKey('p', outputPdf);
+  useKeydown(changeEditorKey.handleKeyDown);
+  useKeydown(outputPdfKey.handleKeyDown);
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,10 @@
 <template>
   <div class="task-element">
     <div class="header">
-      <div class="left">
+      <div
+        class="left"
+      >
+        <span class="nested-padding" />
         <input
           v-model="completionFlag"
           type="checkbox"
@@ -28,9 +31,6 @@
       </div>
 
       <div class="right">
-        <div class="item-date">
-          {{ taskElement.register_date }}
-        </div>
         <div class="item-date">
           <icon-list
             :show-icons="['calendar']"
@@ -65,6 +65,8 @@
 
 
     <div class="item-content pl-5">
+      <span class="nested-padding" />
+
       <template v-if="!isEdigingContent && editedContent">
         <div
           class="mr-2"
@@ -128,6 +130,7 @@ const isEdigingContent:Ref<boolean>       = ref(false);
 const editedContent:Ref<string>           = ref(props.taskElement.content);
 const editedStartDate:Ref<string|null>    = ref(props.taskElement.start_date);
 const editedDueDate:Ref<string|null>      = ref(props.taskElement.due_date);
+const nestedPadding                       = ref((props.taskElement.hierarchy - 1) * 25 + 'px');
 
 const nameInput: Ref<HTMLInputElement | null>       = ref(null);
 const contentTextarea: Ref<HTMLInputElement | null> = ref(null);
@@ -220,16 +223,17 @@ function openDatepicker(changeDate: Ref<string|null>): void {
 <style lang="scss" scoped>
 .task-element {
   padding: 5px 0px;
-  border-bottom: 2px solid #2E2E2E;
+  border-bottom: 2px solid $color-border-dark;
   .header {
     display: flex;
     justify-content: space-between;
     .left {
+      min-width : 600px;
       display: flex;
       align-items: center;
       .item-name {
-        width : 600px;
-        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .right {
@@ -253,6 +257,11 @@ function openDatepicker(changeDate: Ref<string|null>): void {
   .item-content {
     width : 600px;
     white-space: pre-wrap;
+    display: flex;
+  }
+
+  .nested-padding {
+    padding-left : v-bind(nestedPadding);
   }
 }
 </style>

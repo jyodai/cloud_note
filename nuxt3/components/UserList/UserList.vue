@@ -1,119 +1,93 @@
 <template>
   <div class="user-list">
-    <modal
-      :modal-name="modalName"
-      :modal-option="modalOption"
+    <template
+      v-if="visible"
     >
-      <template #modalTitle>
-        ユーザー一覧
-      </template>
-      <template
-        v-if="visible"
-        #modalContent
-      >
-        <div class="content-header">
-          <v-btn
-            class="mb-2"
-            @click="openAdd()"
-          >
-            追加
-          </v-btn>
-        </div>
-
-        <div class="content-body g-table-list">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  ID
-                </th>
-                <th>
-                  ユーザー名
-                </th>
-                <th>
-                  メールアドレス
-                </th>
-                <th class="table-header-icon" />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="user in users"
-                :key="user.id"
-              >
-                <td>
-                  {{ user.id }}
-                </td>
-                <td>
-                  {{ user.name }}
-                </td>
-                <td>
-                  {{ user.email }}
-                </td>
-                <td>
-                  <icon-list
-                    :show-icons="getShowIcons(user)"
-                    @edit="openEdit(user)"
-                    @lock="openPasswordEdit(user)"
-                    @trash="deleteUser(user)"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </template>
-      <template #modalAction>
-        <modal-footer-button
-          :visible-lists="['close']"
-          @close="closeModal()"
+      <div class="content-header">
+        <primary-button
+          :label="'追加'"
+          @click="openAdd()"
         />
-      </template>
-    </modal>
+      </div>
+
+      <div class="content-body g-table-list">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                ユーザー名
+              </th>
+              <th>
+                メールアドレス
+              </th>
+              <th class="table-header-icon" />
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="user in users"
+              :key="user.id"
+            >
+              <td>
+                {{ user.id }}
+              </td>
+              <td>
+                {{ user.name }}
+              </td>
+              <td>
+                {{ user.email }}
+              </td>
+              <td>
+                <icon-list
+                  :show-icons="getShowIcons(user)"
+                  @edit="openEdit(user)"
+                  @lock="openPasswordEdit(user)"
+                  @trash="deleteUser(user)"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import Modal from '../Modal/ModalWrapper.vue';
-import ModalFooterButton from '~/commonComponents/ModalFooterButton.vue';
 import IconList from '~/commonComponents/IconList.vue';
+import PrimaryButton from '~/commonComponents/PrimaryButton.vue';
 
 export default {
   components : {
-    Modal,
-    ModalFooterButton,
     IconList,
+    PrimaryButton,
   },
   data () {
     return {
-      modalName   : 'UserList',
-      modalOption : {
-        beforeOpen : this.beforeOpen,
-      },
       visible : false,
       users   : null,
     };
   },
+  created () {
+    this.load();
+  },
   methods : {
-    beforeOpen () {
-      this.load();
-    },
     async load () {
       const url      = this.$config.public.apiUrl + '/users';
       const response = await this.$axios.get(url);
       this.users     = response.data;
       this.visible   = true;
     },
-    closeModal () {
-      this.$vfm.close('UserList', this.$config.MODAL_CLOSE_TYPE_CLOSE);
-    },
     openAdd () {
       this.$vfm.open('UserAdd');
-      this.$vfm.setClosedCallback('UserAdd', () => { this.beforeOpen(); });
+      this.$vfm.setClosedCallback('UserAdd', () => { this.load(); });
     },
     openEdit (user) {
       this.$vfm.open('UserEdit', {user, });
-      this.$vfm.setClosedCallback('UserEdit', () => { this.beforeOpen(); });
+      this.$vfm.setClosedCallback('UserEdit', () => { this.load(); });
     },
     openPasswordEdit (user) {
       this.$vfm.open('UserPasswordEdit', {user, });
