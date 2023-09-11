@@ -6,7 +6,7 @@
         type="radio"
         name="mode"
         checked
-        @click="canvas.changeDrawingMode(true)"
+        @click="canvas?.changeDrawingMode(true)"
       >
       <label
         for="draw"
@@ -18,7 +18,7 @@
         id="select"
         type="radio"
         name="mode"
-        @click="canvas.changeDrawingMode(false)"
+        @click="canvas?.changeDrawingMode(false)"
       >
       <label
         for="select"
@@ -30,7 +30,7 @@
       <v-icon
         id="zoom-out"
         size="20"
-        @click="canvas.zoomOut()"
+        @click="canvas?.zoomOut()"
       >
         mdi-minus
       </v-icon>
@@ -38,7 +38,7 @@
         id="zoom-in"
         size="20"
         class="mr-2"
-        @click="canvas.zoomIn()"
+        @click="canvas?.zoomIn()"
       >
         mdi-plus
       </v-icon>
@@ -46,7 +46,7 @@
       <v-icon
         id="undo"
         size="20"
-        @click="canvas.undo()"
+        @click="canvas?.undo()"
       >
         mdi-arrow-left
       </v-icon>
@@ -54,7 +54,7 @@
         id="redo"
         size="20"
         class="mr-2"
-        @click="canvas.redo()"
+        @click="canvas?.redo()"
       >
         mdi-arrow-right
       </v-icon>
@@ -63,7 +63,7 @@
         id="remove"
         size="20"
         class="mr-2"
-        @click="canvas.remove()"
+        @click="canvas?.remove()"
       >
         mdi-trash-can-outline
       </v-icon>
@@ -72,7 +72,7 @@
         id="clear"
         size="20"
         class="mr-2"
-        @click="canvas.clear()"
+        @click="canvas?.clear()"
       >
         mdi-refresh
       </v-icon>
@@ -89,7 +89,7 @@
 import { onMounted } from 'vue';
 import Fabric from '~/libraries/fabric';
 
-let canvas = null;
+let canvas: null|Fabric = null;
 
 onMounted(() => {
   const id = "canvas";
