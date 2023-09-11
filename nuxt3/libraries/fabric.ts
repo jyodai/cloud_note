@@ -38,6 +38,8 @@ export default class Fabric implements IFabric {
     this.canvas.on('path:created', () => {
       this.addHitory();
     });
+
+    this.registerShortcut();
   }
 
   private addHitory () {
@@ -45,6 +47,23 @@ export default class Fabric implements IFabric {
       this.undoStack.push(this.currentState);
     }
     this.currentState = this.canvas.toJSON();
+  }
+
+  private registerShortcut() {
+    const element = this.canvas.getElement().parentElement;
+    element?.addEventListener('wheel', (event) => {
+      const isCtrlPressed = event.ctrlKey;
+      const delta         = event.deltaY;
+
+      if (isCtrlPressed) {
+        if (delta < 0) {
+          this.zoomIn();
+        } else if (delta > 0) {
+          this.zoomOut();
+        }
+        event.preventDefault();
+      }
+    });
   }
 
   public changeDrawingMode (mode: boolean) {
