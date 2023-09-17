@@ -1,6 +1,7 @@
 export default {
   NOTE_TYPE_NORMAL : 'App\\Models\\NoteContent',
   NOTE_TYPE_TASK   : 'App\\Models\\Task',
+  NOTE_TYPE_CANVAS : 'App\\Models\\Canvas',
 
   USER_TYPE_ADMIN : 1,
 

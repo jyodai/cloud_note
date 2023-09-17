@@ -15,6 +15,10 @@
             v-if="note && note.note_type === $const.NOTE_TYPE_TASK"
             :note="note"
           />
+          <canvas-content-body
+            v-if="note && note.note_type === $const.NOTE_TYPE_CANVAS"
+            :note="note"
+          />
         </template>
       </div>
     </div>
@@ -27,6 +31,7 @@ import NoteContentHead from './NoteContentHead.vue';
 import NoteContentBody from './NoteContentBody.vue';
 import { useNoteTabStore } from '~/store/NoteTab';
 import TaskContentBody from '~/components/Task/TaskContentBody.vue';
+import CanvasContentBody from '~/components/Canvas/CanvasContentBody.vue';
 
 export default {
   components : {
@@ -34,6 +39,7 @@ export default {
     NoteContentHead,
     NoteContentBody,
     TaskContentBody,
+    CanvasContentBody,
   },
   data () {
     return {
