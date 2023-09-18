@@ -89,6 +89,10 @@ Route::middleware(['auth_api'])->group(function () {
         });
     });
 
+    Route::prefix('canvas')->name('canvas.')->group(function () {
+        Route::put('/{id}', 'Api\CanvasController@update')->name('update');
+    });
+
     Route::prefix('tree')->name('tree.')->group(function () {
         Route::get('/', 'Api\TreeController@index')->name('index');
         Route::get('/{id}/children', 'Api\TreeController@getTreeChildren')->name('children.index');
