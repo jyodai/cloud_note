@@ -27,21 +27,26 @@
         選択
       </label>
 
-      <v-icon
-        id="zoom-out"
-        size="20"
-        @click="canvas?.zoomOut()"
-      >
-        mdi-minus
-      </v-icon>
-      <v-icon
-        id="zoom-in"
-        size="20"
-        class="mr-2"
-        @click="canvas?.zoomIn()"
-      >
-        mdi-plus
-      </v-icon>
+      <span class="zoom">
+        <v-icon
+          id="zoom-out"
+          size="20"
+          @click="canvas?.zoomOut()"
+        >
+          mdi-minus
+        </v-icon>
+        <v-icon
+          id="zoom-in"
+          size="20"
+          @click="canvas?.zoomIn()"
+        >
+          mdi-plus
+        </v-icon>
+        <span
+        >
+          {{ nuxtApp.$util.number.percent(zoomLevel) }}
+        </span>
+      </span>
 
       <v-icon
         id="undo"
@@ -86,9 +91,12 @@
 </template>
 
 <script setup lang="ts">
+import { ref, Ref } from 'vue';
 import { onMounted } from 'vue';
 import Fabric from '~/libraries/fabric';
 import Canvas from '~/types/models/canvas';
+
+const nuxtApp = useNuxtApp();
 
 const emit = defineEmits<{
   update: [canvasState: string],
@@ -101,17 +109,23 @@ const props = defineProps({
   }
 });
 
-let canvas: null|Fabric = null;
+let canvas: null|Fabric      = null;
+const zoomLevel: Ref<number> = ref(1);
 
 onMounted(() => {
   const id = "canvas";
   canvas   = new Fabric(id);
   canvas.setUpdatedCallback(update);
+  canvas.setZoomCallback(zoom);
   canvas.loadCanvas(props.canvasModel.content);
 });
 
 function update(canvasState: string) {
   emit('update', canvasState);
+}
+
+function zoom(level: number) {
+  zoomLevel.value = level;
 }
 
 </script>
@@ -123,6 +137,10 @@ function update(canvasState: string) {
   flex-direction: column;
   .head {
     width: 100%;
+    display: flex;
+    .zoom {
+      width: 90px;
+    }
   }
   .body {
     width: 100%;
