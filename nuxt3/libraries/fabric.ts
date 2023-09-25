@@ -3,6 +3,7 @@ import { fabric } from 'fabric';
 interface IFabric {
   loadCanvas(state: string): void;
   setUpdatedCallback(callback: () => void): void;
+  setZoomCallback(callback: () => void): void;
   changeDrawingMode(mode: boolean): void;
   zoomIn(): void;
   zoomOut(): void;
@@ -20,13 +21,17 @@ interface IState {
 export default class Fabric implements IFabric {
   private canvas: fabric.Canvas;
 
-  private zoomLevel = 1;
+  private zoomLevel = 1.0;
+  private zoomStep  = 0.1;
+  private maxZoomLevel = 2.0;
+  private minZoomLevel = 0.1;
 
   private undoStack:Array<IState> = [];
   private redoStack:Array<IState> = [];
   private currentState: null|IState = null;
 
   private updatedCallback: (state: string) => void  = () => { return; };
+  private zoomCallback: (zoomLevel: number) => void  = () => { return; };
 
   constructor(id: string) {
     this.canvas = new fabric.Canvas(id);
@@ -54,6 +59,10 @@ export default class Fabric implements IFabric {
 
   public setUpdatedCallback(callback: (state: string) => void) {
     this.updatedCallback = callback;
+  }
+
+  public setZoomCallback(callback: (zoomLevel: number) => void) {
+    this.zoomCallback = callback;
   }
 
   private addHitory () {
@@ -85,15 +94,26 @@ export default class Fabric implements IFabric {
   }
 
   public zoomIn () {
-    this.zoomLevel *= 1.2;
-    this.canvas.setZoom(this.zoomLevel);
-    this.canvas.renderAll();
+    if (this.zoomLevel === this.maxZoomLevel) {
+      return;
+    }
+    this.zoomLevel += this.zoomStep;
+    this.zoomExec();
   }
 
   public zoomOut () {
-    this.zoomLevel /= 1.2;
+    if (this.zoomLevel === this.minZoomLevel) {
+      return;
+    }
+    this.zoomLevel -= this.zoomStep;
+    this.zoomExec();
+  }
+
+  private zoomExec () {
+    this.zoomLevel = Math.round(this.zoomLevel * 10) / 10;
     this.canvas.setZoom(this.zoomLevel);
     this.canvas.renderAll();
+    this.zoomCallback(this.zoomLevel);
   }
 
   public undo () {
