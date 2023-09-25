@@ -13,12 +13,18 @@ interface ErrorData {
   }
 }
 
+interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
+  loadingScreen?: boolean;
+}
+
 const loadingScreen = new LoadingScreen();
 
 const instance: AxiosInstance = axios.create({});
 
-instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  loadingScreen.show();
+instance.interceptors.request.use((config: CustomInternalAxiosRequestConfig) => {
+  if (enableLoadingScreen(config)) {
+    loadingScreen.show();
+  }
 
   const token: string | null = sessionStorage.get('token');
   if (token) {
@@ -30,11 +36,16 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    loadingScreen.hide();
+    if (enableLoadingScreen(response.config)) {
+      loadingScreen.hide();
+    }
     return response.data;
   },
   (error: AxiosError<ErrorData>) => {
-    loadingScreen.hide();
+    const config = error.config as CustomInternalAxiosRequestConfig;
+    if (enableLoadingScreen(config)) {
+      loadingScreen.hide();
+    }
     if (error.response && error.response.status === 422) {
       showValidateMessage(error.response.data);
     }
@@ -52,6 +63,13 @@ function showValidateMessage(data: ErrorData): void {
     }
   }
   alert(messages.join("\n"));
+}
+
+function enableLoadingScreen (config: CustomInternalAxiosRequestConfig) {
+  if (!('loadingScreen' in config)) {
+    return true;
+  }
+  return config.loadingScreen;
 }
 
 export default instance;

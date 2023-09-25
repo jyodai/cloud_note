@@ -88,13 +88,32 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import Fabric from '~/libraries/fabric';
+import Canvas from '~/types/models/canvas';
+
+const emit = defineEmits<{
+  update: [canvasState: string],
+}>();
+
+const props = defineProps({
+  canvasModel : {
+    type     : Object as () => Canvas,
+    required : true
+  }
+});
 
 let canvas: null|Fabric = null;
 
 onMounted(() => {
   const id = "canvas";
   canvas   = new Fabric(id);
+  canvas.setUpdatedCallback(update);
+  canvas.loadCanvas(props.canvasModel.content);
 });
+
+function update(canvasState: string) {
+  emit('update', canvasState);
+}
+
 </script>
 <style lang="scss" scoped>
 .draw-canvas {

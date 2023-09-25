@@ -1,6 +1,8 @@
 import { fabric } from 'fabric';
 
 interface IFabric {
+  loadCanvas(state: string): void;
+  setUpdatedCallback(callback: () => void): void;
   changeDrawingMode(mode: boolean): void;
   zoomIn(): void;
   zoomOut(): void;
@@ -24,6 +26,8 @@ export default class Fabric implements IFabric {
   private redoStack:Array<IState> = [];
   private currentState: null|IState = null;
 
+  private updatedCallback: (state: string) => void  = () => { return; };
+
   constructor(id: string) {
     this.canvas = new fabric.Canvas(id);
     this.canvas.setHeight(5000);
@@ -37,9 +41,19 @@ export default class Fabric implements IFabric {
 
     this.canvas.on('path:created', () => {
       this.addHitory();
+      this.updated();
     });
 
     this.registerShortcut();
+  }
+
+  public loadCanvas(state: string) {
+    this.canvas.loadFromJSON(JSON.parse(state), () => { return; });
+    this.canvas.renderAll();
+  }
+
+  public setUpdatedCallback(callback: (state: string) => void) {
+    this.updatedCallback = callback;
   }
 
   private addHitory () {
@@ -88,6 +102,7 @@ export default class Fabric implements IFabric {
       this.redoStack.push(this.canvas.toJSON());
       this.canvas.loadFromJSON(state, () => { return; });
       this.canvas.renderAll();
+      this.updated();
     }
   }
 
@@ -97,6 +112,7 @@ export default class Fabric implements IFabric {
       this.undoStack.push(this.canvas.toJSON());
       this.canvas.loadFromJSON(state, () => { return; });
       this.canvas.renderAll();
+      this.updated();
     }
   }
 
@@ -107,6 +123,7 @@ export default class Fabric implements IFabric {
     const state = this.canvas.toJSON();
     this.undoStack.push(state);
     this.canvas.clear();
+    this.updated();
   }
 
   public remove() {
@@ -114,5 +131,12 @@ export default class Fabric implements IFabric {
     selectedObjects.forEach((obj) => {
       this.canvas.remove(obj);
     });
+    this.updated();
+  }
+
+  public updated() {
+    const state = this.canvas.toJSON();
+    const str   = JSON.stringify(state);
+    this.updatedCallback(str);
   }
 }
