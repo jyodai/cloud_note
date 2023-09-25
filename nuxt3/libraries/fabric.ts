@@ -33,10 +33,14 @@ export default class Fabric implements IFabric {
   private updatedCallback: (state: string) => void  = () => { return; };
   private zoomCallback: (zoomLevel: number) => void  = () => { return; };
 
+  // A4 350dpi
+  private height = 4093;
+  private width  = 2894;
+
   constructor(id: string) {
     this.canvas = new fabric.Canvas(id);
-    this.canvas.setHeight(5000);
-    this.canvas.setWidth(5000);
+    this.canvas.setHeight(this.height);
+    this.canvas.setWidth(this.width);
     this.canvas.setZoom(this.zoomLevel);
     this.canvas.isDrawingMode = true;
 
