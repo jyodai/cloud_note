@@ -116,7 +116,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  const canvasState = canvas.getCanvasState();
+  const canvasState = canvas?.getCanvasState() as string;
   emit('update', canvasState);
 });
 
@@ -128,7 +128,7 @@ function createCanvas() {
   canvas.loadCanvas(props.canvasModel.content);
 
   window.addEventListener('beforeunload', (e) => {
-    if (props.canvasModel.content !== canvas.getCanvasState()) {
+    if (props.canvasModel.content !== canvas?.getCanvasState()) {
       e.returnValue = '';
     }
   }, false);
