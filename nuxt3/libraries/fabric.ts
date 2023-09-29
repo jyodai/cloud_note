@@ -5,6 +5,7 @@ interface IFabric {
   setUpdatedCallback(callback: () => void): void;
   setZoomCallback(callback: () => void): void;
   changeDrawingMode(mode: boolean): void;
+  getCanvasState(): string;
   zoomIn(): void;
   zoomOut(): void;
   undo(): void;
@@ -50,6 +51,9 @@ export default class Fabric implements IFabric {
 
     this.canvas.on('path:created', () => {
       this.addHitory();
+    });
+
+    this.canvas.on('mouse:out', () => {
       this.updated();
     });
 
@@ -95,6 +99,12 @@ export default class Fabric implements IFabric {
 
   public changeDrawingMode (mode: boolean) {
     this.canvas.isDrawingMode = mode;
+  }
+
+  public getCanvasState () {
+    const state = this.canvas.toJSON();
+    const str   = JSON.stringify(state);
+    return str;
   }
 
   public zoomIn () {
@@ -159,8 +169,7 @@ export default class Fabric implements IFabric {
   }
 
   public updated() {
-    const state = this.canvas.toJSON();
-    const str   = JSON.stringify(state);
-    this.updatedCallback(str);
+    const state = this.getCanvasState();
+    this.updatedCallback(state);
   }
 }

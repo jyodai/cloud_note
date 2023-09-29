@@ -41,6 +41,9 @@ async function update(canvasState: string) {
     loadingScreen : false,
   };
   await nuxtApp.$axios.put(url, params, customConfig)
+    .then(() => {
+      canvasModel.value.content = canvasState;
+    })
     .catch(() => {
       alert('保存に失敗しました');
     });

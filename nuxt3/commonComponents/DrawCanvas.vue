@@ -42,8 +42,7 @@
         >
           mdi-plus
         </v-icon>
-        <span
-        >
+        <span>
           {{ nuxtApp.$util.number.percent(zoomLevel) }}
         </span>
       </span>
@@ -92,7 +91,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import Fabric from '~/libraries/fabric';
 import Canvas from '~/types/models/canvas';
 
@@ -113,12 +112,27 @@ let canvas: null|Fabric      = null;
 const zoomLevel: Ref<number> = ref(1);
 
 onMounted(() => {
+  createCanvas();
+});
+
+onUnmounted(() => {
+  const canvasState = canvas.getCanvasState();
+  emit('update', canvasState);
+});
+
+function createCanvas() {
   const id = "canvas";
   canvas   = new Fabric(id);
   canvas.setUpdatedCallback(update);
   canvas.setZoomCallback(zoom);
   canvas.loadCanvas(props.canvasModel.content);
-});
+
+  window.addEventListener('beforeunload', (e) => {
+    if (props.canvasModel.content !== canvas.getCanvasState()) {
+      e.returnValue = '';
+    }
+  }, false);
+}
 
 function update(canvasState: string) {
   emit('update', canvasState);
