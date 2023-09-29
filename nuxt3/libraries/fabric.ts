@@ -5,6 +5,7 @@ interface IFabric {
   setUpdatedCallback(callback: () => void): void;
   setZoomCallback(callback: () => void): void;
   changeDrawingMode(mode: boolean): void;
+  getCanvasState(): string;
   zoomIn(): void;
   zoomOut(): void;
   undo(): void;
@@ -33,10 +34,14 @@ export default class Fabric implements IFabric {
   private updatedCallback: (state: string) => void  = () => { return; };
   private zoomCallback: (zoomLevel: number) => void  = () => { return; };
 
+  // A4 350dpi
+  private height = 4093;
+  private width  = 2894;
+
   constructor(id: string) {
     this.canvas = new fabric.Canvas(id);
-    this.canvas.setHeight(5000);
-    this.canvas.setWidth(5000);
+    this.canvas.setHeight(this.height);
+    this.canvas.setWidth(this.width);
     this.canvas.setZoom(this.zoomLevel);
     this.canvas.isDrawingMode = true;
 
@@ -46,6 +51,9 @@ export default class Fabric implements IFabric {
 
     this.canvas.on('path:created', () => {
       this.addHitory();
+    });
+
+    this.canvas.on('mouse:out', () => {
       this.updated();
     });
 
@@ -91,6 +99,12 @@ export default class Fabric implements IFabric {
 
   public changeDrawingMode (mode: boolean) {
     this.canvas.isDrawingMode = mode;
+  }
+
+  public getCanvasState () {
+    const state = this.canvas.toJSON();
+    const str   = JSON.stringify(state);
+    return str;
   }
 
   public zoomIn () {
@@ -155,8 +169,7 @@ export default class Fabric implements IFabric {
   }
 
   public updated() {
-    const state = this.canvas.toJSON();
-    const str   = JSON.stringify(state);
-    this.updatedCallback(str);
+    const state = this.getCanvasState();
+    this.updatedCallback(state);
   }
 }
