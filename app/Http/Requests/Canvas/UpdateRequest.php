@@ -9,15 +9,15 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => "string|max:1431655765",
+            'content' => "string|max:4194304", // 4MB
         ];
     }
 
     public function messages()
     {
         return [
-            'content.string' => 'タイトルは文字列で指定してください。',
-            'content.max'    => 'タイトルは1,431,655,765文字以内で指定してください。',
+            'content.string' => 'コンテンツは文字列で指定してください。',
+            'content.max'    => 'コンテンツの最大サイズ(4MB)を超えています',
         ];
     }
 }
