@@ -29,6 +29,7 @@ export default class Fabric implements IFabric {
 
   private undoStack:Array<IState> = [];
   private redoStack:Array<IState> = [];
+  private maxStackSize = 10;
   private currentState: null|IState = null;
 
   private updatedCallback: (state: string) => void  = () => { return; };
@@ -75,7 +76,7 @@ export default class Fabric implements IFabric {
 
   private addHitory () {
     if (this.currentState) {
-      this.undoStack.push(this.currentState);
+      this.addUndo(this.currentState);
     }
     this.currentState = this.canvas.toJSON();
   }
@@ -133,7 +134,7 @@ export default class Fabric implements IFabric {
   public undo () {
     if (this.undoStack.length > 0) {
       const state = this.undoStack.pop();
-      this.redoStack.push(this.canvas.toJSON());
+      this.addRedo(this.canvas.toJSON());
       this.canvas.loadFromJSON(state, () => { return; });
       this.canvas.renderAll();
       this.updated();
@@ -143,10 +144,24 @@ export default class Fabric implements IFabric {
   public redo () {
     if (this.redoStack.length > 0) {
       const state = this.redoStack.pop();
-      this.undoStack.push(this.canvas.toJSON());
+      this.addUndo(this.canvas.toJSON());
       this.canvas.loadFromJSON(state, () => { return; });
       this.canvas.renderAll();
       this.updated();
+    }
+  }
+
+  private addUndo(state: IState) {
+    this.undoStack.push(state);
+    if (this.undoStack.length > this.maxStackSize) {
+      this.undoStack.shift();
+    }
+  }
+
+  private addRedo(state: IState) {
+    this.redoStack.push(state);
+    if (this.redoStack.length > this.maxStackSize) {
+      this.redoStack.shift();
     }
   }
 

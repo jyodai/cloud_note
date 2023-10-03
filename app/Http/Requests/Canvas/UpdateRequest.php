@@ -9,7 +9,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => "string|max:4194304", // 4MB
+            'content' => "string|max:8388608", // 4MB
         ];
     }
 
@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'content.string' => 'コンテンツは文字列で指定してください。',
-            'content.max'    => 'コンテンツの最大サイズ(4MB)を超えています',
+            'content.max'    => 'コンテンツの最大サイズ(8MB)を超えています',
         ];
     }
 }
