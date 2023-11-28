@@ -26,7 +26,7 @@
           class="mr-2 item-name"
           type="text"
           @blur="finishEditing"
-          @keyup.enter="finishEditing"
+          @keyup.esc="finishEditing"
         >
       </div>
 
