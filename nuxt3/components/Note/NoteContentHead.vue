@@ -6,7 +6,10 @@
     </div>
     <div class="right">
       <icon-list
-        v-if="noteTabStore.getSelectNote.note_type === $const.NOTE_TYPE_NORMAL"
+        v-if="
+          noteTabStore.getSelectNote
+          && noteTabStore.getSelectNote.note_type === $const.NOTE_TYPE_NORMAL
+        "
         :show-icons="['edit']"
         @edit="edit()"
       />
