@@ -1,5 +1,8 @@
 <template>
-  <div class="dir-frame">
+  <div
+    class="dir-frame"
+    @click.right.prevent
+  >
     <div class="head-area">
       <div class="left">
         ページ一覧
@@ -15,25 +18,28 @@
       </div>
     </div>
 
-    <directory-contextmenu>
-      <div
-        id="dir-frame"
-        class="tree-area"
-      >
+    <div
+      id="dir-frame"
+      class="tree-area"
+    >
+      <directory-contextmenu>
         <Tree
           ref="tree"
           :value="treeNodes"
           @drop="drop"
           @node-folded-changed="nodeFoldedChanged"
-          @click="selectNoteTree(null)"
-          @mouseup.right="selectNoteTree(null)"
+          @click="clearSelectedNoteTree()"
+          @click.right="clearSelectedNoteTree()"
         >
           <template #default="{node, path, tree}">
             <div
               class="tree-node-container"
               :class="{'select-node': selectTreeNoteId === node.data.id}"
-              @click.stop="setNote(node.data)"
-              @mouseup.right.stop="selectNoteTree(node.data)"
+              @click="
+                setNote(node.data);
+                selectNoteTree(node.data)
+              "
+              @click.right="selectNoteTree(node.data)"
             >
               <span
                 v-if="node.data.hasChild"
@@ -79,8 +85,8 @@
             </div>
           </template>
         </Tree>
-      </div>
-    </directory-contextmenu>
+      </directory-contextmenu>
+    </div>
   </div>
 </template>
 
@@ -108,7 +114,8 @@ export default {
           'Content-Type' : 'application/x-www-form-urlencoded',
         },
       },
-      dragNoteId : null,
+      dragNoteId        : null,
+      skipTreeSelection : false,
     };
   },
   computed : {
@@ -139,10 +146,17 @@ export default {
     setNote (note) {
       this.noteTabStore.setNoteTab(Object.assign({}, note));
       this.noteTabStore.setSelectNote(note);
-      this.selectNoteTree(note);
     },
     selectNoteTree (note) {
       this.noteTreeStore.setSelectTree(note);
+      this.skipTreeSelection = true;
+    },
+    clearSelectedNoteTree() {
+      if (this.skipTreeSelection) {
+        this.skipTreeSelection = false;
+        return;
+      }
+      this.noteTreeStore.setSelectTree(null);
     },
     async drop (event) {
       const id       = event.dragNode.data.id;
