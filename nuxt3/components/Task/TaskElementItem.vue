@@ -73,6 +73,9 @@
       <template v-if="!isEdigingContent && editedContent">
         <div
           class="mr-2"
+          :class="{
+            'completion' : completionFlag
+          }"
           @dblclick="startEditingContent()"
         >
           {{ editedContent }}
@@ -258,9 +261,10 @@ function openDatepicker(changeDate: Ref<string|null>): void {
         color: $color-error;
       }
     }
-    .completion {
-      opacity: 0.5;
-    }
+  }
+
+  .completion {
+    opacity: 0.5;
   }
 
   .item-content {
