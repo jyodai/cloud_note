@@ -14,7 +14,10 @@
         <span
           v-if="!isEdigingName"
           class="mr-2 item-name g-draggable-handle g-pointer"
-          :class="{'font-weight-bold' : taskElement.hierarchy === 1}"
+          :class="{
+            'font-weight-bold' : taskElement.hierarchy === 1,
+            'completion' : completionFlag
+          }"
           @dblclick="startEditingName"
         >
           {{ editedName }}
@@ -139,6 +142,9 @@ const deadlineClass = computed(() => {
   if (editedDueDate.value === null) {
     return '';
   }
+  if (completionFlag.value) {
+    return '';
+  }
 
   const currentDate = new Date();
   const dueDate     = new Date(editedDueDate.value);
@@ -251,6 +257,9 @@ function openDatepicker(changeDate: Ref<string|null>): void {
       .missed-deadline {
         color: $color-error;
       }
+    }
+    .completion {
+      opacity: 0.5;
     }
   }
 
