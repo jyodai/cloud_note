@@ -1,5 +1,6 @@
 import MarkdownIt from 'markdown-it';
 import Checkbox   from 'markdown-it-task-checkbox';
+import injectLinenumgers from 'markdown-it-inject-linenumbers';
 
 export default defineNuxtPlugin(() => {
   const instance = new MarkdownIt({
@@ -12,6 +13,7 @@ export default defineNuxtPlugin(() => {
     ulClass  : 'md-checkbox',
     disabled : false,
   });
+  instance.use(injectLinenumgers);
   return {
     provide : {
       md : instance,

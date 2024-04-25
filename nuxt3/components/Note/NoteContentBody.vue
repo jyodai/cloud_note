@@ -9,6 +9,7 @@
         :content="content"
         @save-note="saveNote"
         @blur="blur"
+        @cursor-changed="editCursorChanged"
       />
       <markdown-view
         ref="markdownViewRef"
@@ -100,6 +101,25 @@ function registerShortcut() {
   useKeydown(changeEditorKey.handleKeyDown);
   useKeydown(outputPdfKey.handleKeyDown);
 }
+
+function editCursorChanged(cursorLine: number) {
+  if (markdownViewRef.value === null) {
+    return;
+  }
+  const view = markdownViewRef.value.$el;
+
+  view.scrollTop = 0; // スクロール位置をリセット
+
+  let lineElement = null;
+  for (let i = cursorLine; i < cursorLine + 100; i++) {
+    lineElement = view.querySelector(`[data-source-line="${i}"]`);
+    if (lineElement) {
+      view.scrollTop = lineElement.offsetTop - 200;
+      break;
+    }
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
