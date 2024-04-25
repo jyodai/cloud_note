@@ -1,11 +1,9 @@
 <template>
-  <!-- eslint-disable -->
   <div
     id="markdownArea"
     class="g-markdown-area line-numbers"
     v-html="$md.render(markdown)"
   />
-  <!-- eslint-enable -->
 </template>
 
 <script>

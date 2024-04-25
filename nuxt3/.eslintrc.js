@@ -65,6 +65,7 @@ module.exports = {
         ],
       }
     ],
+    'vue/no-v-html' : 'off',
 
     // 垂直方向のイコールを揃える
     'align-assignments/align-assignments' : [2, { 'requiresOnly' : false } ]
