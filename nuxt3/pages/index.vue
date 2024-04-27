@@ -1,5 +1,8 @@
 <template>
-  <splitpanes class="note">
+  <splitpanes
+    class="note"
+    @resized="resized($event)"
+  >
     <pane :size="sidebarSize">
       <side-bar />
     </pane>
@@ -22,12 +25,26 @@ definePageMeta({
 const userStore = useUserStore();
 await userStore.setUser();
 
-const sidebarSize   = ref(20);
-const noteFrameSize = ref(80);
+const sidebarSize     = ref(20);
+const noteFrameSize   = ref(80);
+const lastSidebarSize = ref(20);
 
 function toggleSidebarr() {
-  sidebarSize.value   = sidebarSize.value === 0 ? 20 : 0;
-  noteFrameSize.value = sidebarSize.value === 0 ? 100 : 80;
+  if (isOpenedSidebar()) {
+    sidebarSize.value   = 0;
+    noteFrameSize.value = 100;
+  } else {
+    sidebarSize.value   = lastSidebarSize.value;
+    noteFrameSize.value = 100 - lastSidebarSize.value;
+  }
+}
+
+function isOpenedSidebar() {
+  return sidebarSize.value !== 0;
+}
+
+function resized(event) {
+  lastSidebarSize.value = event[0].size;
 }
 
 registerShortcut();
