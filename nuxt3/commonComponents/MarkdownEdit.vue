@@ -9,6 +9,7 @@
       :options="codemirrorOptions"
       @blur="onBlur"
       @changes="contentChange()"
+      @cursor-activity="onCursorActivity"
     />
   </div>
 </template>
@@ -33,6 +34,7 @@ export default {
   emits : [
     'saveNote',
     'blur',
+    'cursorChanged',
   ],
   data () {
     return {
@@ -117,7 +119,11 @@ export default {
     },
     isChangeTabEvent(event) {
       return event.ctrlKey && (event.key === 'j' || event.key === 'k');
-    }
+    },
+    onCursorActivity(codemirror) {
+      const cursor = codemirror.getCursor();
+      this.$emit('cursorChanged', cursor.line);
+    },
   },
 };
 </script>
