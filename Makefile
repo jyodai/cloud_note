@@ -28,7 +28,7 @@ help :
 	# tsc               TypeScriptでコードチェック
 	# cacheclear        Laravelのキャッシュをクリア
 	# createTag         gitでタグを作成
-	#                   例) make tag version=1.2.3
+	#                   例) make createTag version=1.2.3
 
 up :
 	docker-compose up -d
