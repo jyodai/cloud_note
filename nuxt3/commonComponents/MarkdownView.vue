@@ -114,59 +114,45 @@ export default {
       return content.replace(/\[TOC\]/g, '<div id="toc"></div>');
     },
     afterMarkdown () {
-      this.revertPreCode();
       this.toc();
       Mermaid.init();
       this.$prism.highlightAll();
     },
-    toc () {
+    toc() {
       const area         = 'markdownArea';
       const tocMark      = '<div id="toc"></div>';
-      const markdonwHtml = document.getElementById(area);
+      const markdownHtml = document.getElementById(area);
 
-      const elements     = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      const headElements = [];
-      elements.forEach(function (element) {
-        if (element.parentElement.id === area) {
-          headElements.push(element);
-        }
-      });
+      const elements = document.querySelectorAll(`#${area} h1, #${area} h2, #${area} h3, #${area} h4, #${area} h5, #${area} h6`);
 
-      if (!headElements || !markdonwHtml.innerHTML.match(tocMark)) {
+      // TOCマークがなければ処理を終了
+      if (!markdownHtml.innerHTML.includes(tocMark)) {
         return;
       }
 
       const tocElement = document.createElement('div');
-      tocElement.setAttribute('id', 'toc');
+      tocElement.id    = 'toc';
       tocElement.classList.add('toc');
-      tocElement.appendChild(document.createElement('ul'));
+      const list = document.createElement('ul');
+      tocElement.appendChild(list);
 
-      let i = 1;
-      headElements.forEach(function (headElement) {
-        let headNum     = headElement.outerHTML.match(/<h([1-6])([^>]*)>/);
-        headNum         = headNum[1];
-        const headTitle = headElement.innerText;
-        const headClass = 'head_content_' + headNum;
-        const headId    = 'head_link_' + i;
+      elements.forEach((element, index) => {
+        const level = element.tagName.toLowerCase().charAt(1); // h1, h2, ... の '1', '2', ...
+        const title = element.textContent;
+        const id    = 'head_link_' + (index + 1);
 
-        const anchor = document.createElement('li');
-        anchor.classList.add(headClass);
-        anchor.innerHTML = `<span onclick="document.getElementById('${headId}').scrollIntoView({behavior: 'smooth'})">${headTitle}</span>`;
+        // アンカーリスト項目を作成
+        const listItem     = document.createElement('li');
+        listItem.className = 'head_content_' + level;
+        listItem.innerHTML = `<span onclick="document.getElementById('${id}').scrollIntoView({behavior: 'smooth'})">${title}</span>`;
+        list.appendChild(listItem);
 
-        markdonwHtml.innerHTML = markdonwHtml.innerHTML.replace(headElement.outerHTML, `<h${headNum} id="${headId}">${headTitle}</h${headNum}>`);
-
-        tocElement.children[0].appendChild(anchor);
-        i++;
+        // 元の要素にIDを追加し、他の属性を保持
+        element.id = id;
       });
-      markdonwHtml.innerHTML = markdonwHtml.innerHTML.replace(tocMark, tocElement.outerHTML);
-    },
-    // preタグ内はbeforeMarkdown()で変換したコードを元の値に戻す
-    revertPreCode () {
-      const element = document.getElementsByTagName('code');
-      const pattern = '&lt;span class="replace_space"&gt;    &lt;/span&gt;'; // <span class="replace_space">    </span>
-      for (let i = 0; i < element.length; i++) {
-        element[i].innerHTML = element[i].innerHTML.replace(new RegExp(pattern, 'g'), '    ');
-      }
+
+      // tocマークの場所にTOC要素を挿入
+      markdownHtml.innerHTML = markdownHtml.innerHTML.replace(tocMark, tocElement.outerHTML);
     },
   },
 };

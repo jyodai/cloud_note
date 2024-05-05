@@ -108,14 +108,10 @@ function editCursorChanged(cursorLine: number) {
   }
   const view = markdownViewRef.value.$el;
 
-  let lineElement = null;
-  for (let i = cursorLine; i < cursorLine + 100; i++) {
-    lineElement = view.querySelector(`[data-source-line="${i}"]`);
-    if (lineElement) {
-      view.scrollTop = 0; // スクロール位置をリセット
-      view.scrollTop = lineElement.offsetTop - 200;
-      break;
-    }
+  const lineElement = view.querySelector(`[data-source-line="${cursorLine}"]`);
+  if (lineElement) {
+    view.scrollTop = 0; // スクロール位置をリセット
+    view.scrollTop = lineElement.offsetTop - view.clientHeight / 2;
   }
 }
 
