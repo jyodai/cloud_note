@@ -27,6 +27,8 @@ help :
 	# lintfix           ESLintでコード整形
 	# tsc               TypeScriptでコードチェック
 	# cacheclear        Laravelのキャッシュをクリア
+	# createTag         gitでタグを作成
+	#                   例) make createTag version=1.2.3
 
 up :
 	docker-compose up -d
@@ -160,3 +162,9 @@ cacheclear :
 		php artisan cache:clear; \
 		php artisan route:clear; \
 	'
+
+createTag :
+	git checkout master
+	git pull origin master
+	git tag -a v$(version) -m "Version $(version)"
+	git push origin v$(version)
