@@ -114,7 +114,6 @@ export default {
       return content.replace(/\[TOC\]/g, '<div id="toc"></div>');
     },
     afterMarkdown () {
-      this.revertPreCode();
       this.toc();
       Mermaid.init();
       this.$prism.highlightAll();
@@ -154,14 +153,6 @@ export default {
 
       // tocマークの場所にTOC要素を挿入
       markdownHtml.innerHTML = markdownHtml.innerHTML.replace(tocMark, tocElement.outerHTML);
-    },
-    // preタグ内はbeforeMarkdown()で変換したコードを元の値に戻す
-    revertPreCode () {
-      const element = document.getElementsByTagName('code');
-      const pattern = '&lt;span class="replace_space"&gt;    &lt;/span&gt;'; // <span class="replace_space">    </span>
-      for (let i = 0; i < element.length; i++) {
-        element[i].innerHTML = element[i].innerHTML.replace(new RegExp(pattern, 'g'), '    ');
-      }
     },
   },
 };
