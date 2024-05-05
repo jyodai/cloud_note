@@ -63,36 +63,43 @@ export default {
     },
     // markdownItでのHTMLレンダリングの前段階で独自のMarkdown処理を行う
     beforeMarkdown (content) {
-      content = this.convertMermaid(content);
       content = this.convertIndent(content);
+      content = this.convertMermaid(content);
       content = this.convertStyle(content);
       content = this.convertImageToken(content);
+      content = this.convertToc(content);
       return content;
+    },
+    convertIndent (content) {
+      const lines = content.split('\n');
+      return lines.map((line, index) => this.processIndentLine(line, lines[index - 1])).join('\n');
+    },
+    processIndentLine(line, previousLine) {
+      // リスト要素内の行はそのまま返す
+      const prevPattern = /^( {4})+(\s*\*|\s*\d+\.\s)/;
+      if (previousLine && prevPattern.test(previousLine)) {
+        return line;
+      }
+
+      // リスト要素以外の場合、インデントを変換する
+      // 先頭が4の倍数のスペースで始まり、その直後に'*'や数値+ピリオド+スペースが続かない行
+      const currentPattern = /^( {4})+(?!\s*\*|\s*\d+\.\s)/;
+      if (currentPattern.test(line)) {
+        const leadingSpaces = line.match(/^( {4})+/)[0].length;
+        const indent        = '&nbsp;'.repeat(leadingSpaces);
+        return line.replace(/^( {4})+/, indent);
+      }
+
+      return line;
     },
     convertMermaid (content) {
-      content = this.removeSpaceMermaid(content, /\(```*?mermaid[\s\S]*?\(```\/\)/g);
-      content = this.removeSpaceMermaid(content, /```*?mermaid[\s\S]*?```/g);
-      return content;
-    },
-    removeSpaceMermaid (content, pattern) {
-      const str = content.match(pattern);
-      if (!str) {
-        return content;
-      }
+      const regex = /```mermaid\n([\s\S]*?)```/g;
 
-      for (let i = 0; i < str.length; i++) {
-        // レンダリング時に空行があると<p>タグに変換され、mermaidがエラーとなる
-        let replaceStr = str[i].replace(/^\n/gm, '').replace(/^\s+/g, '');
-        // mermaid内は見た目を整えている4スペースは必要ない
-        replaceStr = replaceStr.replace(/\u0020\u0020\u0020\u0020/gm, '');
+      const convertContent = content.replace(regex, (match, innerText) => {
+        return `<p class="mermaid">${innerText.trim()}</p>`;
+      });
 
-        content = content.replace(str[i], replaceStr);
-      }
-      return content;
-    },
-    // markdownItで連続スペースが1つの扱いになるので防ぐ
-    convertIndent (content) {
-      return content.replace(/\u0020\u0020\u0020\u0020/g, '<span class="replace_space">    </span>');
+      return convertContent;
     },
     convertStyle (content) {
       return content
@@ -102,6 +109,9 @@ export default {
     convertImageToken (content) {
       const token = this.userStore.getToken;
       return content.replace(/%cn_api_token%/g, token);
+    },
+    convertToc (content) {
+      return content.replace(/\[TOC\]/g, '<div id="toc"></div>');
     },
     afterMarkdown () {
       this.revertPreCode();
@@ -133,7 +143,7 @@ export default {
 
       let i = 1;
       headElements.forEach(function (headElement) {
-        let headNum     = headElement.outerHTML.match(/<h(.*?)>/);
+        let headNum     = headElement.outerHTML.match(/<h([1-6])([^>]*)>/);
         headNum         = headNum[1];
         const headTitle = headElement.innerText;
         const headClass = 'head_content_' + headNum;
