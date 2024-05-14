@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { Editor } from "codemirror";
+import * as CodeMirror from 'codemirror';
 import { CreateComponentPublicInstance } from 'vue';
 import { Ref } from 'vue';
 
 interface State {
-  editor: Editor | null,
+  editor: CodeMirror.Editor | null,
   isSyncingPreview: boolean,
   isSyncingEditor: boolean,
 }
@@ -21,7 +21,7 @@ export const useSyncMarkdown = defineStore({
     init() {
       this.editor = null;
     },
-    setEditor(editorInstance: Editor) {
+    setEditor(editorInstance: CodeMirror.Editor) {
       this.editor = editorInstance;
     },
     syncEditor(element: HTMLElement) {
