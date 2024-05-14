@@ -2,6 +2,7 @@
   <div
     id="markdownArea"
     class="g-markdown-area line-numbers"
+    @scroll="handleScroll"
     v-html="$md.render(markdown)"
   />
 </template>
@@ -9,6 +10,7 @@
 <script>
 import Mermaid from 'mermaid/dist/mermaid';
 import { useUserStore } from '~/store/User';
+import { useSyncMarkdown } from '~/store/SyncMarkdown';
 
 export default {
   props : {
@@ -19,8 +21,9 @@ export default {
   },
   data () {
     return {
-      userStore : useUserStore(),
-      markdown  : '',
+      userStore    : useUserStore(),
+      syncMarkdown : useSyncMarkdown(),
+      markdown     : '',
     };
   },
   computed : {
@@ -45,6 +48,10 @@ export default {
     this.afterMarkdown();
   },
   methods : {
+    handleScroll(event) {
+      const previewElement = event.target;  // スクロールイベントのソース
+      this.syncMarkdown.syncEditor(previewElement);
+    },
     loadInlineCSS() {
       const user        = this.userStore.getUser;
       const style       = document.createElement('style');

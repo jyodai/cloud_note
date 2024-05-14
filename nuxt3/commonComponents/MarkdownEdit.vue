@@ -4,12 +4,14 @@
     @keydown.ctrl.s.prevent.stop="saveNote()"
   >
     <codemirror
+      ref="editorRef"
       v-model:value="codemirrorContent"
       class="editor"
       :options="codemirrorOptions"
       @blur="onBlur"
       @changes="contentChange()"
       @cursor-activity="onCursorActivity"
+      @scroll="onScroll"
     />
   </div>
 </template>
@@ -20,6 +22,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/base16-dark.css';
 import 'codemirror/keymap/vim.js';
 import { useUserStore } from '~/store/User';
+import { useSyncMarkdown } from '~/store/SyncMarkdown';
 
 export default {
   components : {
@@ -35,6 +38,7 @@ export default {
     'saveNote',
     'blur',
     'cursorChanged',
+    'scroll',
   ],
   data () {
     return {
@@ -51,7 +55,6 @@ export default {
         mode            : 'text',
         lineWrapping    : false,
         theme           : 'base16-dark',
-        autofocus       : true,
         extraKeys       : {
           Tab : (cm) => {
             if (cm.somethingSelected()) {
@@ -83,14 +86,24 @@ export default {
         e.returnValue = '';
       }
     }, false);
+
+    this.setSyncMarkdown();
   },
   beforeUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
   },
   methods : {
+    setSyncMarkdown() {
+      const syncMarkdown = useSyncMarkdown();
+      syncMarkdown.setEditor(this.$refs.editorRef.cminstance);
+    },
     handleKeyDown(event) {
       if (this.isChangeTabEvent(event) && this.contentChangeFlag) {
         this.saveNote();
+      }
+
+      if (event.key === 'Escape') {
+        this.removeEditorFocus();
       }
     },
     mergeCodemirrorOption () {
@@ -117,12 +130,19 @@ export default {
       this.$emit('saveNote', { id : this.content.id, content : this.codemirrorContent, });
       this.contentChangeFlag = false;
     },
+    removeEditorFocus() {
+      const editor = this.$refs.editorRef.cminstance;
+      editor.getInputField().blur();
+    },
     isChangeTabEvent(event) {
       return event.ctrlKey && (event.key === 'j' || event.key === 'k');
     },
     onCursorActivity(codemirror) {
       const cursor = codemirror.getCursor();
       this.$emit('cursorChanged', cursor.line);
+    },
+    onScroll() {
+      this.$emit('scroll');
     },
   },
 };
