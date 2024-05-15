@@ -15,6 +15,7 @@
     "@babel/core": "^7.22.5",
     "@babel/eslint-parser": "^7.22.5",
     "@nuxt/devtools": "latest",
+    "@types/codemirror": "^5.60.15",
     "@types/fabric": "^5.3.3",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
