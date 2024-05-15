@@ -49,7 +49,7 @@ function resized(event) {
 
 registerShortcut();
 function registerShortcut() {
-  const toggleSidebar = new ShortcutKey('t', toggleSidebarr);
+  const toggleSidebar = new ShortcutKey('b', toggleSidebarr);
   useKeydown(toggleSidebar.handleKeyDown);
 }
 </script>
