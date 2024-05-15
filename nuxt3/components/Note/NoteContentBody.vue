@@ -10,6 +10,7 @@
         @save-note="saveNote"
         @blur="blur"
         @cursor-changed="editCursorChanged"
+        @scroll="onScroll"
       />
       <markdown-view
         ref="markdownViewRef"
@@ -40,6 +41,7 @@ import { useKeydown } from '~/composable/useKeydown';
 import Note from '~/types/models/note';
 import NoteContent from '~/types/models/noteContent';
 import { useNoteContentStore } from '~/store/NoteContent';
+import { useSyncMarkdown } from '~/store/SyncMarkdown';
 
 const props = defineProps({
   note : {
@@ -49,6 +51,8 @@ const props = defineProps({
 });
 
 const noteContentStore = useNoteContentStore();
+const syncMarkdown     = useSyncMarkdown();
+
 
 const visible                                                    = ref(false);
 const markdownViewRef: Ref<CreateComponentPublicInstance | null> = ref(null);
@@ -74,6 +78,7 @@ function changeEditor() {
     return;
   }
   noteContentStore.toggleShowMarkdown();
+  syncMarkdown.init();
 }
 
 function blur(data: NoteContent) {
@@ -111,7 +116,13 @@ function editCursorChanged(cursorLine: number) {
   const lineElement = view.querySelector(`[data-source-line="${cursorLine}"]`);
   if (lineElement) {
     view.scrollTop = 0; // スクロール位置をリセット
-    view.scrollTop = lineElement.offsetTop - view.clientHeight / 2;
+    view.scrollTop = lineElement.offsetTop - 100;
+  }
+}
+
+function onScroll() {
+  if (markdownViewRef.value) {
+    syncMarkdown.syncPreview(markdownViewRef as Ref<CreateComponentPublicInstance>);
   }
 }
 

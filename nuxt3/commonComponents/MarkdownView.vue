@@ -2,6 +2,7 @@
   <div
     id="markdownArea"
     class="g-markdown-area line-numbers"
+    @scroll="handleScroll"
     v-html="$md.render(markdown)"
   />
 </template>
@@ -9,6 +10,7 @@
 <script>
 import Mermaid from 'mermaid/dist/mermaid';
 import { useUserStore } from '~/store/User';
+import { useSyncMarkdown } from '~/store/SyncMarkdown';
 
 export default {
   props : {
@@ -19,8 +21,9 @@ export default {
   },
   data () {
     return {
-      userStore : useUserStore(),
-      markdown  : '',
+      userStore    : useUserStore(),
+      syncMarkdown : useSyncMarkdown(),
+      markdown     : '',
     };
   },
   computed : {
@@ -45,6 +48,10 @@ export default {
     this.afterMarkdown();
   },
   methods : {
+    handleScroll(event) {
+      const previewElement = event.target;  // スクロールイベントのソース
+      this.syncMarkdown.syncEditor(previewElement);
+    },
     loadInlineCSS() {
       const user        = this.userStore.getUser;
       const style       = document.createElement('style');
@@ -70,9 +77,24 @@ export default {
       content = this.convertToc(content);
       return content;
     },
-    convertIndent (content) {
-      const lines = content.split('\n');
-      return lines.map((line, index) => this.processIndentLine(line, lines[index - 1])).join('\n');
+    convertIndent(content) {
+      const lines     = content.split('\n');
+      let inCodeBlock = false;
+      
+      return lines.map((line, index) => {
+        // コードブロックの開始または終了を検出
+        if (line.trim().startsWith('```')) {
+          inCodeBlock = !inCodeBlock;
+          return line;
+        }
+
+        if (inCodeBlock) {
+          return line;
+        }
+
+        // コードブロック外のテキストに対してインデント処理を適用
+        return this.processIndentLine(line, lines[index - 1]);
+      }).join('\n');
     },
     processIndentLine(line, previousLine) {
       // リスト要素内の行はそのまま返す
