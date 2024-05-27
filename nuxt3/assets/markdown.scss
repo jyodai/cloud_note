@@ -141,6 +141,24 @@
     margin-bottom: 15px;
   }
 
+  blockquote {
+    margin: 1.5em 0;
+    padding: 0.5em 1em;
+    color: #a5a5a5;
+  }
+
+  blockquote p {
+      margin: 0;
+  }
+
+  blockquote p:before {
+    content: '“';
+  }
+
+  blockquote p:after {
+    content: '”';
+  }
+
   .toc {
     border-top: solid 1px #888888;
     border-bottom: solid 1px #888888;
